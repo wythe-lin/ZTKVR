@@ -1,0 +1,50 @@
+
+< 14-08-20 14:36:58 >==============================================
+Device is Inserted On Driver : [Hub6 Port2] [VER:0, SN:9&2db97609&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/08/20 PM 02:37:00:324
+   Step 1 - End Time : 2014/08/20 PM 02:37:00:324
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\workspace\ZealTek\GP\GP6813\GP3268xxB_CVR_zealtek_20140818\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/08/20 PM 02:37:00:324
+   Step 2 - End Time : 2014/08/20 PM 02:37:00:339
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/08/20 PM 02:37:00:340
+   Step 3 - End Time : 2014/08/20 PM 02:37:00:341
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/08/20 PM 02:37:00:341
+   Step 4 - End Time : 2014/08/20 PM 02:37:04:281
+   Step 4 ok! Spent Time: 3.931s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\workspace\ZealTek\GP\GP6813\GP3268xxB_CVR_zealtek_20140818\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/08/20 PM 02:37:04:281
+   Step 5 - End Time : 2014/08/20 PM 02:37:09:408
+   Step 5 ok! Spent Time: 5.133s
+   USB Task Finished! Spent Time: 9.80s
+
+< 14-08-20 14:43:17 >==============================================
+Device is Inserted On Driver : [Hub6 Port2] [VER:0, SN:9&2db97609&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/08/20 PM 02:43:19:925
+   Step 1 - End Time : 2014/08/20 PM 02:43:19:925
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\workspace\ZealTek\GP\GP6813\GP3268xxB_CVR_zealtek_20140818\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/08/20 PM 02:43:19:925
+   Step 2 - End Time : 2014/08/20 PM 02:43:19:940
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/08/20 PM 02:43:19:940
+   Step 3 - End Time : 2014/08/20 PM 02:43:19:941
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/08/20 PM 02:43:19:941
+   Step 4 - End Time : 2014/08/20 PM 02:43:23:678
+   Step 4 ok! Spent Time: 3.729s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\workspace\ZealTek\GP\GP6813\GP3268xxB_CVR_zealtek_20140818\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/08/20 PM 02:43:23:678
+   Step 5 - End Time : 2014/08/20 PM 02:43:28:776
+   Step 5 ok! Spent Time: 5.101s
+   USB Task Finished! Spent Time: 8.845s

@@ -1,0 +1,180 @@
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.16 - July. 1, 2014
+==============================================================================
+- modify: When open the Log file fail, pop-up warning prompt, and can't log information.
+- modify: modify the retry prompt information.
+- modify: Add the HDB Version Info to the front of the MPTool log file.
+- modify: When new a step by UI, the "ReadFromHDB" node of Script file value always is 1, modify it as the actual value.
+- fixed bug: When select a file to store the read data of "VendorCommand" step will fail.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.15 - Jun. 12, 2014
+==============================================================================
+- modify: Modify the Command Retry Times to 1 from 3 by the GPUSBDeviceManager library.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.14 - May. 29, 2014
+==============================================================================
+- modify: Modified the Write step failed prompting message. 
+- modify: OnLineUpdate StartUp mode, when there is no install "G + Online Updater" does not prompt message(is not installed).
+- modify: Modify the "CmdRetryTimes" and "CmdRetrySleepTime" node in the script file default value is 3.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.13 - Apr. 25, 2014
+==============================================================================
+- fixed bug: VendorCommad Step, unable to check the "Read Command" and can't choose "DataLength".
+- fixed bug: Click on the button to set the CodeFile path, restore the value of Address, Length, Remark.
+- fixed bug: SetNVRamType Step, check the "Disable this step" can't real disable it.
+- fixed bug: TwoByteWrite Step, always fail.
+- Add: Add the "USBCmdLogSetting" node in the USBTool.conf, as to log USBCommandLog and set log path.
+- Add: Add the "CmdRetryTimes" and "CmdRetrySleepTime" node in the script file, as to do retry command for every step.
+- Add: Add the Tool Version to the beginning of the MPTool log file.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.12 - Feb. 26, 2014
+==============================================================================
+- fixed bug: If "Erase" SPI Flash fails, the Tool shows that it performs correctly.
+- modify: Modified the Erase step failed prompting message.
+- Add: Add a SenseErr (Code: 0x062900) to show "Sensor Calibration Fail" error text.
+- modify: The ScriptFile node of USBTool.conf initialized to an empty.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.11 - Jan. 20, 2014
+==============================================================================
+- fixed bug: Open script conf file fail or the script file does not exist, don't show the version detection error message.
+- modify: New script conf can save the latest version.
+- fixed bug: if EnableStartDownloadTimeStamp node's value is 1 in the USBTool.conf, Cann't StartDownload.
+- modify: The Log timestamp information, some information display is not correct.
+- Add: Add StartDownloadSYNCFlag node in the  USBTool to support asynchronous do StartDownload or not.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.10 - Jan. 17, 2014
+==============================================================================
+- fixed bug: The "Pre-register" step editing area selected some content then drag the scroll bar, the content of selected will repeat display.
+- modify: CurrentPath problem: remove the pointer way,Switched buf.
+- fixed bug: HDB lib fixed a bug about multiple downloads at the same time fail because of creating same file to write.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.9 - Dec. 12, 2013
+==============================================================================
+- modify: Free the path space, then path again failed.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.8 - Nov. 01, 2013
+==============================================================================
+- fixed bug: Such a “..\” relative path will Error analysis as the full path.
+- modify: Switch to the new "OnLineUpdate" installation package.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.7 - Sep. 08, 2013
+==============================================================================
+- modify: modify the warning tip of the version detection mechanism about USBTool.conf and script file.
+- modify: modify the log path(Using the log Path now) when need to save the read back verify file after write.
+- fixed bug: cannot disable the ReadBackComboxControl & CheckSumComboxControl.
+- Add: Can Set Relative Path Basis Directory when save the conf file.
+- fixed bug: Read step UI cannot save when select a saving file is not relative path.
+- fixed bug: Write is occasional failure (frequent large files).
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.6 - Aug. 14, 2013
+==============================================================================
+- Fixed bug: Only when Step's ActionName is Write and ChipType is eCHIP_RAM and the CodeFile is *.hdb, then the Address Edit control is disable, otherwise is enable.
+- modify: WaitingThread exit when all of the WorkingThreads exit, and one WaitingThread will create when has WorkerThread create, 
+			so that we can judge whether there is any WorkerThreads in the work.
+- modify: Fixed current path problem, the current path set to the exe path, and also to set the current path through the API.
+- fixed bug: Download large files(More than 1G) tool crash problem.
+- Add: Add the "ExportFlag" node in the USBTool.conf, as to falg tool is export by CodePacker Tool, if true then Tool's SettingButton and OpenButton is disable.
+- Add: version detection mechanism about USBTool.conf and script file.
+- Fixed bug: fixed the file path too long problem , due to the relative path (The middle one more "..\..\..\...").
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.5 - Jun. 28, 2013
+==============================================================================
+- Fixed bug: ChipErase UI "Enhance Mode Option" CheckBox not UpdateData UI;
+- Fixed bug: ChipErase UI is not Disable and "Enhance Mode Option" CheckBox is BST_UNCHECKED, but the "Page Index" wnds not Disable.
+- Fixed bug: JumpStep's address log error problem;
+- Add: Detect the path is too long, is adding tip;
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.4 - Jun. 11, 2013
+==============================================================================
+- Support a maximum of 100 pre-register sets.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.3 - Apr. 25, 2013
+==============================================================================
+- Modify G+CodePacker KRAM the newest GPL329XX don't show the KRAM data.
+-	Added some types,for example SPI and SD Download,upload AddrOffset error,so that downlaod error.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.2 - Apr. 12, 2013
+==============================================================================
+- Support a maximum of 50 pre-register sets.
+- Support OTP type.
+- Support SPI1 type.
+- Support SPI2 type.
+- Support SPI3 type.
+
+- Support SD Device 1 type.
+- Support SD Device 2 type.
+- Support SD Device 3 type.
+- Support SD Device 4 type.
+- Support SD Device 5 type.
+- Support SD Device 6 type.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4.1 - Feb. 01, 2013
+=================================================================
+- Support OTP type.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.4 - November 06, 2012
+=================================================================
+- Update the checking rule of HDB version.
+- Add retry mechanism for each step command execution.
+- Add lock scheme to synchronize device enumeration and access between multiple devices.
+- Add step: Set NVRAM type step.
+- Add the version number of script file parser.
+- Support to assign the starting address from HDB file.
+- Add crash report function.
+- Add online updater function.
+- Fixed bug: Cannot show the chip erase progress.
+- Fixed bug: Show red text during downloading.
+- Fixed bug: Failed to download file with size larger than 4GB.
+- Fixed bug: Cannot open step script file when locates at the same directory.
+- Fixed bug: "ChipErase" step cannot show action name in the tag window.
+- Fixed bug: If user gives non-exist file, it should check and prompt correct error message.
+- Fixed bug: Cannot support to download file that is located on network disk.
+- Fixed bug: The step name in log file has to be the same to that of GUI step.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.3 - October 08, 2011
+=================================================================
+- Add a support function to prevent time-out if polling takes too long.
+- Modify the format of log file.
+- Add new command: support App Header Parsing.
+- Add new command: send nand database.
+- Add to set NVRam Type function.
+- Support to set data length for Vendor Command.
+- Support to load the specific step DLLs&Libs according to the CPU type.
+- Modify Delay Step to provide second and millisecond Options.
+- Add time stamp in the log file.
+- Modify Chip Erase UI to add User and Original Bad block option.
+- Remove GPL83xxx and GPDV6xx Body Name.
+- Modify DRam Calibration UI Setting.
+- Fixed bug: GUI step index does not match with that of script file.
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.2 - June 17, 2011
+=================================================================
+- For chip erase enhance mode, support to specify page index of scan page scheme.
+- Add enhance mode option for NAND chip erase.
+- Modified command protocol to reduce timeout value with 10s and retry only one time.
+- Fixed bug that occurs runtime error randomly if downloading large bin file.
+- Provide option to enable/disable GUI verification checkbox.
+- Add standard error message of Sense Error Code.
+- Support SD/eMMC device Read/Write.
+- Add message dialog to confirm if adding new USB device plugged in PC to download list.
+- Support two-bytes download mode.
+- Add read register function.
+
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.1 -  April 20, 2011
+==============================================================================
+- Remove the function of automatically copy file to code folder after specified target write file
+- Fix up address value been reset after selecting read or write file
+- Synchronize the script file path with main dialog
+- Fixed up pre-register command
+- Code path supports relative path
+- Support boot header parsing 
+- Support to get nand flash information
+- Automatically add device into download list when deivce plug-in PC
+- Support to load customized step DLLs
+- Add port mapping function
+- Support data area step command
+
+G+ Mass Production Tool For GPL329xx Ver 1.0.0 -  January 28, 2011
+==============================================================================
+- First Release
+- Support Step type command

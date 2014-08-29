@@ -1,0 +1,53 @@
+Get Input Palette
+Get Input Palette
+Decode success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_12_24_hr.bmp
+Parse success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_12_24_hr.bmp
+Convert success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_12_24_hr.bmp
+Export success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_12_24_hr.bmp
+Compress Success -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_12_24_hr.bmp
+Palette Index: 1 -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_12_24_hr.bmp
+
+Decode success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_date_order.bmp
+Parse success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_date_order.bmp
+Convert success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_date_order.bmp
+Export success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_date_order.bmp
+Compress Success -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_date_order.bmp
+Palette Index: 1 -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_date_order.bmp
+
+Decode success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_language.bmp
+Parse success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_language.bmp
+Convert success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_language.bmp
+Export success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_language.bmp
+Compress Success -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_language.bmp
+Palette Index: 1 -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_language.bmp
+
+Decode success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_slide.bmp
+Parse success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_slide.bmp
+Convert success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_slide.bmp
+Export success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_slide.bmp
+Compress Success -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_slide.bmp
+Palette Index: 1 -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_slide.bmp
+
+Decode success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_photo_date.bmp
+Parse success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_photo_date.bmp
+Convert success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_photo_date.bmp
+Export success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_photo_date.bmp
+Compress Success -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_photo_date.bmp
+Palette Index: 1 -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_photo_date.bmp
+
+Decode success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_sleep_time.bmp
+Parse success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_sleep_time.bmp
+Convert success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_sleep_time.bmp
+Export success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_sleep_time.bmp
+Compress Success -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_sleep_time.bmp
+Palette Index: 1 -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\set_sleep_time.bmp
+
+Decode success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\clock_center.png
+Parse success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\clock_center.png
+Convert success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\clock_center.png
+Export success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\clock_center.png
+Compress Success -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\clock_center.png
+Palette Index: 2 -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\clock_center.png
+
+Decode success!! -- G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\clock.bmp
+Error!! -- 1555 Convert Failed

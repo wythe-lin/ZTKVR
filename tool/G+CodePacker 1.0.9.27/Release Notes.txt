@@ -1,0 +1,319 @@
+G+CodePacker V1.0.9.27 - 2014.08.12
+======================================
+- Fix USBDiskDirectAccess Tool fails in 4G above data size burning.
+- Fix GPL326XXB (SPI and NAND mode) wrong user-defined reg number while doing lots of calibration.
+- Fix GPL3268XXA fails to boot issue.  
+
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.16.
+- Tool Update : G+MassProductionTool V2.1.1.14.
+
+G+CodePacker V1.0.9.26 - 2014.06.24
+======================================
+- Fix Wrong DataArea Address in Body GPL327XX SDCard type.
+
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.15.
+- Tool Update : G+MassProductionTool V2.1.1.14.
+
+G+CodePacker V1.0.9.25 - 2014.05.29
+======================================
+
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.14.
+- Tool Update : G+MassProductionTool V2.1.1.14.
+
+G+CodePacker V1.0.9.24 - 2014.04.28
+======================================
+- Add new spec for GPEL31XX.("ChipErase" and "NandFlush" steps)
+- Fix issue of empty register numbers while loading from a conf file.
+- Fix less regsiter numbers problem in MP tool of GPL326XXA. 
+- Fix repeated register values in MP tool of GPL326XXB.
+- Fix GPL329XXA crash issues while writing Kram data back to CodePacker.
+
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.13.
+- Tool Update : G+MassProductionTool V2.1.1.14.
+
+G+CodePacker V1.0.9.23 - 2014.04.14
+======================================
+- Add new spec for GPEL31XX.(MP conf file in MP tool and combobox menu in CodePacker and data in bootheader)
+- Fix GPL326XXB fail booting issue and wrong working frequency.
+- Make UI of register page more pleasing.
+
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.12.
+- Tool Update : G+MassProductionTool V2.1.1.14.
+
+G+CodePacker V1.0.9.22 - 2014.03.07
+======================================
+- Add full-packed format for GPL326XXB nand flash only.(named GPL326XXB_NAND_ALL.bin)
+- Fix worng BCHType, btHdrBCHType, NF_WP_Pin_Id and CheckSumKey value in GPL326XXB bootheader.(BCH_OFF mode)
+- Fix wrong packed bootheader data that affected by vendor list of cfg file in GPL326XXB case. 
+
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.12.
+- Tool Update : G+MassProductionTool V2.1.1.14.
+
+G+CodePacker V1.0.9.21 - 2014.01.17
+======================================
+- Fix GPL329XXB wrong register number in bootheader and Rom bin file.
+- Expand DRAM size of GPL329XXB to 2048.
+- Fix FATImageTool problem.
+- Fix GPL327XX wrong register value in bootheader.
+
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.10.
+- Tool Update : G+MassProductionTool V2.1.1.14.
+
+G+CodePacker V1.0.9.20 - 2013.12.11
+======================================
+- Fixed incorrect number of reported back registers of DRAM calibration tool. 
+- Fixed failed calibration after reset issue.
+- Modified DRAM calibration tool to keep CPUSpeed and DRAMSpeed value while program is off. 
+
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.9.
+- Tool Update : G+MassProductionTool V2.1.1.14.
+
+G+CodePacker V1.0.9.19 - 2013.11.18
+======================================
+- Redesign PresetRegister UI and related fuctions.
+- Redesign DRAMCalibrationTool UI and related fuctions.
+- Fixed MemoryMap page display issue.
+- Fixed worng data address issue in GPEL31XX SPI DATA AREA.
+- Fixed G+FATImageTool problems.
+- Fixed Image file gerneration issue of lots-of-files packing.
+
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.8.
+- Tool Update : G+MassProductionTool V2.1.1.13.
+
+G+CodePacker V1.0.9.18 - 2013.08.16
+======================================
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.7.
+- Tool Update : G+MassProductionTool V2.1.1.12.
+
+G+CodePacker V1.0.9.18 - 2013.08.16
+======================================
+- Fixed GPL326XXB Export\OutputBin folder issue.
+- Fixed GPL326XXB warning message while config loading. 
+- Fixed GPL329XXA SD card writing issue on Windows 7.
+- Modified GPEL31XX erased block number calculation.
+- Updated SD card producing flow.
+- Fixed config restore issue.
+- Fixed GPL329XXB packing issue while blank patition on Data Area page last place.
+- Modified GPL329XX.cfg to GPL329XXA.cfg and GPL329XXB.cfg.
+- Disable Setting botton in MP tool in export mode.
+- Add MBR option in G+FATImageTool command mode.
+- Remove GPL329XXB warning message whlie Nand BCH mode = 40b/1KB. 
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.6.
+- Tool Update : G+MassProductionTool V2.1.1.11.
+
+G+CodePacker V1.0.9.17 - 2013.07.03
+======================================
+- Add GP326XXXA, GP327XXXA and GP31P1XXXA bodies.
+- Fixed check for update crash problem.
+- Fixed problem of USBDiskDirectAccess write fail issue on Windows 7.
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.5.
+- Tool Update : G+MassProductionTool V2.1.1.9.
+
+G+CodePacker V1.0.9.16 - 2013.04.29
+======================================
+- Fixed All HDB ToolID & VersionID.
+- Fixed GPL326B BootHeader with wrong version issue.
+- Fixed GPL326B Pre-rigister number not set to 0 without SDRam Calibration issue..
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.3 for Setting Button crash issue..
+- Tool Update : G+MassProductionTool V2.1.1.7 for SPI and SDCard download with AddrOffset problem..
+
+G+CodePacker V1.0.9.15 - 2013.04.19
+======================================
+- Support GPL326B SDCard can be download from G+MassProductionTool For GPL329xx.
+- Modified the UI layout of Binary Package Version Check Dialog.
+- Fixed problem of MBR option on G+ FATImageTool.
+
+G+CodePacker V1.0.9.14 - 2013.04.12
+======================================
+- Modified Nand BootHeader of GPEL31XX.
+- Added Pre-Register maxium number to 50.
+- Added GPEL31XX version information in Version Check Dialog.
+- Support SDCard & SPI with different port setting for GPEL31XX.
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.2 for supporting to burn SDCard & SPI with different port.
+- Tool Update : G+MassProductionTool V2.1.1.5 for supporting 50 Pre-Register.
+
+G+CodePacker V1.0.9.13 - 2013.03.15
+======================================
+- Fixed GPL329XXA/GPL329XXB DRAMCalibration fail issue.
+- Fixed GPL326XXA Write fail on step 10 issue.
+
+G+CodePacker V1.0.9.12 - 2013.02.27
+======================================
+- Fixed GPL329XXB pack fail issue.
+- Fixed DRAMCalibrationTool initial fail issue.
+- Modified SDC BootHeader of GPL329XXB.
+- Modified Nand BootHeader of GPEL31XX with "Write Boot Header" option disable.
+
+G+CodePacker V1.0.9.11 - 2013.02.06
+======================================
+- Fix GPEL31XX pack fail issue
+- Modified MP Tool GPEL31xx download script
+- Modified GPL329XX to GPL329XXA, and add GPL329XXB.
+
+G+CodePacker V1.0.9.10 - 2013.01.25
+======================================
+- Modified GUI for GPEL31XX
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4.1 for supporting to burn OTP
+
+G+CodePacker V1.0.9.9 - 2013.01.04
+======================================
+- Modified GUI for GPEL31XX
+- Fix GPEL31XX pack failed issue
+
+G+CodePacker V1.0.9.8 - 2012.12.12
+======================================
+-Add Body : GPEL31XX
+
+G+CodePacker V1.0.9.7 - 2012.12.12
+======================================
+-Fill GPL326XXB SDRAM Calibration value to Pre-Register (NAND & SDCard)
+
+G+CodePacker V1.0.9.6 - 2012.12.11
+======================================
+-Fix GPL326XXB SPINOR boot fail issue
+-Decrease G+USBDiskDirectAccess Tool CPU loading
+
+G+CodePacker V1.0.9.5 - 2012.12.05
+======================================
+-Fix mantis issue #79930、#79898、#79927
+
+G+CodePacker V1.0.9.4 - 2012.12.04
+======================================
+-修正 GPL326XXB 選擇Export會Fail 問題
+-修正 GPL326XXA/B Nand Flash download script缺少Erase all block 問題
+-開啟 GPL326XXA SDRAM Calibration 48MHz 選項
+
+G+CodePacker V1.0.9.3 - 2012.11.30
+======================================
+-關閉GPL326XXB SDC to Nand、SDC to SDC 功能
+-GPL326XXA 選擇 Nand (new) 會 Pack Fail 問題
+-改變NVRAM Type選項後，Download、Export按鈕不會 disable 問題
+-GPL326XXB 新增 32 page + 8KBpp/16KBpp 選項
+-修正 GPL326XXB SDRAM Size選項
+-修正 GPL326XXB Nand AC Timing 選項顯示為 1 byte
+-修正 GPL326XXB Advanced Setting 中新增/減少 Pre Register 設置相關問題
+-暫時 關閉 GPL326XXB SDCard download by MP Tool 功能
+-FW Update : GPL326XXB_SpiBootLoader.hdb、GPL326XXB_SdcBootLoader.hdb、
+             GPL326XXB_SpiUsbBin.hdb、GPL326XXA_NandUsbBin.hdb
+
+G+CodePacker V1.0.9.2 - 2012.11.26
+======================================
+- Add Body : GPL326XXB
+
+G+CodePacker V1.0.9 - 2012.10.29
+======================================
+- FW Code Update : Binary Chain V1.0.9
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.4
+- Tool Update : G+FATImageTool V1.0.6
+- Document Update : G+CodePacker User Guide V1.0.8 (CHT & ENG version)
+- Add checksum for GPL327XX/GPDV6XXX/GPL329XX SPI/SDC all in one image.
+- Support SDC 1-step download.
+- Add SDC data image limitation. (FAT type/ Cluster size/ total size )
+- Auto parsing boot loader start address from hdb file.
+- SDC data area start address alignment to 2MB.
+- SPI data area start address alignment to 64KB.
+- Add SDC/eMMC/SPINOR BootHeader/BootLoader backup mechanism.
+- Support IO driving setting.(for GPL327XX/GPDV6XXX SPINOR)
+- Modified the UI layout of Binary Package Version Check Dialog.
+- Add CPU Clock setting UI in advanced setting.
+- Support NOR flash for GPL326XX.
+- Support GPL327XX/GPDV6XXX SPI/SDCard data area download.
+- Modified GPL327XX/GPDV6XXX SDRAM Calibration mechanism.
+- Support to update new version of online updater.
+
+G+CodePacker V1.0.8 - 2011.10.14
+======================================
+- FW Code Update : Binary Chain V1.0.8
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.2
+- Tool Update : G+FATImageTool V1.0.3
+- Tool Update : G+UsbDiskDirectAccess V1.0.1
+- GPL329XX Series supports  App Area Partition Header
+- GPL329XX Series supports Nand Auto Mode
+- Add Body : GPL327XX & GPDV6XXX
+- Increase GPL329XX SPI Pre-register number to 23
+- Add "Use 2pcs Identical Nand"、"Nand Flash Chip Erase Enable" & "Use 2CS Nand" Option for GPL329XX
+
+G+CodePacker V1.0.7 - 2011.06.17
+======================================
+- FW Code Update : Binary Chain V1.0.7
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.2
+- Document Update : User Guide V1.0.5 (CHT & ENG version)
+- Support GPL329XX SDC Production (SDC to SDC 、 SDC to Nand、SDC to eMMC)
+- Support Nand OTP Mode
+- Support DRAM Calibration Writer Mode
+- Support GPL329XX eMMC Boot
+- Support SDCard Download by Mass Production Tool
+- GPL329XX supports 8 App Partitions
+- Modified SDCard download speed issue
+
+G+CodePacker V1.0.6 - 2011.04.25
+======================================
+- FW Code Update : Binary Chain V1.0.6
+- Tool Update : G+MassProductionTool For GPL329xx V1.0.1
+- Document Update : User Guide V1.0.4 (CHT & ENG version)
+- Integrate "G+DRAMCalibrationTool" to G+CodePacker
+- Support GPL329XX SPINOR
+- GPL329XX NAND & SDCard using new app area format
+- GPL329XX Data Area supports 8 Partitions
+
+G+CodePacker V1.0.5 - 2011.01.28
+======================================
+- FW Code Update : Binary Chain V1.0.5
+- Tool Update : G+MassProductionTool V2.1.1
+- Add Body : GPL329XX
+- Document Update : User Guide V1.0.3 (CHT & ENG version)
+- Integrate "G+MassProductionTool For GPL329xx" to G+CodePacker
+- Support GPL329XX NAND & SDCard
+- Support 8K Nand Page
+- Modified GPL326XX Boot Area Readback Verify mechanism
+- K9GAG08U0E with 48MHz SDRAM Clock will download failure in "Low level format" step
+
+G+CodePacker V1.0.4 - 2010.10.01
+======================================
+- FW Code Update : BinaryChain v1.0.2
+- Document Update : User Guide V1.0.2 (CHT & ENG version)
+- Database Update : GPL326XX.cfg & GPL325XX.cfg
+- Add Function : Upload flash data
+- Tool Update : SDRAM Calibration Tool V1.0.1 (Retry mechanism)
+- Integrate "G+FATImageTool" to G+CodePacker
+- App Area shows the file size of each file and the total size in resource list
+- Resource list supports double click to modify selected file path
+- Release to DCC
+
+G+CodePacker V1.0.3 - 2010.7.1
+======================================
+- Modified Database Format
+- Add Function : Write Protection Pin Selection
+- Add Function : Version Check
+- Modified Function : Load Default
+- Remove Function : Batch Pack
+- Add NVRAM Type : SDCard for GPL326XX
+- Integrate "G+USBDiskDirectAccess" to Code Packer
+- Modified Output File Naming
+- Support unpacking hdb format file
+- Show FW Package Version in Window Title
+- Document Update : User Guide V1.0.1 (CHT & ENG version)
+- Database Update - GPL326XX.cfg & GPL325XX.cfg
+- Tool Update - Mass Production Tool V2.0.9
+- Release to DCC
+
+G+CodePacker V1.0.2 - 2010.5.10
+======================================
+- Tool Update: Mass Production Tool V2.0.8
+- Add Body: GPL326XX
+- Modified Body: GPL32XXX -> GPL325XX (GPL323XX)
+- Add Function: Final Pack Image Padding
+- Modified the method of communication with Mass Production Tool
+- Support to set "Data Area Bank Size" and "Data Area Recycle Size"
+- SPI supports no GPZP Runtime ROM Code
+- Modified the naming rule of F/W bin files
+- Release to DCC
+
+G+CodePacker V1.0.1	- 2009.11.19
+======================================
+- Release to DCC
+
+G+CodePacker V1.0.0	- 2009.11.6
+======================================
+- Tool Update: Mass Production Tool V2.0.5
+- Release to DCC

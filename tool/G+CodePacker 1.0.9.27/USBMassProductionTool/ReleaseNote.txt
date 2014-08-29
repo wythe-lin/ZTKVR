@@ -1,0 +1,365 @@
+G+ Mass Production Tool Ver 2.1.1.14 - Dec. 05, 2013
+==============================================================================
+- fixed bug: The Write/Read/Erase step in the drop-down list box, select the other AccessType will not change the Address unit.
+- fixed bug: The Erase step's UI "Earse All" Control display incomplete. 
+
+G+ Mass Production Tool Ver 2.1.1.13 - Nov. 13, 2013
+==============================================================================
+- fixed bug: Can not Download Multiple devices at the same time.
+
+
+G+ Mass Production Tool Ver 2.1.1.12 - Oct. 17, 2013
+==============================================================================
+- modify: modify the warning tip of the version detection mechanism about USBTool.ini and boot script file.
+- modify: modify readback verify machenism, we will read data block by block after all data be written to device completely.
+- fixed bug: modify the Address Unit showing in the Step setting UI, as the Chip Type and CPU Type.
+- fixed bug: RegisterNum maximum number is 100, but can only choose 99 biggest in the UI.
+- fixed bug: The UI "Dev Num" can't enter two numbers.
+- fixeg bug: Write large file failed for "write" step.
+
+G+ Mass Production Tool Ver 2.1.1.11 - Aug. 20, 2013
+==============================================================================
+- fixed bug: When save boot script file ,the version can not save.
+
+G+ Mass Production Tool Ver 2.1.1.10 - Aug. 3, 2013
+==============================================================================
+- Modified to "Donn't move the Device info in the ListCtrl  when Device plug in or pull up".
+- Add USBTool.ini and boot script file version detection mechanism.
+
+G+ Mass Production Tool Ver 2.1.1.9 - Jun. 07, 2013
+==============================================================================
+- Disable sequential download mode.
+- Fixed bug of library (missing header files).
+
+G+ Mass Production Tool Ver 2.1.1.8 - May. 29, 2013
+==============================================================================
+- Support a maximum of 100 pre-register sets.
+
+
+G+ Mass Production Tool Ver 2.1.1.7 - Apr. 25, 2013
+==============================================================================
+- Modify GPL326XX click setting button crash question.
+
+G+ Mass Production Tool Ver 2.1.1.6 - Apr. 12, 2013
+==============================================================================
+- Support a maximum of 50 pre-register sets.
+
+G+ Mass Production Tool Ver 2.1.1.5 - November 20, 2012
+==============================================================================
+- Fixed bug: Assertion on debug version.
+- Add log of each USB command.
+- Fixed bug: Cause assertion if failed to write file into RAM and no log foler.
+- Add DLL_GPL32DownloadPlugInDevice and DLL_GPL32DownloadPlugOutDevice.
+
+G+ Mass Production Tool Ver 2.1.1.4 - October 29, 2012
+==============================================================================
+- Special version to LF.
+
+G+ Mass Production Tool Ver 2.1.1.3 - July 5, 2011
+==============================================================================
+- Modified to support readback verify function for multi-device .
+- Modified to close compare file step for multi-device.
+
+G+ Mass Production Tool Ver 2.1.1.2_InternalTestOnlyWithBothVerify -June 30, 2011
+==============================================================================
+- Modified to support readback verify function .
+
+G+ Mass Production Tool Ver 2.1.1.2_InternalTestOnlyWithCmpFile -June 29, 2011
+==============================================================================
+- Modified to support multi-device read .
+- Modified to support multi-device compare files.
+- Fixed bug compare file showing problem. 
+
+G+ Mass Production Tool Ver 2.1.1.2 - May 3, 2011
+==============================================================================
+- Modified to disable usb port mapping function.
+- Modified to Enable change device number function.
+- Fixed bug for GP4 Nor Flash Chip erase failed. 
+
+G+ Mass Production Tool Ver 2.1.1.1 - Feb 14, 2011
+==============================================================================
+- Modified message dialog of checking hdb file item(SWTool ID/SWTool Ver) etc.
+- Modified to parse hdb file replaced by packer lib.
+- Modified to enable usb port mapping function.
+- Removed redundant code in StartDoDeviceIOTask & GetVersionFromPath function
+  in the usbtooldlg.cpp file.
+
+G+ Mass Production Tool Ver 2.1.1 - Jan 28, 2011
+==============================================================================
+- Modified dialog message box displaying.
+- Modified the rule of checking SW tool version.
+- Modified DelayPC Action to DelayStep.
+- Modified Pre-register value when device number was changed.
+- Modified Code Path opening method when user click ... button.
+- Updated 8k page Nand driver conf file.
+- Modidy template script file for verify option.
+- Add read back verify & check sum verify option enable or disable issue.
+- Modified std template script file to disable erase all block step.
+- Added step rename function.
+- Modified residue sectors to total sectors.
+- Add residue sector size(4Bytes) when send write command to device.
+- Modify check sum verification calculation.
+- Add check sum verification mode when usb boot bin was changed dynamically.
+- Modify user defined command format.
+
+G+ Mass Production Tool Ver 2.1.0 - Oct 27, 2010
+==============================================================================
+- Add disable setting button function when exported by Codepacker.
+- Add LRunas Dll to promote the authorization of User.
+- Add Probe path function with new ICE Driver to support GP5(just single 
+- device at present.)
+- Add readback verify fucntion for writing serial number step.
+- Modify UI layout and alignment issue.
+- Modified user customerized read command parameters format.
+- Fixed Compare function between two files.
+- Fixed plents of memory leaks when downloading with multi-device.
+- Fixed readback verify fail issue when writing serial number to MLC Flash.
+- Fixed issues : compare file failure even two files are same.
+- Fixed UI showing issue when up or down compare file step.
+- Fixed crash issue when click browse button with compare file step.
+- Removed GetNandInfo & CheckBadBlkRate function when write boot area.
+
+USB Mass Tool Ver 2.0.9 - June 25, 2010
+==============================================================================
+- Modified to enhance delete function of bin & zip files after downloading,
+  include encountered reset or power off when downloading.
+- Add delete function of bin & zip files after downloading, if it has hdb file
+- Modified the showing methods if the directory was created failure.
+- Removed the package version showing if autoerase option was checked.
+- Fixed Crash problem when user have no authorization to access file  .
+- Rename USBMassProductionTool to G+MassProductionTool.
+- Update GPMPPack Bin Library for new hdb files.
+- Modified SW Tool Version verification from 4 to 3 section
+- Fixed boot script file switching failure when power on again.
+- Modify Step retry mechanism if one step failure and specific retry count.
+- Modify File filter for file selecting.
+- Modify HDB files Version information display function, replaced by static 
+- text and removed previous check box selecting .
+- Modify version showing sequency and alignmant.
+- Removed space between characters and version numbers.
+- Add HDB files Version information display function.
+- Add HDB files verify machanism, including sw tool id , sw tool version, body
+  name and so on.
+
+USB Mass Tool  Ver 2.0.8 - May 04, 2010
+===============================================================================
+- Add get version number from resource view function.
+- Modified Progress bar color display.
+- Update CPU name according to formal naming rule.
+- Modify pre-reister dialog setting when select different numbers.
+- Modify 0x2A2A command when it works on vista.
+- Modify UI display if select autowrite app or date area.
+- Added Delay time before read back verify function when write date each time.
+- Added Step retry mechanism if each step failed.
+- Fixed bug: It does not need to check the boot bin file name.
+- Fixed Pre-register setting failure when called by codepacker.
+- Fixed Send pre register cmd when register number is zero.
+- Fixed bug: Does not need to check BCH bin file name.
+- Fixed bug: Pre-register max text length limitation.
+
+USB Mass Tool  Ver 2.0.6 - Jan 07, 2010
+===============================================================================
+- Add Write Serial Number request.
+- Modify disable step check control function when it is checked.
+
+
+USB Mass Tool  Ver 2.0.5.3 - Dec 3th, 2009
+===============================================================================
+- Add parser library for boot script file and usbtools ini file.
+- Modify the GUI to apply to changed request for UI, and worked independently.
+- Modified the version to 2.0.5.3
+
+USB Mass Tool  Ver 2.0.5.2 - Nov 17th, 2009
+===============================================================================
+- Added re-enumerate function when user select new sccript file and enumerate 
+- 			devices with the cup type in script file.
+- Modified message dialog when no device be enumerated in download or enumerate.
+- Fixed bug that does not download at the time with more than one devices.
+- Modified the version to 2.0.5.2
+
+USB Mass Tool  Ver 2.0.5.1 - Nov 09th, 2009
+===============================================================================
+- Added message dialog when no device be enumerated.
+- Removed the version number in usbtools.ini file.
+- Removed the cpu selection dialog whatever called coder packer.
+- Modified the version to 2.0.5.1
+
+USB Mass Tool  Ver 2.0.5 - Nov 6th, 2009
+===============================================================================
+- Modified version 2.0.4.4 to V2.0.5 .
+
+USB Mass Tool  Ver 2.0.4.4 - Nov 6th, 2009
+===============================================================================
+- Fixed bug: read App Area size from downloadinfo.ini file when write SPI Flash.
+-            without codepacker.
+
+USB Mass Tool  Ver 2.0.4.3 - Nov 6th, 2009
+===============================================================================
+- Fixed bug: read App Area size from downloadinfo.ini file when write SPI Flash.
+
+USB Mass Tool  Ver 2.0.4.2 - Nov 5th, 2009
+===============================================================================
+- Add report information if the size of App bin file or RWImage file is zero.
+- Modified AutoDownloadNand config file step .
+- Updated FW Nand bin file in code folder.
+- Fixed bug: could not download when the size of RWImage file is zero.
+- Fixed bug: occur runtime error when download spi in release version.
+
+USB Mass Tool  Ver 2.0.4.1 - Nov 4th, 2009
+===============================================================================
+- remove the CPU Setting Dialog when called by code packer.
+
+USB Mass Tool  Ver 2.0.4 - Oct 12th, 2009
+===============================================================================
+- Add auto write boot area and app area function with codepacker.
+- Add Pre-register function with codepacker.
+- Add GPlusUSBDownload Lib API Specification.
+- Fixed WndCUI version resource release issue caused exception when download twice
+- or more time with different config file.
+
+USB Mass Tool  Ver 2.0.3 - August 12th, 2009
+===============================================================================
+- Fixed bug of GetChipType function for Mac OS Version.
+
+USB Mass Tool  Ver 2.0.2.5 - August 7th, 2009
+===============================================================================
+-	Add test config file for 16 and 32 bit.
+- Add pid & vid to support GP11 in ini file. default is empty.
+- fixed a bug that send command 0xff44 failure for Mac version
+
+USB Mass Tool  Ver 2.0.2.4 - July 20th, 2009
+===============================================================================
+- Add function that read back verify failure ,the program will be go on executing.
+- Modify usbtool.ini file, to add identifier to distinguish on or off.
+- Modify 16 bit read back veriry status.
+
+USB Mass Tool  Ver 2.0.2.3 - June 12th, 2009
+===============================================================================
+- Add function that do not read back verify when it found bad block.
+- Add 0xFF48 Cmd to get the bad block info, including bad block number and size.
+- Add 'break' insturction to get the correct error code of sense key.
+- Modify to report some bad block info in log when each step finished.
+
+USB Mass Tool  Ver 2.0.2.2 - April 30th, 2009
+===============================================================================
+- Add Erase All NandFlash blocks function;
+- Add Power on and Power off function for OTP in GP4(162004).
+
+USB Mass Tool  Ver 2.0.2.1 - April 30th, 2009
+===============================================================================
+- Add Get Nand ID 0xff45 interface in GPL32FlashIO class, for VTech. provide by 
+- xh in 1 department
+
+USB Mass Tool  Ver 2.0.2 - April 8th, 2009
+===============================================================================
+- Add Boot write to handle bad block
+- Add Nand OTP to support GP4 Nand OTP R/W.
+- Add select cpu dialog to identify the usb device automatically.
+- Add Create File automatically according to the user specified when read.
+- Modify some Unit display in UI.
+- Modify the data length have not save normally.
+- Fix a bug when send 0xFD2A command failure.
+- Del BCH Count Setting in the Boot Write Dialog.
+
+GPLXXX Mass Tool  Ver 2.0.0.3 - March 12th,2009
+=================================================================================
+- Add Open button in USBToolDlg, 
+- Add a funtion when readback verify was checked. save a file to disk.
+- Add Unit for address(Byte) and length(Block)  
+- Add USB Command 0xFF40 as SetAppVariable.
+- Modify Jump to Funtion command: only remain RAM Option.
+- Modify nand flash to SLC nand to distinguish 
+- Remove option of "write with auto erase" in Write step.
+- Fixed a bug when disable write command,it will also request to select code file.
+- Fixed a bug when change cpu type betweent 16 and 32 with open bootscript.
+
+GPLXXX Mass Tool Ver 2.0.0.2 - March 2th, 2009
+=================================================================================
+- add data lentth option when read/write
+- add time-out option when download 
+
+GPLXXX Mass Tool Ver 2.0.0.1 - Feb 20th, 2009
+=================================================================================
+ - combine the GPL162002&162004 and GPL32xxx Mass Tool.
+
+MassProductionTool_162002_162004 Ver 1.0.3.8 - Jan 13th, 2009
+=================================================================================
+ - fix two bug: relative path and the limit of the file length 128 byte.
+ - Modify User Command:
+	a) Write can do not specify the file.
+	b) Write: if specify the file, the specified format in the remard will 
+	          be as follow:
+	CMD1	CMD0	Addr3	Addr2	Addr1	Addr0	Rev	Len1	Len0
+	c) Read: if specify to read the file , you need to point a end address. 
+                 the format in the reamark will be as follow:
+	CMD1	CMD0	Addr3	Addr2	Addr1	Addr0	Rev	Len1	Len0	
+ - compare two file whether right or wrong individually. 
+
+
+MassProductionTool_162002_162004 Ver 1.0.3.7 - Dec 29th, 2008
+=================================================================================
+ - Add a Error code named  SenseKey_Original_Bad_Block, when R/W error and return 
+   error according huck's request.
+
+MassProductionTool_162002_162004 Ver 1.0.3.6 - Dec 24th, 2008
+=================================================================================
+ - Add Auto Ready function after device download completely according the request 
+   of sixthDepartment 
+
+MassProductionTool_162002_162004 Ver 1.0.3.5 - Dec 8th, 2008
+=================================================================================
+ - Modify the response speed for ChipErase command from 2 minustes to 10 minutes.
+
+MassProductionTool_162002_162004 Ver 1.0.3.4 - Novem 11th, 2008
+=================================================================================
+ - Add Action type for App Area Format and Initial step
+ - cmd is as below£º 
+ - CMD FF34  APPFormat 
+ -          parameters£º  0x10  Erase expect user mark 
+ -                        0x01  ALL Erase   
+ - CMD FF35  APPInit
+
+MassProductionTool_162002_162004 Ver 1.0.3.3 - Novem 7th, 2008
+=================================================================================
+ - Add the parameter function for SendCommand.
+ 
+MassProductionTool_162002_162004 Ver 1.0.3.2 - Novem 5th, 2008 ================================================================================
+ - Add the support of MLC 2k + 64byte(Physical)
+ 
+MassProductionTool_162002_162004 Ver 1.0.3.1 - Oct 24th, 2008
+=================================================================================
+ - Modify the read address of writing certification as write address. the old 
+   version is placed the fixed address 0x30000.
+
+MassProductionTool_162002_162004 Ver 1.0.3.0 - June 19th, 2008
+=================================================================================
+ - Add button enuming device manually
+ - Add lock operation for SetNoMount function.
+ - Modify the DeviceIoControl in GPlusUSBLib library.
+ - fixed a problem that enumerate device frequently when haven't plugged devices.
+
+MassProductionTool_162002_162004 Ver 1.0.2.12 - June 18th, 2008
+=================================================================================
+ - we should use RegisterDeviceNotification function, this is because it will 
+   trigger the DBT_DEVICEARRIVAL event when calling SetNoMount function.
+
+MassProductionTool_162002_162004 Ver 1.0.2.11 - June 17th, 2008
+=================================================================================
+ - it will occur plenty of WM_DEVICECHANGE message when the devices will be 
+   plugged in or out so it have been fixed in this version.
+
+MassProductionTool_162002_162004 Ver 1.0.2.10 - May 28th, 2008
+=================================================================================
+ - Add Auto Test download function.
+
+MassProductionTool_162002_162004 Ver 1.0.2.9 - May 23th, 2008
+=================================================================================
+ - remove ReadICVersion function because it is reported occur problem frequently 
+   by customer when executing ReadIC Version function. Huck's decision
+
+MassProductionTool_162002_162004 Ver 1.0.2.8  May 19th, 2008
+=================================================================================
+  - list the error sector number in wrong information just as read compare command.
+
+Ver 1.0.0.0  
+ - 

@@ -1,0 +1,338 @@
+[Define]
+//screen resulation
+DPF_H   ,800
+DPF_V   ,600
+//how many rubber key on system
+RUBBER_KEY   ,7
+//how many osd item on system
+OSD_ITEM   ,7
+//how many menu item on system
+MENU_ITEM   ,5
+//how many build in music for photo play select
+MUSIC_OPEN_ITEM   ,0
+// AP state
+STATE_STARTUP   ,0x00000100
+STATE_THUMBNAIL_MULTI_LINE   ,0x00000101
+STATE_SLIDE_SHOW   ,0x00000102
+STATE_PHOTO_VIEWER   ,0x00000103
+STATE_MAIN_MENU   ,0x00000105
+STATE_CLENDAR   ,0x00000106
+STATE_SETUP   ,0x00000107
+STATE_VIDEO_PLAYER   ,0x00000109
+STATE_PET   ,0x0000010a
+STATE_SLIDESHOW_SET_INTERVAL   ,0x00000a01
+STATE_CALENDAR_SET_INTERVAL   ,0x00000a02
+STATE_STORAGE_BACKGROUND   ,0x00000a03
+STATE_STORAGE   ,0x00000a04
+STATE_USB_DEVICE_PC_IN   ,0x00000a05
+STATE_MUSIC_SELECT   ,0x00000a06
+STATE_THUMBNAIL_SINGLE_LINE   ,0x0000010b
+STATE_VOLUME_CONTROL   ,0x00000a07
+STATE_DATE_SET   ,0x00000a0a
+STATE_ALARMSET_SET   ,0x00000a0b
+STATE_ALARM_HAPPEN   ,0x00000a0e
+STATE_INTERROGATION   ,0x00000a0f
+STATE_VIDEO_PREVIEW   ,0x0000010c
+STATE_MOVIE   ,0x00000104
+STATE_MUSIC   ,0x00000108
+STATE_BRIGHTNESS_CONTROL   ,0x00000a08
+STATE_POWERTIME_SET   ,0x00000a09
+STATE_INTERNATIONAL   ,0x00000a0c
+STATE_POP_MESSAGE   ,0x00000a0d
+STATE_EXCEPTION_HANDLE   ,0x0000010d
+STATE_RADIO   ,0x0000010e
+STATE_MUSIC_LIST   ,0x0000010f
+STATE_SAVE_AS_LOGO   ,0x00000a10
+STATE_MASS_PRO_TEST   ,0x00000a11
+//KEY EVENT
+NULL   ,0x00000000
+
+
+
+[Header]
+//ID , version
+GPRS   ,0x0002
+
+
+
+[Boot_Flow]
+//mode,effect,image index, sound index, go state
+0x00,0xff,0x70,0x00,STATE_MAIN_MENU
+
+
+
+[Ir_Key]
+
+
+
+[Rubber_Key]
+STATE_STARTUP   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_THUMBNAIL_MULTI_LINE   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_SLIDE_SHOW   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_PHOTO_VIEWER   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_CLENDAR   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_SETUP   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_VIDEO_PLAYER   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_PET   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_SLIDESHOW_SET_INTERVAL   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_CALENDAR_SET_INTERVAL   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_STORAGE_BACKGROUND   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_STORAGE   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_USB_DEVICE_PC_IN   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_MUSIC_SELECT   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_THUMBNAIL_SINGLE_LINE   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_VOLUME_CONTROL   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_DATE_SET   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_ALARMSET_SET   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_ALARM_HAPPEN   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_INTERROGATION   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_VIDEO_PREVIEW   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_MOVIE   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_MUSIC   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_BRIGHTNESS_CONTROL   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_POWERTIME_SET   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_INTERNATIONAL   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_POP_MESSAGE   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_EXCEPTION_HANDLE   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_RADIO   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_MUSIC_LIST   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_SAVE_AS_LOGO   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_MASS_PRO_TEST   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_MAIN_MENU   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+
+
+
+[OSD_Menu]
+//state,board index ,board_x,board_y,board_mode,auto_hide_time,board_blending,hint_show_mode
+
+
+
+[Cover_Main_Menu]
+//key in display & image item number must same as [define] MENU_ITEM	
+// but real display & real use image number can small it.
+//real display number, image number,bg image , bg music, hint_x, hint_y, hint_show_mode ,hint_color
+0x05,0x00,0x00,0x00,-67,-255,0x01,0xf8
+//(x0,y0,x1,y1,x3,y3,x4,y4)
+-358,270,-189,230,-189,-240,-358,-280
+-302,270,-133,230,-133,-240,-302,-280
+-118,230,118,230,118,-240,-118,-240
+133,230,302,270,302,-280,133,-240
+189,230,358,270,358,-280,189,-240
+//mode,image index,sound_index,hint_index,select
+0x00,0x00,0x00,0x00,NULL
+0x00,0x00,0x00,0x00,NULL
+0x00,0x00,0x00,0x00,NULL
+0x00,0x00,0x00,0x00,NULL
+0x00,0x00,0x00,0x00,NULL
+
+
+
+[String]
+//mode :  0->english , 1 -> unicode
+//font path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_font\
+//languageN , mode , string file
+Font
+Language   ,0,English.txt
+Font
+Language   ,1,"Simplified Chinese.txt"
+Font
+Language   ,1,"Traditional Chinese.txt"
+
+
+
+[Palette]
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image
+//data
+
+
+
+[Image_With_Palette]
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\
+// Maximum number of image resource on system is 2048 
+    // Palette, pal name
+Palette,gray16.pal
+Palette,clock.pal
+// Image, color format, used pal index, char H_V, image name
+Image, 0x0004, 1, 64x64, set_12_24_hr.bmp
+Image, 0x0004, 1, 64x64, set_date_order.bmp
+Image, 0x0004, 1, 64x64, set_language.bmp
+Image, 0x0004, 1, 64x64, set_slide.bmp
+Image, 0x0004, 1, 64x64, set_photo_date.bmp
+Image, 0x0004, 1, 64x64, set_sleep_time.bmp
+Image, 0x0001, 2, 16x16, clock_center.png
+Image, 0x0002, 2, 64x64, clock.bmp
+Image, 0x0001, 2, 32x32, h00.png
+Image, 0x0001, 2, 32x32, h01.png
+Image, 0x0001, 2, 32x32, h02.png
+Image, 0x0001, 2, 32x32, h03.png
+Image, 0x0001, 2, 32x32, h04.png
+Image, 0x0001, 2, 32x32, h05.png
+Image, 0x0001, 2, 32x32, h06.png
+Image, 0x0001, 2, 32x32, h07.png
+Image, 0x0001, 2, 32x32, h08.png
+Image, 0x0001, 2, 32x32, h09.png
+Image, 0x0001, 2, 32x32, h10.png
+Image, 0x0001, 2, 32x32, h11.png
+Image, 0x0001, 2, 32x32, h12.png
+Image, 0x0001, 2, 32x32, h13.png
+Image, 0x0001, 2, 32x32, h14.png
+Image, 0x0001, 2, 32x32, h15.png
+Image, 0x0001, 2, 32x32, m00.png
+Image, 0x0001, 2, 32x32, m01.png
+Image, 0x0001, 2, 32x32, m02.png
+Image, 0x0001, 2, 32x32, m03.png
+Image, 0x0001, 2, 32x32, m04.png
+Image, 0x0001, 2, 32x32, m05.png
+Image, 0x0001, 2, 32x32, m06.png
+Image, 0x0001, 2, 32x32, m07.png
+Image, 0x0001, 2, 32x32, m08.png
+Image, 0x0001, 2, 32x32, m09.png
+Image, 0x0001, 2, 32x32, m10.png
+Image, 0x0001, 2, 32x32, m11.png
+Image, 0x0001, 2, 32x32, m12.png
+Image, 0x0001, 2, 32x32, m13.png
+Image, 0x0001, 2, 32x32, m14.png
+Image, 0x0001, 2, 32x32, m15.png
+Image, 0x0001, 2, 32x32, s00.png
+Image, 0x0001, 2, 32x32, s01.png
+Image, 0x0001, 2, 32x32, s02.png
+Image, 0x0001, 2, 32x32, s03.png
+Image, 0x0001, 2, 32x32, s04.png
+Image, 0x0001, 2, 32x32, s05.png
+Image, 0x0001, 2, 32x32, s06.png
+Image, 0x0001, 2, 32x32, s07.png
+Image, 0x0001, 2, 32x32, s08.png
+Image, 0x0001, 2, 32x32, s09.png
+Image, 0x0001, 2, 32x32, s10.png
+Image, 0x0001, 2, 32x32, s11.png
+Image, 0x0001, 2, 32x32, s12.png
+Image, 0x0001, 2, 32x32, s13.png
+Image, 0x0001, 2, 32x32, s14.png
+Image, 0x0001, 2, 32x32, s15.png
+
+
+
+[Image]
+//max image resource on system is 2048
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_image\
+// Color format, palette index for 256 color, H_V, image file name
+0x01,64x64,cover_avi_icon.png
+0x01,64x64,cover_avi_icon_large.png
+0x03,32x32,loading_photo.jpg
+0x03,64x64,loading_photo_large.jpg
+0x03,32x32,loading_video.jpg
+0x01,64x64,storage_cf.png
+0x01,64x64,storage_ms.png
+0x01,64x64,storage_nand.png
+0x01,64x64,storage_sd.png
+0x01,64x64,storage_usb.png
+0x01,64x64,storage_extreme.png
+0x01,64x64,pop_pc_connected.png
+0x01,64x64,pop_volume.png
+0x01,64x64,pop_volume_mute.png
+0x01,64x64,pop_interval.png
+0x03,32x32,pop_title_bar.jpg
+0x03,32x32,pop_fg_unselect_bar.jpg
+0x03,32x32,pop_bg_bar.jpg
+0x03,32x32,pop_fg_select_bar.jpg
+0x02,64x64,set_volume.bmp
+0x02,64x64,set_lcd_brightness.bmp
+0x03,32x32,set_rolling_bar_select.jpg
+0x03,32x32,set_rolling_bar_unselect.jpg
+0x00,64x64,set_setting_bar.bmp
+0xffff,0,reserved
+0xffff,0,reserved
+0xffff,0,reserved
+0xffff,0,reserved
+0x03,64x64,default_photo.jpg
+0x02,16x16,set_alarm_on.bmp
+0x02,16x16,set_alarm_off.bmp
+0x03,64x64,loading_video_large.jpg
+0x01,64x64,loading_animation.png
+0x02,64x64,setting_clock.bmp
+0x01,64x64,pop_yes.png
+0x01,64x64,pop_no.png
+0x01,64x64,set_alarmclock.png
+0x02,64x64,set_alarm.bmp
+0xffff,0,reserved
+0xffff,0,reserved
+0xffff,0,reserved
+0xffff,0,reserved
+0xffff,0,reserved
+0xffff,0,reserved
+0xffff,0,reserved
+0x02,64x64,full_screen.bmp
+0x02,64x64,full_image.bmp
+0x02,64x64,restore_defaults.bmp
+0x02,64x64,set_power_time.bmp
+0x02,16x16,affirmative.bmp
+0x02,16x16,negative.bmp
+0x01,64x64,thumbnail_ok.png
+0x02,64x64,set_ui_style_1.bmp
+0x02,64x64,set_ui_style_2.bmp
+0x02,64x64,set_ui_style_3.bmp
+0x03,64x16,logo.jpg
+
+
+
+[Audio]
+//max audio resource on system is 2048
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_audio\
+//type , data
+
+
+
+[factor_default_option]
+    language 	, 3					;;index
+time_format, 1         ;; key tone switch, 0:OFF, 1:ON...
+date_format, 2         ;; auto off, 0:off, 1:1min, 2:3min
+week_format, 1
+    date 		, 2014-08-01 			;;yyyy-mm-dd
+time, 08:00
+lcd_backlight, 0       ;; iso 0:auto, 1:100, ...
+sound_volume, 5        ;; sound level, 0~6
+default_storage, SPI
+slideshow_duration, 0        ;; Date Format 0:YYYY/MM/DD, ...
+slideshow_bg_music, 1        ;; quality, 0:fine, 1:standard, 2:economic
+slideshow_photo_date_on, 1   ;; picture size 0: 3M, 1: 2M, 2: 1.3M, 3: VGA
+calendar_duration, 1         ;; staturation, 0:high, 1:standard, 2:low
+calendar_displaymode, 1      ;; sharpness, 0:hard, 1:normal, 2:soft
+music_on_off, 1              ;; Burst 0:on, 1:off
+midi_exist_mode, 6           ;; 0:6, +1/3:5, -1/3:7, ...
+music_play_mode, 1           ;; Motion Detect Sensitivity : 0->High, 1->Medium, 2->LOW
+full_screen, 2               ;; Record Time : 0->off, 1->1Min, 2->2Min, ...
+thumbnail_mode, 1            ;; Date Stamp : 0->OFF, 1->Date&Time
+alarm_set1, 0, 00:00, 0
+alarm_set2, 0, 00:00, 0
+sleep_time, 0
+powertime_onoff1, 0, 08:00, 24:00
+powertime_onoff2, 0, 08:00, 24:00
+
+
+
+
+[Other_Resource]
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\DVR_Resource_ZeakTek_6_29_no_night_mode_VGA\Export\src_others\
+//resource file name
+
+
+
+[Palette_Reserve_Color]
+//PaletteIndex, ColorValue
+0xF8,   0x00808080
+0xF9,   0x0000F8F8
+0xFA,   0x0000F800
+0xFB,   0x00F80000
+0xFC,   0x000000F8
+0xFD,   0x00F8F8F8
+0xFE,   0x00000000
+0xFF, 0xFF000000
+
+
+

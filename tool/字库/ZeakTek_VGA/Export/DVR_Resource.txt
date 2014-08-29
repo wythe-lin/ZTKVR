@@ -1,0 +1,184 @@
+[Define]
+//screen resulation
+DPF_H   ,800
+DPF_V   ,480
+//how many rubber key on system
+RUBBER_KEY   ,7
+//how many osd item on system
+OSD_ITEM   ,7
+//how many menu item on system
+MENU_ITEM   ,5
+//how many build in music for photo play select
+MUSIC_OPEN_ITEM   ,0
+// AP state
+STATE_STARTUP   ,0x00000100
+STATE_MAIN_MENU   ,0x00000105
+//KEY EVENT
+NULL   ,0x00000000
+
+
+
+[Header]
+//ID , version
+GPRS   ,0x0002
+
+
+
+[Boot_Flow]
+//mode,effect,image index, sound index, go state
+0x00,0xff,0x00,0x00,STATE_MAIN_MENU
+
+
+
+[Ir_Key]
+
+
+
+[Rubber_Key]
+STATE_STARTUP   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+STATE_MAIN_MENU   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+
+
+
+[OSD_Menu]
+//state,board index ,board_x,board_y,board_mode,auto_hide_time,board_blending,hint_show_mode
+
+
+
+[Cover_Main_Menu]
+//key in display & image item number must same as [define] MENU_ITEM	
+// but real display & real use image number can small it.
+//real display number, image number,bg image , bg music, hint_x, hint_y, hint_show_mode ,hint_color
+0x05,0x00,0x00,0x00,-67,-195,0x01,0xf8
+//(x0,y0,x1,y1,x3,y3,x4,y4)
+-358,210,-189,170,-189,-180,-358,-220
+-302,210,-133,170,-133,-180,-302,-220
+-118,170,118,170,118,-180,-118,-180
+133,170,302,210,302,-220,133,-180
+189,170,358,210,358,-220,189,-180
+//mode,image index,sound_index,hint_index,select
+0x00,0x00,0x00,0x00,NULL
+0x00,0x00,0x00,0x00,NULL
+0x00,0x00,0x00,0x00,NULL
+0x00,0x00,0x00,0x00,NULL
+0x00,0x00,0x00,0x00,NULL
+
+
+
+[String]
+//mode :  0->english , 1 -> unicode
+//font path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_font\
+//languageN , mode , string file
+Font,GulimChe,14,0,0
+Language   ,0,English.txt
+Font,DFKai-SB,14,0,0
+Language   ,1,"Traditional Chinese.txt"
+Font,DFKai-SB,14,0,0
+Language   ,1,"Simplified Chinese.txt"
+Font,Dotum,14,0,0
+Language   ,1,Japanese.txt
+Font,Dotum,14,0,0
+Language   ,1,French.txt
+Font,Dotum,13,0,0
+Language   ,1,German.txt
+Font,Dotum,14,0,0
+Language   ,1,Korean.txt
+Font,Dotum,13,0,0
+Language   ,1,Italian.txt
+Font,Dotum,13,0,0
+Language   ,1,Portuguese.txt
+Font,Dotum,14,0,0
+Language   ,1,Russian.txt
+Font,Dotum,13,0,0
+Language   ,1,Spanish.txt
+Font,Dotum,14,0,0
+Language   ,1,Arabic.txt
+Font,Arial,26,0,0
+Language   ,1,Thai.txt
+Font,Arial,13,0,0
+Language   ,1,Dutch.txt
+
+
+
+[Palette]
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_image
+//data
+
+
+
+[Image_With_Palette]
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_image\
+// Maximum number of image resource on system is 2048 
+    // Palette, pal name
+// Image, color format, used pal index, char H_V, image name
+
+
+
+[Image]
+//max image resource on system is 2048
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_image\
+// Color format, palette index for 256 color, H_V, image file name
+
+
+
+[Audio]
+//max audio resource on system is 2048
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_audio\
+//type , data
+
+
+
+[factor_default_option]
+    language 	, 2					;;index
+time_format, 1         ;; key tone switch, 0:OFF, 1:ON...
+date_format, 2         ;; auto off, 0:off, 1:1min, 2:3min
+week_format, 1         ;; usb 0:p-cam, 1:u-disk
+    date 		, 2014-08-01 			;;yyyy-mm-dd
+time, 08:00
+lcd_backlight, 0       ;; iso 0:auto, 1:100, ...
+sound_volume, 5        ;; sound level, 0~6
+default_storage, NAND
+slideshow_duration, 0        ;; Date Format 0:YYYY/MM/DD, ...
+slideshow_bg_music, 1        ;; quality, 0:fine, 1:standard, 2:economic
+slideshow_photo_date_on, 0   ;; picture size 0: 1.3M, 1:VGA
+calendar_duration, 1         ;; staturation, 0:high, 1:standard, 2:low
+calendar_displaymode, 1      ;; sharpness, 0:hard, 1:normal, 2:soft
+music_on_off, 1              ;; Burst 0:on, 1:off
+midi_exist_mode, 6           ;; 0:6, +1/3:5, -1/3:7, ...
+music_play_mode, 1           ;; Motion Detect Sensitivity : 0->High, 1->Medium, 2->LOW
+full_screen, 2               ;; Record Time : 0->off, 1->1Min, 2->2Min, ...
+thumbnail_mode, 1            ;; Date Stamp : 0->OFF, 1->Date&Time
+alarm_set1, 0, 00:00, 0
+alarm_set2, 0, 00:00, 0
+sleep_time, 0
+powertime_onoff1, 0, 08:00, 24:00
+powertime_onoff2, 0, 08:00, 24:00
+
+
+
+
+[Other_Resource]
+//path , max length 128
+G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_others\
+//resource file name
+
+
+
+[Palette_Reserve_Color]
+//PaletteIndex, ColorValue
+0xF8,   0x00808080
+0xF9,   0x0000F8F8
+0xFA,   0x0000F800
+0xFB,   0x00F80000
+0xFC,   0x000000F8
+0xFD,   0x00F8F8F8
+0xFE,   0x00000000
+0xFF, 0xFF000000
+
+
+
