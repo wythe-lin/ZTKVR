@@ -174,6 +174,9 @@ void tft_start(INT32U model)
 		case ILI9341:
 			ILI9341_LX240A3602B_Initial();
 			break;
+		case ILI8961:
+			ili8961_txdt270c_init();
+			break;
 #endif
 #if (DPF_H_V==DPF_400x240)
 		case FOX_FL320WQC11:
@@ -2112,6 +2115,43 @@ Wirte_Com_TM024HBH(0x29);
 
 
 }
+
+/*
+ * TXDT270C driver
+ */
+#include "drv_l1_ili8961.h"
+
+void ili8961_txdt270c_init(void)
+{
+#if (C_DISPLAY_DEVICE == ILI8961)
+	ili8961_init();
+
+	ili8961_write(0x05, 0x34);
+	ili8961_write(0x0C, 0x06);
+	ili8961_write(0x00, 0x07);
+	ili8961_write(0x06, 0x95);
+	ili8961_write(0x07, 0x46);
+	ili8961_write(0x04, 0x10);
+	ili8961_write(0x2F, 0x71);
+	ili8961_write(0x2B, 0x01);
+
+	R_TFT_HS_WIDTH		= 0;			//	1	=HPW
+	R_TFT_H_START		= 1+239;		//	240	=HPW+HBP
+	R_TFT_H_END		= 1+239+1280;		//	1520	=HPW+HBP+HDE
+	R_TFT_H_PERIOD		= 1+239+1280+40;	//	1560	=HPW+HBP+HDE+HFP
+	R_TFT_VS_WIDTH		= 0;			//	1	=VPW			(DCLK)
+	R_TFT_V_START		= 21;			//	21	=VPW+VBP		(LINE)
+	R_TFT_V_END		= 21+240;		//	261	=VPW+VBP+VDE		(LINE)
+	R_TFT_V_PERIOD		= 21+240+1;		//	262	=VPW+VBP+VDE+VFP	(LINE)
+	R_TFT_LINE_RGB_ORDER	= 0x00;
+	
+	tft_signal_inv_set(TFT_VSYNC_INV|TFT_HSYNC_INV, (TFT_ENABLE & TFT_VSYNC_INV)|(TFT_ENABLE & TFT_HSYNC_INV));
+	tft_mode_set(TFT_MODE_UPS052);
+	tft_data_mode_set(TFT_DATA_MODE_8);
+	tft_clk_set(TFT_CLK_DIVIDE_5); /* FS=66 */
+#endif
+}
+
 #if 0
 void chilin_spi_write(INT32U cmd) 
 {

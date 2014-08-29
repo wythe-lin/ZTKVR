@@ -117,6 +117,7 @@
     #define AUO_A040CN01            	0x600A  // 320x240
     #define TPO_TD025THD1	          	0x600B  // 320x240                                 //
 	#define ILI9341					    0x600C  // 320x240
+	#define ILI8961					    0x600D  // 320x240
 	#define FOX_FL320WQC11	          	0x7000  // 400x240 
     #define GPM_LM765A0		          	0x8000  // 160x128
     #define GPM_LM765H0		          	0x8001  // 160x128                                  //
@@ -124,7 +125,7 @@
     #define C_TV_VGA                    0xE251	// 640x480
     #define C_TV_D1                     0xE252  // 720x480
 
-    #define C_DISPLAY_DEVICE            TPO_TD025THD1//ILI9341//ILI9341//TPO_TD025THD1//C_TV_VGA          		// Select one of the display device from above list
+    #define C_DISPLAY_DEVICE            ILI8961//TPO_TD025THD1//ILI9341//C_TV_VGA          		// Select one of the display device from above list
     #define C_DISPLAY_DEV_HPIXEL        320//640                     // Set display device horizontal pixel number
     #define C_DISPLAY_DEV_VPIXEL        240//480                     // Set display device vertical pixel number
 
