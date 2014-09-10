@@ -1,0 +1,2672 @@
+
+< 14-09-09 14:43:15 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 02:43:20:608
+   Step 1 - End Time : 2014/09/09 PM 02:43:20:608
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 02:43:20:608
+   Step 2 - End Time : 2014/09/09 PM 02:43:20:624
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 02:43:20:624
+   Step 3 - End Time : 2014/09/09 PM 02:43:20:624
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 02:43:20:624
+   Step 4 - End Time : 2014/09/09 PM 02:43:23:853
+   Step 4 ok! Spent Time: 3.229s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 02:43:23:853
+   Step 5 - End Time : 2014/09/09 PM 02:43:28:626
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 8.18s
+   Device is Pullouted.
+
+< 14-09-09 14:45:20 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 02:45:22:130
+   Step 1 - End Time : 2014/09/09 PM 02:45:22:130
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 02:45:22:130
+   Step 2 - End Time : 2014/09/09 PM 02:45:22:145
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 02:45:22:145
+   Step 3 - End Time : 2014/09/09 PM 02:45:22:145
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 02:45:22:145
+   Step 4 - End Time : 2014/09/09 PM 02:45:25:375
+   Step 4 ok! Spent Time: 3.229s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 02:45:25:375
+   Step 5 - End Time : 2014/09/09 PM 02:45:30:148
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 8.19s
+
+< 14-09-09 14:48:47 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 02:48:48:535
+   Step 1 - End Time : 2014/09/09 PM 02:48:48:535
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 02:48:48:535
+   Step 2 - End Time : 2014/09/09 PM 02:48:48:535
+   Step 2 ok! Spent Time: 0.0s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 02:48:48:535
+   Step 3 - End Time : 2014/09/09 PM 02:48:48:535
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 02:48:48:535
+   Step 4 - End Time : 2014/09/09 PM 02:48:51:765
+   Step 4 ok! Spent Time: 3.230s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 02:48:51:765
+   Step 5 - End Time : 2014/09/09 PM 02:48:56:507
+   Step 5 ok! Spent Time: 4.742s
+   USB Task Finished! Spent Time: 7.987s
+
+< 14-09-09 14:53:55 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 02:53:56:351
+   Step 1 - End Time : 2014/09/09 PM 02:53:56:351
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 02:53:56:351
+   Step 2 - End Time : 2014/09/09 PM 02:53:56:367
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 02:53:56:367
+   Step 3 - End Time : 2014/09/09 PM 02:53:56:367
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 02:53:56:367
+   Step 4 - End Time : 2014/09/09 PM 02:53:59:549
+   Step 4 ok! Spent Time: 3.182s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 02:53:59:549
+   Step 5 - End Time : 2014/09/09 PM 02:54:04:292
+   Step 5 ok! Spent Time: 4.742s
+   USB Task Finished! Spent Time: 7.940s
+
+< 14-09-09 15:01:10 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:01:12:988
+   Step 1 - End Time : 2014/09/09 PM 03:01:12:988
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:01:12:988
+   Step 2 - End Time : 2014/09/09 PM 03:01:13:03
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:01:13:03
+   Step 3 - End Time : 2014/09/09 PM 03:01:13:03
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:01:13:03
+   Step 4 - End Time : 2014/09/09 PM 03:01:16:248
+   Step 4 ok! Spent Time: 3.245s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:01:16:248
+   Step 5 - End Time : 2014/09/09 PM 03:01:20:975
+   Step 5 ok! Spent Time: 4.727s
+   USB Task Finished! Spent Time: 7.987s
+   Device is Pullouted.
+
+< 14-09-09 15:03:01 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:03:02:952
+   Step 1 - End Time : 2014/09/09 PM 03:03:02:952
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:03:02:952
+   Step 2 - End Time : 2014/09/09 PM 03:03:02:968
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:03:02:968
+   Step 3 - End Time : 2014/09/09 PM 03:03:02:968
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:03:02:968
+   Step 4 - End Time : 2014/09/09 PM 03:03:06:119
+   Step 4 ok! Spent Time: 3.152s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:03:06:119
+   Step 5 - End Time : 2014/09/09 PM 03:03:10:861
+   Step 5 ok! Spent Time: 4.742s
+   USB Task Finished! Spent Time: 7.909s
+   Device is Pullouted.
+
+< 14-09-09 15:05:50 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:05:52:490
+   Step 1 - End Time : 2014/09/09 PM 03:05:52:490
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:05:52:490
+   Step 2 - End Time : 2014/09/09 PM 03:05:52:506
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:05:52:506
+   Step 3 - End Time : 2014/09/09 PM 03:05:52:506
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:05:52:506
+
+< 14-09-09 15:06:08 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:06:09:593
+   Step 1 - End Time : 2014/09/09 PM 03:06:09:593
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:06:09:593
+   Step 2 - End Time : 2014/09/09 PM 03:06:09:608
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:06:09:608
+   Step 3 - End Time : 2014/09/09 PM 03:06:09:608
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:06:09:608
+   Step 4 - End Time : 2014/09/09 PM 03:06:12:775
+   Step 4 ok! Spent Time: 3.167s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:06:12:775
+   Step 5 - End Time : 2014/09/09 PM 03:06:17:518
+   Step 5 ok! Spent Time: 4.742s
+   USB Task Finished! Spent Time: 7.925s
+   Device is Pullouted.
+
+< 14-09-09 15:07:50 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 15:08:08 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:08:09:628
+   Step 1 - End Time : 2014/09/09 PM 03:08:09:628
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:08:09:628
+   Step 2 - End Time : 2014/09/09 PM 03:08:09:644
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:08:09:644
+   Step 3 - End Time : 2014/09/09 PM 03:08:09:644
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:08:09:644
+   Step 4 - End Time : 2014/09/09 PM 03:08:12:811
+   Step 4 ok! Spent Time: 3.167s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:08:12:811
+   Step 5 - End Time : 2014/09/09 PM 03:08:17:569
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.940s
+   Device is Pullouted.
+
+< 14-09-09 15:11:22 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 15:11:53 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:11:54:591
+   Step 1 - End Time : 2014/09/09 PM 03:11:54:591
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:11:54:591
+   Step 2 - End Time : 2014/09/09 PM 03:11:54:607
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:11:54:607
+   Step 3 - End Time : 2014/09/09 PM 03:11:54:607
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:11:54:607
+   0xFF20: An error occurred during erase flash! Address: 0x30000, Block Number: 11, 操作順利完成。
+   Step 4 Fail!!!
+   Device is Pullouted.
+
+< 14-09-09 15:12:41 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:12:44:33
+   Step 1 - End Time : 2014/09/09 PM 03:12:44:33
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:12:44:33
+   Step 2 - End Time : 2014/09/09 PM 03:12:44:49
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:12:44:49
+   Step 3 - End Time : 2014/09/09 PM 03:12:44:49
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:12:44:49
+   Step 4 - End Time : 2014/09/09 PM 03:12:47:403
+   Step 4 ok! Spent Time: 3.354s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:12:47:403
+   Step 5 - End Time : 2014/09/09 PM 03:12:52:145
+   Step 5 ok! Spent Time: 4.742s
+   USB Task Finished! Spent Time: 8.112s
+   Device is Pullouted.
+
+< 14-09-09 15:28:01 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:28:02:861
+   Step 1 - End Time : 2014/09/09 PM 03:28:02:861
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:28:02:861
+   Step 2 - End Time : 2014/09/09 PM 03:28:02:877
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:28:02:877
+   Step 3 - End Time : 2014/09/09 PM 03:28:02:877
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:28:02:877
+   Step 4 - End Time : 2014/09/09 PM 03:28:06:28
+   Step 4 ok! Spent Time: 3.151s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:28:06:28
+   Step 5 - End Time : 2014/09/09 PM 03:28:10:786
+   Step 5 ok! Spent Time: 4.759s
+   USB Task Finished! Spent Time: 7.925s
+   Device is Pullouted.
+
+< 14-09-09 15:28:39 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 15:29:02 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:29:04:63
+   Step 1 - End Time : 2014/09/09 PM 03:29:04:63
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:29:04:63
+   Step 2 - End Time : 2014/09/09 PM 03:29:04:79
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:29:04:79
+   Step 3 - End Time : 2014/09/09 PM 03:29:04:79
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:29:04:79
+   Step 4 - End Time : 2014/09/09 PM 03:29:07:230
+   Step 4 ok! Spent Time: 3.152s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:29:07:230
+   Step 5 - End Time : 2014/09/09 PM 03:29:11:988
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.925s
+   Device is Pullouted.
+
+< 14-09-09 15:30:25 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:30:28:670
+   Step 1 - End Time : 2014/09/09 PM 03:30:28:670
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:30:28:670
+   Step 2 - End Time : 2014/09/09 PM 03:30:28:686
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:30:28:686
+   Step 3 - End Time : 2014/09/09 PM 03:30:28:686
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:30:28:686
+   Step 4 - End Time : 2014/09/09 PM 03:30:31:806
+   Step 4 ok! Spent Time: 3.120s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:30:31:806
+   Step 5 - End Time : 2014/09/09 PM 03:30:36:580
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.909s
+   Device is Pullouted.
+
+< 14-09-09 15:32:51 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:32:52:894
+   Step 1 - End Time : 2014/09/09 PM 03:32:52:894
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:32:52:894
+   Step 2 - End Time : 2014/09/09 PM 03:32:52:910
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:32:52:910
+   Step 3 - End Time : 2014/09/09 PM 03:32:52:910
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:32:52:910
+   Step 4 - End Time : 2014/09/09 PM 03:32:56:92
+   Step 4 ok! Spent Time: 3.183s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:32:56:92
+   Step 5 - End Time : 2014/09/09 PM 03:33:00:866
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 7.971s
+   Device is Pullouted.
+
+< 14-09-09 15:35:27 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:35:32:429
+   Step 1 - End Time : 2014/09/09 PM 03:35:32:429
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:35:32:429
+   Step 2 - End Time : 2014/09/09 PM 03:35:32:445
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:35:32:445
+   Step 3 - End Time : 2014/09/09 PM 03:35:32:445
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:35:32:445
+   Step 4 - End Time : 2014/09/09 PM 03:35:35:627
+   Step 4 ok! Spent Time: 3.182s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:35:35:627
+   Step 5 - End Time : 2014/09/09 PM 03:35:40:385
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.956s
+   Device is Pullouted.
+
+< 14-09-09 15:36:36 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 15:37:45 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 15:37:51 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:37:54:48
+   Step 1 - End Time : 2014/09/09 PM 03:37:54:48
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:37:54:48
+   Step 2 - End Time : 2014/09/09 PM 03:37:54:64
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:37:54:64
+   Step 3 - End Time : 2014/09/09 PM 03:37:54:64
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:37:54:64
+   Step 4 - End Time : 2014/09/09 PM 03:37:57:199
+   Step 4 ok! Spent Time: 3.135s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:37:57:199
+   Step 5 - End Time : 2014/09/09 PM 03:38:01:957
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.909s
+   Device is Pullouted.
+
+< 14-09-09 15:38:45 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 15:38:49 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 15:38:49 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 15:39:02 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:39:06:436
+   Step 1 - End Time : 2014/09/09 PM 03:39:06:436
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:39:06:436
+   Step 2 - End Time : 2014/09/09 PM 03:39:06:452
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:39:06:452
+   Step 3 - End Time : 2014/09/09 PM 03:39:06:452
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:39:06:452
+   Step 4 - End Time : 2014/09/09 PM 03:39:09:541
+   Step 4 ok! Spent Time: 3.89s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:39:09:541
+   Step 5 - End Time : 2014/09/09 PM 03:39:14:299
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.863s
+   Device is Pullouted.
+
+< 14-09-09 15:40:33 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:40:36:351
+   Step 1 - End Time : 2014/09/09 PM 03:40:36:351
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:40:36:351
+   Step 2 - End Time : 2014/09/09 PM 03:40:36:366
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:40:36:366
+   Step 3 - End Time : 2014/09/09 PM 03:40:36:366
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:40:36:366
+
+< 14-09-09 15:40:50 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:40:57:232
+   Step 1 - End Time : 2014/09/09 PM 03:40:57:232
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:40:57:232
+   Step 2 - End Time : 2014/09/09 PM 03:40:57:247
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:40:57:247
+   Step 3 - End Time : 2014/09/09 PM 03:40:57:247
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:40:57:247
+   Step 4 - End Time : 2014/09/09 PM 03:41:00:321
+   Step 4 ok! Spent Time: 3.73s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:41:00:321
+   Step 5 - End Time : 2014/09/09 PM 03:41:05:79
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.847s
+   Device is Pullouted.
+
+< 14-09-09 15:44:17 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:44:20:429
+   Step 1 - End Time : 2014/09/09 PM 03:44:20:429
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:44:20:429
+   Step 2 - End Time : 2014/09/09 PM 03:44:20:445
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:44:20:445
+   Step 3 - End Time : 2014/09/09 PM 03:44:20:445
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:44:20:460
+   Step 4 - End Time : 2014/09/09 PM 03:44:23:580
+   Step 4 ok! Spent Time: 3.120s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:44:23:580
+   Step 5 - End Time : 2014/09/09 PM 03:44:28:354
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 7.925s
+   Device is Pullouted.
+
+< 14-09-09 15:45:40 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:45:43:465
+   Step 1 - End Time : 2014/09/09 PM 03:45:43:465
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:45:43:465
+   Step 2 - End Time : 2014/09/09 PM 03:45:43:481
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:45:43:481
+   Step 3 - End Time : 2014/09/09 PM 03:45:43:481
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:45:43:481
+   Step 4 - End Time : 2014/09/09 PM 03:45:46:523
+   Step 4 ok! Spent Time: 3.42s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:45:46:523
+
+< 14-09-09 15:46:02 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:46:04:562
+   Step 1 - End Time : 2014/09/09 PM 03:46:04:562
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:46:04:562
+   Step 2 - End Time : 2014/09/09 PM 03:46:04:577
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:46:04:577
+   Step 3 - End Time : 2014/09/09 PM 03:46:04:577
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:46:04:577
+   Step 4 - End Time : 2014/09/09 PM 03:46:07:775
+   Step 4 ok! Spent Time: 3.198s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:46:07:775
+   Step 5 - End Time : 2014/09/09 PM 03:46:12:533
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.972s
+   Device is Pullouted.
+
+< 14-09-09 15:48:20 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:48:22:724
+   Step 1 - End Time : 2014/09/09 PM 03:48:22:724
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:48:22:724
+   Step 2 - End Time : 2014/09/09 PM 03:48:22:724
+   Step 2 ok! Spent Time: 0.0s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:48:22:724
+   Step 3 - End Time : 2014/09/09 PM 03:48:22:739
+   Step 3 ok! Spent Time: 0.16s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:48:22:739
+   Step 4 - End Time : 2014/09/09 PM 03:48:25:859
+   Step 4 ok! Spent Time: 3.120s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:48:25:859
+   Step 5 - End Time : 2014/09/09 PM 03:48:30:633
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 7.909s
+   Device is Pullouted.
+
+< 14-09-09 15:49:06 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:49:08:861
+   Step 1 - End Time : 2014/09/09 PM 03:49:08:861
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:49:08:861
+   Step 2 - End Time : 2014/09/09 PM 03:49:08:877
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:49:08:877
+   Step 3 - End Time : 2014/09/09 PM 03:49:08:877
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:49:08:877
+   Step 4 - End Time : 2014/09/09 PM 03:49:11:997
+   Step 4 ok! Spent Time: 3.120s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:49:11:997
+   Step 5 - End Time : 2014/09/09 PM 03:49:16:786
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.924s
+   Device is Pullouted.
+
+< 14-09-09 15:50:44 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:50:47:777
+   Step 1 - End Time : 2014/09/09 PM 03:50:47:777
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:50:47:777
+   Step 2 - End Time : 2014/09/09 PM 03:50:47:777
+   Step 2 ok! Spent Time: 0.0s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:50:47:793
+   Step 3 - End Time : 2014/09/09 PM 03:50:47:793
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:50:47:793
+   Step 4 - End Time : 2014/09/09 PM 03:50:50:944
+   Step 4 ok! Spent Time: 3.152s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:50:50:944
+   Step 5 - End Time : 2014/09/09 PM 03:50:55:718
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 7.940s
+   Device is Pullouted.
+
+< 14-09-09 15:51:19 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 15:52:06 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 15:52:11 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:52:12:471
+   Step 1 - End Time : 2014/09/09 PM 03:52:12:471
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:52:12:471
+   Step 2 - End Time : 2014/09/09 PM 03:52:12:486
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:52:12:486
+   Step 3 - End Time : 2014/09/09 PM 03:52:12:486
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:52:12:486
+   Step 4 - End Time : 2014/09/09 PM 03:52:15:591
+   Step 4 ok! Spent Time: 3.105s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:52:15:591
+   Step 5 - End Time : 2014/09/09 PM 03:52:20:380
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.909s
+   Device is Pullouted.
+
+< 14-09-09 15:53:51 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:53:52:992
+   Step 1 - End Time : 2014/09/09 PM 03:53:52:992
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:53:52:992
+   Step 2 - End Time : 2014/09/09 PM 03:53:53:08
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:53:53:08
+   Step 3 - End Time : 2014/09/09 PM 03:53:53:08
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:53:53:08
+   Step 4 - End Time : 2014/09/09 PM 03:53:56:128
+   Step 4 ok! Spent Time: 3.120s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:53:56:128
+   Step 5 - End Time : 2014/09/09 PM 03:54:00:886
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.893s
+   Device is Pullouted.
+
+< 14-09-09 15:56:10 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:56:16:572
+   Step 1 - End Time : 2014/09/09 PM 03:56:16:572
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:56:16:572
+   Step 2 - End Time : 2014/09/09 PM 03:56:16:588
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:56:16:588
+   Step 3 - End Time : 2014/09/09 PM 03:56:16:588
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:56:16:588
+   Step 4 - End Time : 2014/09/09 PM 03:56:19:708
+   Step 4 ok! Spent Time: 3.120s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:56:19:708
+   Step 5 - End Time : 2014/09/09 PM 03:56:24:466
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.893s
+   Device is Pullouted.
+
+< 14-09-09 15:57:40 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:57:45:544
+   Step 1 - End Time : 2014/09/09 PM 03:57:45:544
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:57:45:544
+   Step 2 - End Time : 2014/09/09 PM 03:57:45:559
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:57:45:559
+   Step 3 - End Time : 2014/09/09 PM 03:57:45:559
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:57:45:559
+   Step 4 - End Time : 2014/09/09 PM 03:57:48:648
+   Step 4 ok! Spent Time: 3.89s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:57:48:648
+   Step 5 - End Time : 2014/09/09 PM 03:57:53:422
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.879s
+   Device is Pullouted.
+
+< 14-09-09 15:58:19 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 15:58:29 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:58:31:463
+   Step 1 - End Time : 2014/09/09 PM 03:58:31:463
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:58:31:463
+   Step 2 - End Time : 2014/09/09 PM 03:58:31:479
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:58:31:479
+   Step 3 - End Time : 2014/09/09 PM 03:58:31:479
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:58:31:479
+   Step 4 - End Time : 2014/09/09 PM 03:58:34:599
+   Step 4 ok! Spent Time: 3.120s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 03:58:34:599
+   Step 5 - End Time : 2014/09/09 PM 03:58:39:357
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.893s
+   Device is Pullouted.
+
+< 14-09-09 15:59:47 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 03:59:48:813
+   Step 1 - End Time : 2014/09/09 PM 03:59:48:813
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 03:59:48:813
+   Step 2 - End Time : 2014/09/09 PM 03:59:48:828
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 03:59:48:828
+   Step 3 - End Time : 2014/09/09 PM 03:59:48:828
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 03:59:48:828
+   0xFF20: An error occurred during erase flash! Address: 0x40000, Block Number: 11, 操作順利完成。
+   Step 4 Fail!!!
+   Device is Pullouted.
+
+< 14-09-09 16:00:20 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 16:00:21 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:00:23:73
+   Step 1 - End Time : 2014/09/09 PM 04:00:23:73
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:00:23:73
+   Step 2 - End Time : 2014/09/09 PM 04:00:23:89
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:00:23:89
+   Step 3 - End Time : 2014/09/09 PM 04:00:23:89
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:00:23:89
+   Step 4 - End Time : 2014/09/09 PM 04:00:30:436
+   Step 4 ok! Spent Time: 7.348s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:00:30:436
+   Step 5 - End Time : 2014/09/09 PM 04:00:35:210
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 12.137s
+   Device is Pullouted.
+
+< 14-09-09 16:09:25 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:09:27:637
+   Step 1 - End Time : 2014/09/09 PM 04:09:27:637
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:09:27:637
+   Step 2 - End Time : 2014/09/09 PM 04:09:27:652
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:09:27:652
+   Step 3 - End Time : 2014/09/09 PM 04:09:27:652
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:09:27:652
+
+< 14-09-09 16:09:53 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:09:54:764
+   Step 1 - End Time : 2014/09/09 PM 04:09:54:764
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:09:54:764
+   Step 2 - End Time : 2014/09/09 PM 04:09:54:779
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:09:54:779
+   Step 3 - End Time : 2014/09/09 PM 04:09:54:779
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:09:54:779
+   Step 4 - End Time : 2014/09/09 PM 04:09:58:196
+   Step 4 ok! Spent Time: 3.417s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:09:58:196
+   Step 5 - End Time : 2014/09/09 PM 04:10:02:969
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 8.205s
+   Device is Pullouted.
+
+< 14-09-09 16:12:05 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:12:06:681
+   Step 1 - End Time : 2014/09/09 PM 04:12:06:681
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:12:06:681
+   Step 2 - End Time : 2014/09/09 PM 04:12:06:697
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:12:06:697
+   Step 3 - End Time : 2014/09/09 PM 04:12:06:697
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:12:06:697
+   Step 4 - End Time : 2014/09/09 PM 04:12:09:848
+   Step 4 ok! Spent Time: 3.151s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:12:09:848
+   Step 5 - End Time : 2014/09/09 PM 04:12:14:621
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.940s
+   Device is Pullouted.
+
+< 14-09-09 16:13:31 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:13:36:429
+   Step 1 - End Time : 2014/09/09 PM 04:13:36:429
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:13:36:429
+   Step 2 - End Time : 2014/09/09 PM 04:13:36:444
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:13:36:444
+   Step 3 - End Time : 2014/09/09 PM 04:13:36:444
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:13:36:444
+   Step 4 - End Time : 2014/09/09 PM 04:13:39:533
+   Step 4 ok! Spent Time: 3.88s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:13:39:533
+   Step 5 - End Time : 2014/09/09 PM 04:13:44:322
+   Step 5 ok! Spent Time: 4.790s
+   USB Task Finished! Spent Time: 7.894s
+   Device is Pullouted.
+
+< 14-09-09 16:14:43 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:14:46:309
+   Step 1 - End Time : 2014/09/09 PM 04:14:46:309
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:14:46:309
+   Step 2 - End Time : 2014/09/09 PM 04:14:46:324
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:14:46:324
+   Step 3 - End Time : 2014/09/09 PM 04:14:46:324
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:14:46:324
+   Step 4 - End Time : 2014/09/09 PM 04:14:49:429
+   Step 4 ok! Spent Time: 3.105s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:14:49:429
+   Step 5 - End Time : 2014/09/09 PM 04:14:54:218
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.909s
+   Device is Pullouted.
+
+< 14-09-09 16:16:02 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:16:04:173
+   Step 1 - End Time : 2014/09/09 PM 04:16:04:173
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:16:04:173
+   Step 2 - End Time : 2014/09/09 PM 04:16:04:189
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:16:04:189
+   Step 3 - End Time : 2014/09/09 PM 04:16:04:189
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:16:04:189
+   Step 4 - End Time : 2014/09/09 PM 04:16:07:355
+   Step 4 ok! Spent Time: 3.166s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:16:07:355
+   Step 5 - End Time : 2014/09/09 PM 04:16:12:129
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.956s
+   Device is Pullouted.
+
+< 14-09-09 16:17:17 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:17:18:559
+   Step 1 - End Time : 2014/09/09 PM 04:17:18:559
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:17:18:559
+   Step 2 - End Time : 2014/09/09 PM 04:17:18:574
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:17:18:574
+   Step 3 - End Time : 2014/09/09 PM 04:17:18:574
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:17:18:574
+   Step 4 - End Time : 2014/09/09 PM 04:17:26:281
+   Step 4 ok! Spent Time: 7.707s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:17:26:281
+   Step 5 - End Time : 2014/09/09 PM 04:17:31:54
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 12.495s
+   Device is Pullouted.
+
+< 14-09-09 16:21:18 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:21:20:748
+   Step 1 - End Time : 2014/09/09 PM 04:21:20:748
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:21:20:748
+   Step 2 - End Time : 2014/09/09 PM 04:21:20:764
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:21:20:764
+   Step 3 - End Time : 2014/09/09 PM 04:21:20:764
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:21:20:764
+   Step 4 - End Time : 2014/09/09 PM 04:21:23:900
+   Step 4 ok! Spent Time: 3.136s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:21:23:900
+   Step 5 - End Time : 2014/09/09 PM 04:21:28:689
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.940s
+   Device is Pullouted.
+
+< 14-09-09 16:22:17 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:22:37 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:22:41:947
+   Step 1 - End Time : 2014/09/09 PM 04:22:41:947
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:22:41:947
+   Step 2 - End Time : 2014/09/09 PM 04:22:41:962
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:22:41:962
+   Step 3 - End Time : 2014/09/09 PM 04:22:41:962
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:22:41:962
+   Step 4 - End Time : 2014/09/09 PM 04:22:45:82
+   Step 4 ok! Spent Time: 3.120s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:22:45:82
+   Step 5 - End Time : 2014/09/09 PM 04:22:49:856
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.910s
+   Device is Pullouted.
+
+< 14-09-09 16:23:41 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:23:55 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:23:57:126
+   Step 1 - End Time : 2014/09/09 PM 04:23:57:126
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:23:57:126
+   Step 2 - End Time : 2014/09/09 PM 04:23:57:142
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:23:57:142
+   Step 3 - End Time : 2014/09/09 PM 04:23:57:142
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:23:57:142
+   Step 4 - End Time : 2014/09/09 PM 04:24:00:246
+   Step 4 ok! Spent Time: 3.105s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:24:00:246
+   Step 5 - End Time : 2014/09/09 PM 04:24:05:35
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.909s
+   Device is Pullouted.
+
+< 14-09-09 16:24:09 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 16:28:33 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:28:35:277
+   Step 1 - End Time : 2014/09/09 PM 04:28:35:277
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:28:35:277
+   Step 2 - End Time : 2014/09/09 PM 04:28:35:292
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:28:35:292
+   Step 3 - End Time : 2014/09/09 PM 04:28:35:292
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:28:35:292
+   Step 4 - End Time : 2014/09/09 PM 04:28:38:365
+   Step 4 ok! Spent Time: 3.73s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:28:38:365
+   Step 5 - End Time : 2014/09/09 PM 04:28:43:139
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.862s
+   Device is Pullouted.
+
+< 14-09-09 16:29:26 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:29:28:505
+   Step 1 - End Time : 2014/09/09 PM 04:29:28:505
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:29:28:505
+   Step 2 - End Time : 2014/09/09 PM 04:29:28:520
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:29:28:520
+   Step 3 - End Time : 2014/09/09 PM 04:29:28:520
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:29:28:520
+   Step 4 - End Time : 2014/09/09 PM 04:29:31:594
+   Step 4 ok! Spent Time: 3.73s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:29:31:594
+   Step 5 - End Time : 2014/09/09 PM 04:29:36:367
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.863s
+   Device is Pullouted.
+
+< 14-09-09 16:30:20 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:30:31 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:30:38:444
+   Step 1 - End Time : 2014/09/09 PM 04:30:38:444
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:30:38:444
+   Step 2 - End Time : 2014/09/09 PM 04:30:38:460
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:30:38:460
+   Step 3 - End Time : 2014/09/09 PM 04:30:38:460
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:30:38:460
+   Step 4 - End Time : 2014/09/09 PM 04:30:41:549
+   Step 4 ok! Spent Time: 3.89s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:30:41:549
+   Step 5 - End Time : 2014/09/09 PM 04:30:46:307
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.863s
+   Device is Pullouted.
+
+< 14-09-09 16:31:59 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:32:00:480
+   Step 1 - End Time : 2014/09/09 PM 04:32:00:480
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:32:00:480
+   Step 2 - End Time : 2014/09/09 PM 04:32:00:495
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:32:00:495
+   Step 3 - End Time : 2014/09/09 PM 04:32:00:495
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:32:00:495
+   Step 4 - End Time : 2014/09/09 PM 04:32:03:600
+   Step 4 ok! Spent Time: 3.104s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:32:03:600
+   Step 5 - End Time : 2014/09/09 PM 04:32:08:373
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.894s
+   Device is Pullouted.
+
+< 14-09-09 16:32:31 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:34:27 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 16:34:32 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:34:34:262
+   Step 1 - End Time : 2014/09/09 PM 04:34:34:262
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:34:34:277
+   Step 2 - End Time : 2014/09/09 PM 04:34:34:277
+   Step 2 ok! Spent Time: 0.0s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:34:34:277
+   Step 3 - End Time : 2014/09/09 PM 04:34:34:293
+   Step 3 ok! Spent Time: 0.16s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:34:34:293
+   Step 4 - End Time : 2014/09/09 PM 04:34:37:335
+   Step 4 ok! Spent Time: 3.42s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:34:37:335
+   Step 5 - End Time : 2014/09/09 PM 04:34:42:108
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 7.847s
+   Device is Pullouted.
+
+< 14-09-09 16:35:47 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:35:49:437
+   Step 1 - End Time : 2014/09/09 PM 04:35:49:437
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:35:49:437
+   Step 2 - End Time : 2014/09/09 PM 04:35:49:452
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:35:49:452
+   Step 3 - End Time : 2014/09/09 PM 04:35:49:452
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:35:49:452
+   Step 4 - End Time : 2014/09/09 PM 04:35:52:525
+   Step 4 ok! Spent Time: 3.73s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:35:52:525
+   Step 5 - End Time : 2014/09/09 PM 04:35:57:315
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.878s
+   Device is Pullouted.
+
+< 14-09-09 16:37:03 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:37:26 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:37:27:956
+   Step 1 - End Time : 2014/09/09 PM 04:37:27:956
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:37:27:956
+   Step 2 - End Time : 2014/09/09 PM 04:37:27:971
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:37:27:971
+   Step 3 - End Time : 2014/09/09 PM 04:37:27:971
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:37:27:971
+   Step 4 - End Time : 2014/09/09 PM 04:37:31:29
+   Step 4 ok! Spent Time: 3.57s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:37:31:29
+   Step 5 - End Time : 2014/09/09 PM 04:37:35:802
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.847s
+   Device is Pullouted.
+
+< 14-09-09 16:37:59 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:38:20 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 16:38:25 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:38:33 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:38:34:700
+   Step 1 - End Time : 2014/09/09 PM 04:38:34:700
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:38:34:700
+   Step 2 - End Time : 2014/09/09 PM 04:38:34:716
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:38:34:716
+   Step 3 - End Time : 2014/09/09 PM 04:38:34:716
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:38:34:716
+   Step 4 - End Time : 2014/09/09 PM 04:38:37:804
+   Step 4 ok! Spent Time: 3.89s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:38:37:804
+   Step 5 - End Time : 2014/09/09 PM 04:38:42:578
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.878s
+   Device is Pullouted.
+
+< 14-09-09 16:39:43 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:39:45:320
+   Step 1 - End Time : 2014/09/09 PM 04:39:45:320
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:39:45:320
+   Step 2 - End Time : 2014/09/09 PM 04:39:45:335
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:39:45:335
+   Step 3 - End Time : 2014/09/09 PM 04:39:45:335
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:39:45:335
+   Step 4 - End Time : 2014/09/09 PM 04:39:48:377
+   Step 4 ok! Spent Time: 3.42s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:39:48:377
+   Step 5 - End Time : 2014/09/09 PM 04:39:53:151
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.832s
+   Device is Pullouted.
+
+< 14-09-09 16:40:13 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:43:04 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:43:06:97
+   Step 1 - End Time : 2014/09/09 PM 04:43:06:97
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:43:06:97
+   Step 2 - End Time : 2014/09/09 PM 04:43:06:113
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:43:06:113
+   Step 3 - End Time : 2014/09/09 PM 04:43:06:113
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:43:06:113
+   Step 4 - End Time : 2014/09/09 PM 04:43:09:155
+   Step 4 ok! Spent Time: 3.42s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:43:09:155
+   Step 5 - End Time : 2014/09/09 PM 04:43:13:944
+   Step 5 ok! Spent Time: 4.790s
+   USB Task Finished! Spent Time: 7.847s
+   Device is Pullouted.
+
+< 14-09-09 16:44:32 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:44:36:738
+   Step 1 - End Time : 2014/09/09 PM 04:44:36:738
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:44:36:738
+   Step 2 - End Time : 2014/09/09 PM 04:44:36:754
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:44:36:754
+   Step 3 - End Time : 2014/09/09 PM 04:44:36:754
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:44:36:754
+   Step 4 - End Time : 2014/09/09 PM 04:44:39:781
+   Step 4 ok! Spent Time: 3.26s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:44:39:781
+   Step 5 - End Time : 2014/09/09 PM 04:44:44:570
+   Step 5 ok! Spent Time: 4.790s
+   USB Task Finished! Spent Time: 7.832s
+   Device is Pullouted.
+
+< 14-09-09 16:45:22 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:45:31 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:45:32:817
+   Step 1 - End Time : 2014/09/09 PM 04:45:32:817
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:45:32:817
+   Step 2 - End Time : 2014/09/09 PM 04:45:32:833
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:45:32:833
+   Step 3 - End Time : 2014/09/09 PM 04:45:32:833
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:45:32:833
+   Step 4 - End Time : 2014/09/09 PM 04:45:35:844
+   Step 4 ok! Spent Time: 3.11s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:45:35:844
+   Step 5 - End Time : 2014/09/09 PM 04:45:40:617
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.800s
+   Device is Pullouted.
+
+< 14-09-09 16:46:59 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:47:01:808
+   Step 1 - End Time : 2014/09/09 PM 04:47:01:824
+   Step 1 ok! Spent Time: 0.16s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:47:01:824
+   Step 2 - End Time : 2014/09/09 PM 04:47:01:824
+   Step 2 ok! Spent Time: 0.0s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:47:01:824
+   Step 3 - End Time : 2014/09/09 PM 04:47:01:840
+   Step 3 ok! Spent Time: 0.15s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:47:01:840
+   Step 4 - End Time : 2014/09/09 PM 04:47:04:866
+   Step 4 ok! Spent Time: 3.27s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:47:04:882
+   Step 5 - End Time : 2014/09/09 PM 04:47:09:671
+   Step 5 ok! Spent Time: 4.790s
+   USB Task Finished! Spent Time: 7.863s
+   Device is Pullouted.
+
+< 14-09-09 16:48:00 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:48:25 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:48:26:590
+   Step 1 - End Time : 2014/09/09 PM 04:48:26:590
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:48:26:590
+   Step 2 - End Time : 2014/09/09 PM 04:48:26:606
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:48:26:606
+   Step 3 - End Time : 2014/09/09 PM 04:48:26:606
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:48:26:606
+   Step 4 - End Time : 2014/09/09 PM 04:48:29:679
+   Step 4 ok! Spent Time: 3.73s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:48:29:679
+   Step 5 - End Time : 2014/09/09 PM 04:48:34:437
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.847s
+   Device is Pullouted.
+
+< 14-09-09 16:49:36 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:49:39:260
+   Step 1 - End Time : 2014/09/09 PM 04:49:39:260
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:49:39:260
+   Step 2 - End Time : 2014/09/09 PM 04:49:39:276
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:49:39:276
+   Step 3 - End Time : 2014/09/09 PM 04:49:39:276
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:49:39:276
+   Step 4 - End Time : 2014/09/09 PM 04:49:42:380
+   Step 4 ok! Spent Time: 3.104s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:49:42:380
+   Step 5 - End Time : 2014/09/09 PM 04:49:47:169
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.909s
+   Device is Pullouted.
+
+< 14-09-09 16:50:19 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:50:32 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:50:36:331
+   Step 1 - End Time : 2014/09/09 PM 04:50:36:331
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:50:36:331
+   Step 2 - End Time : 2014/09/09 PM 04:50:36:347
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:50:36:347
+   Step 3 - End Time : 2014/09/09 PM 04:50:36:347
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:50:36:347
+   Step 4 - End Time : 2014/09/09 PM 04:50:39:389
+   Step 4 ok! Spent Time: 3.42s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:50:39:389
+   Step 5 - End Time : 2014/09/09 PM 04:50:44:162
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 7.831s
+   Device is Pullouted.
+
+< 14-09-09 16:51:46 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 16:52:00 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 04:52:01:449
+   Step 1 - End Time : 2014/09/09 PM 04:52:01:449
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 04:52:01:449
+   Step 2 - End Time : 2014/09/09 PM 04:52:01:465
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 04:52:01:465
+   Step 3 - End Time : 2014/09/09 PM 04:52:01:465
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 04:52:01:465
+   Step 4 - End Time : 2014/09/09 PM 04:52:04:523
+   Step 4 ok! Spent Time: 3.58s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 04:52:04:523
+   Step 5 - End Time : 2014/09/09 PM 04:52:09:296
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 7.847s
+   Device is Pullouted.
+
+< 14-09-09 17:00:04 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:00:08:573
+   Step 1 - End Time : 2014/09/09 PM 05:00:08:573
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:00:08:573
+   Step 2 - End Time : 2014/09/09 PM 05:00:08:589
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:00:08:589
+   Step 3 - End Time : 2014/09/09 PM 05:00:08:589
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:00:08:604
+   Step 4 - End Time : 2014/09/09 PM 05:00:11:584
+   Step 4 ok! Spent Time: 2.980s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:00:11:584
+   Step 5 - End Time : 2014/09/09 PM 05:00:16:373
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.800s
+   Device is Pullouted.
+
+< 14-09-09 17:04:23 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:04:24:866
+   Step 1 - End Time : 2014/09/09 PM 05:04:24:866
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:04:24:866
+   Step 2 - End Time : 2014/09/09 PM 05:04:24:882
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:04:24:882
+   Step 3 - End Time : 2014/09/09 PM 05:04:24:882
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:04:24:882
+   Step 4 - End Time : 2014/09/09 PM 05:04:27:955
+   Step 4 ok! Spent Time: 3.73s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:04:27:955
+   Step 5 - End Time : 2014/09/09 PM 05:04:32:744
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.878s
+
+< 14-09-09 17:05:33 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:05:35:789
+   Step 1 - End Time : 2014/09/09 PM 05:05:35:789
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:05:35:789
+   Step 2 - End Time : 2014/09/09 PM 05:05:35:805
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:05:35:805
+   Step 3 - End Time : 2014/09/09 PM 05:05:35:805
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:05:35:805
+   Step 4 - End Time : 2014/09/09 PM 05:05:38:831
+   Step 4 ok! Spent Time: 3.26s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:05:38:831
+   Step 5 - End Time : 2014/09/09 PM 05:05:43:605
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.816s
+   Device is Pullouted.
+
+< 14-09-09 17:07:20 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:07:22:598
+   Step 1 - End Time : 2014/09/09 PM 05:07:22:598
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:07:22:598
+   Step 2 - End Time : 2014/09/09 PM 05:07:22:613
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:07:22:613
+   Step 3 - End Time : 2014/09/09 PM 05:07:22:613
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:07:22:613
+   Step 4 - End Time : 2014/09/09 PM 05:07:25:671
+   Step 4 ok! Spent Time: 3.57s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:07:25:671
+   Step 5 - End Time : 2014/09/09 PM 05:07:30:444
+   Step 5 ok! Spent Time: 4.774s
+   USB Task Finished! Spent Time: 7.847s
+   Device is Pullouted.
+
+< 14-09-09 17:08:07 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 17:08:17 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:08:18:749
+   Step 1 - End Time : 2014/09/09 PM 05:08:18:749
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:08:18:749
+   Step 2 - End Time : 2014/09/09 PM 05:08:18:764
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:08:18:764
+   Step 3 - End Time : 2014/09/09 PM 05:08:18:764
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:08:18:764
+   Step 4 - End Time : 2014/09/09 PM 05:08:21:760
+   Step 4 ok! Spent Time: 2.996s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:08:21:760
+   Step 5 - End Time : 2014/09/09 PM 05:08:26:533
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 7.784s
+   Device is Pullouted.
+
+< 14-09-09 17:17:35 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:17:37:691
+   Step 1 - End Time : 2014/09/09 PM 05:17:37:691
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:17:37:691
+   Step 2 - End Time : 2014/09/09 PM 05:17:37:707
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:17:37:707
+   Step 3 - End Time : 2014/09/09 PM 05:17:37:707
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:17:37:707
+   Step 4 - End Time : 2014/09/09 PM 05:17:40:718
+   Step 4 ok! Spent Time: 3.11s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:17:40:718
+   Step 5 - End Time : 2014/09/09 PM 05:17:45:476
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.785s
+
+< 14-09-09 17:20:45 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:20:46:576
+   Step 1 - End Time : 2014/09/09 PM 05:20:46:576
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:20:46:576
+   Step 2 - End Time : 2014/09/09 PM 05:20:46:592
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:20:46:592
+   Step 3 - End Time : 2014/09/09 PM 05:20:46:592
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:20:46:592
+   Step 4 - End Time : 2014/09/09 PM 05:20:49:556
+   Step 4 ok! Spent Time: 2.964s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:20:49:556
+   Step 5 - End Time : 2014/09/09 PM 05:20:54:314
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.738s
+   Device is Pullouted.
+
+< 14-09-09 17:21:55 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:21:56:785
+   Step 1 - End Time : 2014/09/09 PM 05:21:56:785
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:21:56:785
+   Step 2 - End Time : 2014/09/09 PM 05:21:56:800
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:21:56:800
+   Step 3 - End Time : 2014/09/09 PM 05:21:56:800
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:21:56:800
+   Step 4 - End Time : 2014/09/09 PM 05:21:59:811
+   Step 4 ok! Spent Time: 3.11s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:21:59:811
+   Step 5 - End Time : 2014/09/09 PM 05:22:04:569
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.784s
+   Device is Pullouted.
+
+< 14-09-09 17:23:40 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 17:23:50 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:23:51:843
+   Step 1 - End Time : 2014/09/09 PM 05:23:51:843
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:23:51:843
+   Step 2 - End Time : 2014/09/09 PM 05:23:51:859
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:23:51:859
+   Step 3 - End Time : 2014/09/09 PM 05:23:51:859
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:23:51:859
+   Step 4 - End Time : 2014/09/09 PM 05:23:54:870
+   Step 4 ok! Spent Time: 3.11s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:23:54:870
+   Step 5 - End Time : 2014/09/09 PM 05:23:59:628
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.785s
+   Device is Pullouted.
+
+< 14-09-09 17:24:26 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 17:24:50 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 17:24:59 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:25:00:507
+   Step 1 - End Time : 2014/09/09 PM 05:25:00:507
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:25:00:507
+   Step 2 - End Time : 2014/09/09 PM 05:25:00:507
+   Step 2 ok! Spent Time: 0.0s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:25:00:507
+   Step 3 - End Time : 2014/09/09 PM 05:25:00:523
+   Step 3 ok! Spent Time: 0.16s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:25:00:523
+   Device is Pullouted.
+   0xFF20: An error occurred during erase flash! Address: 0x40000, Block Number: 11, load usb library failure!
+
+< 14-09-09 17:25:09 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:25:10:762
+   Step 1 - End Time : 2014/09/09 PM 05:25:10:762
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:25:10:762
+   Step 2 - End Time : 2014/09/09 PM 05:25:10:777
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:25:10:777
+   Step 3 - End Time : 2014/09/09 PM 05:25:10:777
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:25:10:777
+   Step 4 - End Time : 2014/09/09 PM 05:25:13:944
+   Step 4 ok! Spent Time: 3.167s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:25:13:944
+   Step 5 - End Time : 2014/09/09 PM 05:25:18:702
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.941s
+   Device is Pullouted.
+
+< 14-09-09 17:26:15 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:26:16:620
+   Step 1 - End Time : 2014/09/09 PM 05:26:16:620
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:26:16:620
+   Step 2 - End Time : 2014/09/09 PM 05:26:16:635
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:26:16:635
+   Step 3 - End Time : 2014/09/09 PM 05:26:16:635
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:26:16:635
+   Step 4 - End Time : 2014/09/09 PM 05:26:19:631
+   Step 4 ok! Spent Time: 2.995s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:26:19:631
+   Step 5 - End Time : 2014/09/09 PM 05:26:24:389
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.769s
+   Device is Pullouted.
+
+< 14-09-09 17:27:20 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:27:21:903
+   Step 1 - End Time : 2014/09/09 PM 05:27:21:903
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:27:21:903
+   Step 2 - End Time : 2014/09/09 PM 05:27:21:919
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:27:21:919
+   Step 3 - End Time : 2014/09/09 PM 05:27:21:919
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:27:21:919
+   Step 4 - End Time : 2014/09/09 PM 05:27:24:914
+   Step 4 ok! Spent Time: 2.995s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:27:24:914
+   Step 5 - End Time : 2014/09/09 PM 05:27:29:672
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.768s
+   Device is Pullouted.
+
+< 14-09-09 17:28:10 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 17:28:33 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 17:28:37 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:28:38:141
+   Step 1 - End Time : 2014/09/09 PM 05:28:38:141
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:28:38:141
+   Step 2 - End Time : 2014/09/09 PM 05:28:38:156
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:28:38:156
+   Step 3 - End Time : 2014/09/09 PM 05:28:38:156
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:28:38:156
+   Step 4 - End Time : 2014/09/09 PM 05:28:41:136
+   Step 4 ok! Spent Time: 2.979s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:28:41:136
+   Step 5 - End Time : 2014/09/09 PM 05:28:45:894
+   Step 5 ok! Spent Time: 4.758s
+   USB Task Finished! Spent Time: 7.753s
+   Device is Pullouted.
+
+< 14-09-09 17:29:03 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 17:29:16 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:29:17:574
+   Step 1 - End Time : 2014/09/09 PM 05:29:17:574
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:29:17:574
+   Step 2 - End Time : 2014/09/09 PM 05:29:17:590
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:29:17:590
+   Step 3 - End Time : 2014/09/09 PM 05:29:17:590
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:29:17:590
+   Step 4 - End Time : 2014/09/09 PM 05:29:20:554
+   Step 4 ok! Spent Time: 2.964s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:29:20:554
+   Step 5 - End Time : 2014/09/09 PM 05:29:25:296
+   Step 5 ok! Spent Time: 4.742s
+   USB Task Finished! Spent Time: 7.722s
+   Device is Pullouted.
+
+< 14-09-09 17:29:28 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Device is Pullouted.
+
+< 14-09-09 17:30:54 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:30:55:846
+   Step 1 - End Time : 2014/09/09 PM 05:30:55:846
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:30:55:846
+   Step 2 - End Time : 2014/09/09 PM 05:30:55:862
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:30:55:862
+   Step 3 - End Time : 2014/09/09 PM 05:30:55:862
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:30:55:862
+   Step 4 - End Time : 2014/09/09 PM 05:30:58:841
+   Step 4 ok! Spent Time: 2.980s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:30:58:841
+   Step 5 - End Time : 2014/09/09 PM 05:31:03:615
+   Step 5 ok! Spent Time: 4.773s
+   USB Task Finished! Spent Time: 7.769s
+   Device is Pullouted.
+
+< 14-09-09 17:34:06 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:34:09:592
+   Step 1 - End Time : 2014/09/09 PM 05:34:09:592
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:34:09:592
+   Step 2 - End Time : 2014/09/09 PM 05:34:09:608
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:34:09:608
+   Step 3 - End Time : 2014/09/09 PM 05:34:09:608
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:34:09:608
+   Step 4 - End Time : 2014/09/09 PM 05:34:12:541
+   Step 4 ok! Spent Time: 2.933s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:34:12:541
+   Step 5 - End Time : 2014/09/09 PM 05:34:17:330
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.737s
+   Device is Pullouted.
+
+< 14-09-09 17:37:11 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:37:13:201
+   Step 1 - End Time : 2014/09/09 PM 05:37:13:201
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:37:13:201
+   Step 2 - End Time : 2014/09/09 PM 05:37:13:217
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:37:13:217
+   Step 3 - End Time : 2014/09/09 PM 05:37:13:217
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:37:13:217
+   Step 4 - End Time : 2014/09/09 PM 05:37:16:212
+   Step 4 ok! Spent Time: 2.995s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:37:16:212
+   Step 5 - End Time : 2014/09/09 PM 05:37:21:17
+   Step 5 ok! Spent Time: 4.805s
+   USB Task Finished! Spent Time: 7.816s
+   Device is Pullouted.
+
+< 14-09-09 17:38:37 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:38:38:522
+   Step 1 - End Time : 2014/09/09 PM 05:38:38:522
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:38:38:522
+   Step 2 - End Time : 2014/09/09 PM 05:38:38:538
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:38:38:538
+   Step 3 - End Time : 2014/09/09 PM 05:38:38:538
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:38:38:538
+   Step 4 - End Time : 2014/09/09 PM 05:38:41:486
+   Step 4 ok! Spent Time: 2.949s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:38:41:486
+   Step 5 - End Time : 2014/09/09 PM 05:38:46:307
+   Step 5 ok! Spent Time: 4.820s
+   USB Task Finished! Spent Time: 7.784s
+   Device is Pullouted.
+
+< 14-09-09 17:42:54 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:42:56:205
+   Step 1 - End Time : 2014/09/09 PM 05:42:56:205
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:42:56:205
+   Step 2 - End Time : 2014/09/09 PM 05:42:56:220
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:42:56:220
+   Step 3 - End Time : 2014/09/09 PM 05:42:56:220
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:42:56:220
+   Step 4 - End Time : 2014/09/09 PM 05:42:59:200
+   Step 4 ok! Spent Time: 2.979s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:42:59:200
+   Step 5 - End Time : 2014/09/09 PM 05:43:04:20
+   Step 5 ok! Spent Time: 4.821s
+   USB Task Finished! Spent Time: 7.816s
+   Device is Pullouted.
+
+< 14-09-09 17:44:28 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:44:30:113
+   Step 1 - End Time : 2014/09/09 PM 05:44:30:113
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:44:30:113
+   Step 2 - End Time : 2014/09/09 PM 05:44:30:129
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:44:30:129
+   Step 3 - End Time : 2014/09/09 PM 05:44:30:129
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:44:30:144
+   Step 4 - End Time : 2014/09/09 PM 05:44:33:108
+   Step 4 ok! Spent Time: 2.964s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:44:33:108
+   Step 5 - End Time : 2014/09/09 PM 05:44:37:929
+   Step 5 ok! Spent Time: 4.821s
+   USB Task Finished! Spent Time: 7.816s
+   Device is Pullouted.
+
+< 14-09-09 17:46:56 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 17:47:10 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:47:13:647
+   Step 1 - End Time : 2014/09/09 PM 05:47:13:647
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:47:13:647
+   Step 2 - End Time : 2014/09/09 PM 05:47:13:662
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:47:13:662
+   Step 3 - End Time : 2014/09/09 PM 05:47:13:662
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:47:13:662
+   Step 4 - End Time : 2014/09/09 PM 05:47:16:642
+   Step 4 ok! Spent Time: 2.979s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:47:16:642
+   Step 5 - End Time : 2014/09/09 PM 05:47:21:462
+   Step 5 ok! Spent Time: 4.821s
+   USB Task Finished! Spent Time: 7.816s
+   Device is Pullouted.
+
+< 14-09-09 17:49:48 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:49:50:129
+   Step 1 - End Time : 2014/09/09 PM 05:49:50:129
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:49:50:129
+   Step 2 - End Time : 2014/09/09 PM 05:49:50:145
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:49:50:145
+   Step 3 - End Time : 2014/09/09 PM 05:49:50:145
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:49:50:145
+   Step 4 - End Time : 2014/09/09 PM 05:49:53:140
+   Step 4 ok! Spent Time: 2.995s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:49:53:140
+   Step 5 - End Time : 2014/09/09 PM 05:49:57:960
+   Step 5 ok! Spent Time: 4.821s
+   USB Task Finished! Spent Time: 7.831s
+   Device is Pullouted.
+
+< 14-09-09 17:51:17 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:51:21:288
+   Step 1 - End Time : 2014/09/09 PM 05:51:21:288
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:51:21:288
+   Step 2 - End Time : 2014/09/09 PM 05:51:21:304
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:51:21:304
+   Step 3 - End Time : 2014/09/09 PM 05:51:21:304
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:51:21:304
+   Step 4 - End Time : 2014/09/09 PM 05:51:24:315
+   Step 4 ok! Spent Time: 3.11s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:51:24:315
+   Step 5 - End Time : 2014/09/09 PM 05:51:29:104
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.815s
+   Device is Pullouted.
+
+< 14-09-09 17:55:20 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:55:21:507
+   Step 1 - End Time : 2014/09/09 PM 05:55:21:507
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:55:21:507
+   Step 2 - End Time : 2014/09/09 PM 05:55:21:523
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:55:21:523
+   Step 3 - End Time : 2014/09/09 PM 05:55:21:523
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:55:21:523
+   Step 4 - End Time : 2014/09/09 PM 05:55:24:502
+   Step 4 ok! Spent Time: 2.980s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:55:24:502
+   Step 5 - End Time : 2014/09/09 PM 05:55:29:323
+   Step 5 ok! Spent Time: 4.821s
+   USB Task Finished! Spent Time: 7.816s
+
+< 14-09-09 17:57:33 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 05:57:37:971
+   Step 1 - End Time : 2014/09/09 PM 05:57:37:971
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 05:57:37:971
+   Step 2 - End Time : 2014/09/09 PM 05:57:37:987
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 05:57:37:987
+   Step 3 - End Time : 2014/09/09 PM 05:57:37:987
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 05:57:37:987
+   Step 4 - End Time : 2014/09/09 PM 05:57:40:951
+   Step 4 ok! Spent Time: 2.964s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 05:57:40:951
+   Step 5 - End Time : 2014/09/09 PM 05:57:45:771
+   Step 5 ok! Spent Time: 4.821s
+   USB Task Finished! Spent Time: 7.800s
+
+< 14-09-09 18:03:13 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 06:03:17:786
+   Step 1 - End Time : 2014/09/09 PM 06:03:17:786
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 06:03:17:786
+   Step 2 - End Time : 2014/09/09 PM 06:03:17:802
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 06:03:17:802
+   Step 3 - End Time : 2014/09/09 PM 06:03:17:802
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 06:03:17:802
+   Step 4 - End Time : 2014/09/09 PM 06:03:20:766
+   Step 4 ok! Spent Time: 2.964s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 06:03:20:766
+   Step 5 - End Time : 2014/09/09 PM 06:03:25:570
+   Step 5 ok! Spent Time: 4.805s
+   USB Task Finished! Spent Time: 7.784s
+   Device is Pullouted.
+
+< 14-09-09 18:09:18 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 06:09:22:166
+   Step 1 - End Time : 2014/09/09 PM 06:09:22:166
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 06:09:22:166
+   Step 2 - End Time : 2014/09/09 PM 06:09:22:182
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 06:09:22:182
+   Step 3 - End Time : 2014/09/09 PM 06:09:22:182
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 06:09:22:198
+   Step 4 - End Time : 2014/09/09 PM 06:09:25:130
+   Step 4 ok! Spent Time: 2.933s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 06:09:25:130
+   Step 5 - End Time : 2014/09/09 PM 06:09:29:966
+   Step 5 ok! Spent Time: 4.836s
+   USB Task Finished! Spent Time: 7.800s
+
+< 14-09-09 18:25:06 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 06:25:08:221
+   Step 1 - End Time : 2014/09/09 PM 06:25:08:221
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 06:25:08:221
+   Step 2 - End Time : 2014/09/09 PM 06:25:08:237
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 06:25:08:237
+   Step 3 - End Time : 2014/09/09 PM 06:25:08:237
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 06:25:08:237
+   Step 4 - End Time : 2014/09/09 PM 06:25:11:170
+   Step 4 ok! Spent Time: 2.933s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 06:25:11:170
+   Step 5 - End Time : 2014/09/09 PM 06:25:16:06
+   Step 5 ok! Spent Time: 4.836s
+   USB Task Finished! Spent Time: 7.784s
+
+< 14-09-09 18:27:31 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 06:27:36:935
+   Step 1 - End Time : 2014/09/09 PM 06:27:36:935
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 06:27:36:935
+   Step 2 - End Time : 2014/09/09 PM 06:27:36:950
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 06:27:36:950
+   Step 3 - End Time : 2014/09/09 PM 06:27:36:966
+   Step 3 ok! Spent Time: 0.16s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 06:27:36:966
+   Step 4 - End Time : 2014/09/09 PM 06:27:39:899
+   Step 4 ok! Spent Time: 2.932s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 06:27:39:899
+   Step 5 - End Time : 2014/09/09 PM 06:27:44:703
+   Step 5 ok! Spent Time: 4.805s
+   USB Task Finished! Spent Time: 7.769s
+   Device is Pullouted.
+
+< 14-09-09 18:29:57 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 18:30:39 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 06:30:40:203
+   Step 1 - End Time : 2014/09/09 PM 06:30:40:203
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 06:30:40:203
+   Step 2 - End Time : 2014/09/09 PM 06:30:40:219
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 06:30:40:219
+   Step 3 - End Time : 2014/09/09 PM 06:30:40:219
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 06:30:40:219
+   Step 4 - End Time : 2014/09/09 PM 06:30:43:152
+   Step 4 ok! Spent Time: 2.933s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 06:30:43:152
+   Step 5 - End Time : 2014/09/09 PM 06:30:47:988
+   Step 5 ok! Spent Time: 4.836s
+   USB Task Finished! Spent Time: 7.785s
+   Device is Pullouted.
+
+< 14-09-09 18:32:28 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 06:32:31:147
+   Step 1 - End Time : 2014/09/09 PM 06:32:31:147
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 06:32:31:147
+   Step 2 - End Time : 2014/09/09 PM 06:32:31:163
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 06:32:31:163
+   Step 3 - End Time : 2014/09/09 PM 06:32:31:163
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 06:32:31:163
+   Step 4 - End Time : 2014/09/09 PM 06:32:34:158
+   Step 4 ok! Spent Time: 2.995s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 06:32:34:158
+   Step 5 - End Time : 2014/09/09 PM 06:32:38:963
+   Step 5 ok! Spent Time: 4.805s
+   USB Task Finished! Spent Time: 7.816s
+   Device is Pullouted.
+
+< 14-09-09 18:36:01 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 06:36:03:664
+   Step 1 - End Time : 2014/09/09 PM 06:36:03:679
+   Step 1 ok! Spent Time: 0.16s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 06:36:03:679
+   Step 2 - End Time : 2014/09/09 PM 06:36:03:679
+   Step 2 ok! Spent Time: 0.0s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 06:36:03:695
+   Step 3 - End Time : 2014/09/09 PM 06:36:03:695
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 06:36:03:695
+   Step 4 - End Time : 2014/09/09 PM 06:36:06:612
+   Step 4 ok! Spent Time: 2.917s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 06:36:06:612
+   Step 5 - End Time : 2014/09/09 PM 06:36:11:432
+   Step 5 ok! Spent Time: 4.820s
+   USB Task Finished! Spent Time: 7.769s
+   Device is Pullouted.
+
+< 14-09-09 18:36:51 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 06:36:53:111
+   Step 1 - End Time : 2014/09/09 PM 06:36:53:111
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 06:36:53:111
+   Step 2 - End Time : 2014/09/09 PM 06:36:53:127
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 06:36:53:127
+   Step 3 - End Time : 2014/09/09 PM 06:36:53:127
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 06:36:53:127
+   Step 4 - End Time : 2014/09/09 PM 06:36:56:75
+   Step 4 ok! Spent Time: 2.948s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 06:36:56:91
+   Step 5 - End Time : 2014/09/09 PM 06:37:00:880
+   Step 5 ok! Spent Time: 4.789s
+   USB Task Finished! Spent Time: 7.769s
+   Device is Pullouted.
+
+< 14-09-09 18:38:04 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 06:38:05:614
+   Step 1 - End Time : 2014/09/09 PM 06:38:05:614
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 06:38:05:614
+   Step 2 - End Time : 2014/09/09 PM 06:38:05:629
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 06:38:05:629
+   Step 3 - End Time : 2014/09/09 PM 06:38:05:629
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 06:38:05:629
+   Step 4 - End Time : 2014/09/09 PM 06:38:08:578
+   Step 4 ok! Spent Time: 2.948s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 06:38:08:578
+   Step 5 - End Time : 2014/09/09 PM 06:38:13:414
+   Step 5 ok! Spent Time: 4.836s
+   USB Task Finished! Spent Time: 7.800s
+   Device is Pullouted.
+
+< 14-09-09 19:11:53 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+
+< 14-09-09 19:12:21 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 07:12:22:726
+   Step 1 - End Time : 2014/09/09 PM 07:12:22:726
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 07:12:22:726
+   Step 2 - End Time : 2014/09/09 PM 07:12:22:726
+   Step 2 ok! Spent Time: 0.0s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 07:12:22:726
+   Step 3 - End Time : 2014/09/09 PM 07:12:22:741
+   Step 3 ok! Spent Time: 0.15s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 07:12:22:741
+   Step 4 - End Time : 2014/09/09 PM 07:12:25:690
+   Step 4 ok! Spent Time: 2.949s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 07:12:25:690
+   Step 5 - End Time : 2014/09/09 PM 07:12:30:495
+   Step 5 ok! Spent Time: 4.804s
+   USB Task Finished! Spent Time: 7.768s
+   Device is Pullouted.
+
+< 14-09-09 19:14:03 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 07:14:05:623
+   Step 1 - End Time : 2014/09/09 PM 07:14:05:623
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 07:14:05:623
+   Step 2 - End Time : 2014/09/09 PM 07:14:05:639
+   Step 2 ok! Spent Time: 0.15s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 07:14:05:639
+   Step 3 - End Time : 2014/09/09 PM 07:14:05:639
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 07:14:05:639
+   Step 4 - End Time : 2014/09/09 PM 07:14:08:556
+   Step 4 ok! Spent Time: 2.918s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 07:14:08:572
+   Step 5 - End Time : 2014/09/09 PM 07:14:13:408
+   Step 5 ok! Spent Time: 4.836s
+   USB Task Finished! Spent Time: 7.784s
+   Device is Pullouted.
+
+< 14-09-09 19:15:21 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 07:15:25:58
+   Step 1 - End Time : 2014/09/09 PM 07:15:25:58
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 07:15:25:58
+   Step 2 - End Time : 2014/09/09 PM 07:15:25:74
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 07:15:25:74
+   Step 3 - End Time : 2014/09/09 PM 07:15:25:74
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 07:15:25:74
+   Step 4 - End Time : 2014/09/09 PM 07:15:28:38
+   Step 4 ok! Spent Time: 2.964s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 07:15:28:38
+   Step 5 - End Time : 2014/09/09 PM 07:15:32:890
+   Step 5 ok! Spent Time: 4.852s
+   USB Task Finished! Spent Time: 7.832s
+   Device is Pullouted.
+
+< 14-09-09 19:16:21 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 07:16:23:145
+   Step 1 - End Time : 2014/09/09 PM 07:16:23:145
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 07:16:23:145
+   Step 2 - End Time : 2014/09/09 PM 07:16:23:161
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 07:16:23:161
+   Step 3 - End Time : 2014/09/09 PM 07:16:23:161
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 07:16:23:177
+   Step 4 - End Time : 2014/09/09 PM 07:16:26:125
+   Step 4 ok! Spent Time: 2.949s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 07:16:26:125
+   Step 5 - End Time : 2014/09/09 PM 07:16:30:945
+   Step 5 ok! Spent Time: 4.820s
+   USB Task Finished! Spent Time: 7.800s
+   Device is Pullouted.
+
+< 14-09-09 19:23:15 >==============================================
+Device is Inserted On Driver : [Hub1 Port3] [VER:0, SN:7&2724189c&0#{53]
+   Begin the USB Task...
+   Begin Step 1... Action: Write, Chip: Register, Address: 0x0000, File: 
+   Step 1 - Start Time : 2014/09/09 PM 07:23:17:155
+   Step 1 - End Time : 2014/09/09 PM 07:23:17:155
+   Step 1 ok! Spent Time: 0.0s
+   Begin Step 2... Action: Write, Chip: RAM, Address: 0x20000000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27\USBMassProductionTool/code/gpl326xxb_spiusbbin.bin
+   Step 2 - Start Time : 2014/09/09 PM 07:23:17:155
+   Step 2 - End Time : 2014/09/09 PM 07:23:17:170
+   Step 2 ok! Spent Time: 0.16s
+   Begin Step 3... Action: Jump to Function, Chip: RAM, Address: 0x20000000
+   Step 3 - Start Time : 2014/09/09 PM 07:23:17:170
+   Step 3 - End Time : 2014/09/09 PM 07:23:17:170
+   Step 3 ok! Spent Time: 0.0s
+   Begin Step 4... Action: Erase, Chip: SPI Nor Flash, Address: 0x0000, Length: 11
+   Step 4 - Start Time : 2014/09/09 PM 07:23:17:170
+   Step 4 - End Time : 2014/09/09 PM 07:23:20:134
+   Step 4 ok! Spent Time: 2.964s
+   Begin Step 5... Action: Write, Chip: SPI Nor Flash, Address: 0x0000, File: D:\sharezone\github\ZTKVR\tool\G+CodePacker 1.0.9.27/outputbin/gpl326xxb_spi_rom.bin
+   Step 5 - Start Time : 2014/09/09 PM 07:23:20:134
+   Step 5 - End Time : 2014/09/09 PM 07:23:24:970
+   Step 5 ok! Spent Time: 4.836s
+   USB Task Finished! Spent Time: 7.816s
+   Device is Pullouted.

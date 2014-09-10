@@ -1,5 +1,7 @@
 #include "ap_peripheral_handling.h"
 
+#define ADKEY_WITH_BAT			1
+
 #define C_AD_VALUE_0			0
 #define C_AD_VALUE_1			70
 #define C_AD_VALUE_2			127+40
@@ -10,9 +12,16 @@
 #define C_AD_VALUE_7			760+40
 #define C_AD_VALUE_8			880+40
 
-#define ENABLE					1
-#define DISABLE					0
+/*
+down: 0000ec20	// 944
+up:   0000da90	// 874
+ok:   0000c8f0  // 803
+mode: 0000fb10	// 1004
+menu: 0000fe00	// 1016
+*/
 
+#define ENABLE				1
+#define DISABLE				0
 	
 
 #if C_MOTION_DETECTION == CUSTOM_ON
@@ -370,6 +379,8 @@ void ap_peripheral_ad_key_judge(void)
 	}
 
 	ad_valid = ad_value>>6;
+
+#if (ADKEY_WITH_BAT == 1)
 	if(ad_valid > last_ad_valid) {
 		diff = ad_valid - last_ad_valid;
 	} else {
@@ -396,7 +407,20 @@ void ap_peripheral_ad_key_judge(void)
 		
 		//DBG_PRINT("adkey_lvl = %d\r\n", adkey_lvl);
 	}
-	
+#else
+	if (ad_valid<C_AD_VALUE_1) {
+		adkey_lvl = ADKEY_LVL_1;
+	} else if (ad_valid<C_AD_VALUE_2) {
+		adkey_lvl = ADKEY_LVL_2;
+	} else if (ad_valid<C_AD_VALUE_3) {
+		adkey_lvl = ADKEY_LVL_3;
+	} else if (ad_valid<C_AD_VALUE_4) {
+		adkey_lvl = ADKEY_LVL_4;
+	} else if (ad_valid<C_AD_VALUE_5) {
+		adkey_lvl = ADKEY_LVL_5;
+	}
+#endif
+
 	if (adkey_lvl != 0xFF) {
 		ad_key_map[adkey_lvl].key_cnt += 1;
 		if(adkey_lvl == OK_KEY) {
@@ -430,6 +454,8 @@ void ap_peripheral_ad_key_judge(void)
 			ad_key_map[i].key_cnt = 0;
 		}
 	}
+
+	DBG_PRINT("adc: %08x\r\n", ad_value);
 }
 #endif
 

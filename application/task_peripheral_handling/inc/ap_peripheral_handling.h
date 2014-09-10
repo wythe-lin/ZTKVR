@@ -28,13 +28,13 @@
 		#define AD_KEY_4_MAX				0x3D60
 		#define AD_KEY_4_MIN				0x22A0
 	#else
-		#define AD_KEY_1_MIN				0xE678
-		#define AD_KEY_2_MAX				0xC350
-		#define AD_KEY_2_MIN				0x9088
-		#define AD_KEY_3_MAX				0x7D00
-		#define AD_KEY_3_MIN				0x5DC0
-		#define AD_KEY_4_MAX				0x4100
-		#define AD_KEY_4_MIN				0x30D4
+		#define AD_KEY_1_MIN				0x0000	// 0xE678
+		#define AD_KEY_2_MAX				0x0000	// 0xC350
+		#define AD_KEY_2_MIN				0x0000	// 0x9088
+		#define AD_KEY_3_MAX				0x0000	// 0x7D00
+		#define AD_KEY_3_MIN				0x0000	// 0x5DC0
+		#define AD_KEY_4_MAX				0x0000	// 0x4100
+		#define AD_KEY_4_MIN				0x0000	// 0x30D4
 	#endif
 #endif
 
