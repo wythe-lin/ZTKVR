@@ -1,28 +1,20 @@
 #include "ap_peripheral_handling.h"
 
-#define ADKEY_WITH_BAT			1
+#define ADKEY_WITH_BAT			0
+#define PRINT_ADKEY_VAL			0	// print ad key value
 
 #define C_AD_VALUE_0			0
-#define C_AD_VALUE_1			70
-#define C_AD_VALUE_2			127+40
-#define C_AD_VALUE_3			280+40 
-#define C_AD_VALUE_4			410+40
-#define C_AD_VALUE_5			520+40 
-#define C_AD_VALUE_6			650+40
-#define C_AD_VALUE_7			760+40
-#define C_AD_VALUE_8			880+40
-
-/*
-down: 0000ec20	// 944
-up:   0000da90	// 874
-ok:   0000c8f0  // 803
-mode: 0000fb10	// 1004
-menu: 0000fe00	// 1016
-*/
+#define C_AD_VALUE_1			((0x28e0 - 0x0400) >> 6)	// menu: 163
+#define C_AD_VALUE_2			((0x51f0 - 0x0400) >> 6)	// ok:   326
+#define C_AD_VALUE_3			((0x7e70 - 0x0400) >> 6)	// mode: 505
+#define C_AD_VALUE_4			((0xb190 - 0x0400) >> 6)	// down: 711
+#define C_AD_VALUE_5			((0xcd80 - 0x0400) >> 6)	// up:   822
+#define C_AD_VALUE_6			0
+#define C_AD_VALUE_7			0
+#define C_AD_VALUE_8			0
 
 #define ENABLE				1
 #define DISABLE				0
-	
 
 #if C_MOTION_DETECTION == CUSTOM_ON
 	static INT32U md_work_memory_addr;
@@ -126,16 +118,18 @@ void ap_peripheral_init(void)
 {
 	key_detect_timerid = 0xFF;
 
-	// Power hold enable	
-	gpio_init_io(POWER_EN,GPIO_OUTPUT);
-	gpio_write_io(POWER_EN,1);	
+	// Power hold enable
+	gpio_init_io(POWER_EN, GPIO_OUTPUT);
+	gpio_set_port_attribute(POWER_EN, ATTRIBUTE_HIGH);
+	gpio_write_io(POWER_EN, DATA_HIGH);
 	DBG_PRINT("POWER_EN\r\n");
-	
+
 	//LED IO init
   	gpio_init_io(LED, GPIO_OUTPUT);
   	gpio_set_port_attribute(LED, ATTRIBUTE_HIGH);
   	//gpio_write_io(LED, DATA_HIGH);
   	gpio_write_io(LED, DATA_LOW);	//wwj modify
+
   	led_status = 0;		//wwj add
   	led_cnt = 0;		//wwj add
   	
@@ -408,15 +402,15 @@ void ap_peripheral_ad_key_judge(void)
 		//DBG_PRINT("adkey_lvl = %d\r\n", adkey_lvl);
 	}
 #else
-	if (ad_valid<C_AD_VALUE_1) {
+	if (ad_valid > C_AD_VALUE_5) {
 		adkey_lvl = ADKEY_LVL_1;
-	} else if (ad_valid<C_AD_VALUE_2) {
+	} else if (ad_valid > C_AD_VALUE_4) {
 		adkey_lvl = ADKEY_LVL_2;
-	} else if (ad_valid<C_AD_VALUE_3) {
+	} else if (ad_valid > C_AD_VALUE_3) {
 		adkey_lvl = ADKEY_LVL_3;
-	} else if (ad_valid<C_AD_VALUE_4) {
+	} else if (ad_valid > C_AD_VALUE_2) {
 		adkey_lvl = ADKEY_LVL_4;
-	} else if (ad_valid<C_AD_VALUE_5) {
+	} else if (ad_valid > C_AD_VALUE_1) {
 		adkey_lvl = ADKEY_LVL_5;
 	}
 #endif
@@ -455,7 +449,10 @@ void ap_peripheral_ad_key_judge(void)
 		}
 	}
 
-	DBG_PRINT("adc: %08x\r\n", ad_value);
+#if PRINT_ADKEY_VAL
+	// print ad key value
+	DBG_PRINT("adc: %04x\r\n", ad_value);
+#endif
 }
 #endif
 
@@ -896,17 +893,23 @@ void ap_peripheral_key_judge(void)
 							cnt_sec = (key_active_cnt >> 7) / USE_IOKEY_NO;
 							if (cnt_sec > screen_auto_off*60) {
 								key_active_cnt = 0;
-								//msgQSend(ApQ, MSG_APQ_KEY_IDLE, NULL, NULL, MSG_PRI_NORMAL);	//wwj mark
-								//msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_SCREEN_SAVER_ENABLE, NULL, NULL, MSG_PRI_NORMAL);
+
+								// add by xyz, begin - 2014.09.11
+								msgQSend(ApQ, MSG_APQ_KEY_IDLE, NULL, NULL, MSG_PRI_NORMAL);	//wwj mark
+								msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_SCREEN_SAVER_ENABLE, NULL, NULL, MSG_PRI_NORMAL);
+								DBG_PRINT("screen saving\r\n");
+								// add by xyz, end   - 2014.09.11
 
 								//wwj add
 								if(screen_saver_enable) {
 									screen_saver_enable = 0;	
 									msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
 								}
-								
+
+/* mark by xyz - 2014.09.11
 								msgQSend(ApQ, MSG_APQ_POWER_KEY_ACTIVE, NULL, NULL, MSG_PRI_NORMAL);
 								DBG_PRINT("Auto Power off\r\n");
+*/
 								//wwj add end
 							}
 						}
@@ -1124,20 +1127,23 @@ void ap_peripheral_usbd_plug_out_exe(INT16U *tick_cnt_ptr)
 
 void ap_peripheral_pw_key_exe(INT16U *tick_cnt_ptr)
 {
-	DBG_PRINT("respond PW key %d\r\n",*tick_cnt_ptr);
+	DBG_PRINT("respond PW key %d\r\n", *tick_cnt_ptr);
 	if(screen_saver_enable){
 		screen_saver_enable = 0;
+/* mark by xyz - 2014.09.11
 		OSQPost(scaler_task_q, (void *) MSG_SCALER_TASK_PREVIEW_ON);
+*/
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
 	}else{
-		if(*tick_cnt_ptr > 24)	//wwj add
-		{
+		if(*tick_cnt_ptr > 24){	//wwj add
 			msgQSend(ApQ, MSG_APQ_POWER_KEY_ACTIVE, NULL, NULL, MSG_PRI_NORMAL);
 		} else {
-			//msgQSend(ApQ, MSG_APQ_NIGHT_MODE_KEY, NULL, NULL, MSG_PRI_NORMAL);	//wwj add
-			msgQSend(ApQ, MSG_APQ_KEY_IDLE, NULL, NULL, MSG_PRI_NORMAL);	//wwj add			
-			msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_SCREEN_SAVER_ENABLE, NULL, NULL, MSG_PRI_NORMAL);	//wwj add
+//			msgQSend(ApQ, MSG_APQ_NIGHT_MODE_KEY, NULL, NULL, MSG_PRI_NORMAL);	//wwj add
+/* mark by xyz - 2014.09.11
+			msgQSend(ApQ, MSG_APQ_KEY_IDLE, NULL, NULL, MSG_PRI_NORMAL);
+			msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_SCREEN_SAVER_ENABLE, NULL, NULL, MSG_PRI_NORMAL);
 			OSQPost(scaler_task_q, (void *) MSG_SCALER_TASK_PREVIEW_OFF);
+*/
 		}
 	}
 	*tick_cnt_ptr = 0;

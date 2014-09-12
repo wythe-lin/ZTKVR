@@ -341,6 +341,7 @@ void ap_state_handling_power_off(void)
 	extab_enable_set(EXTA,FALSE);
 //	tft_tft_en_set(FALSE);
 	gpio_write_io(LED, 1);
+	gpio_write_io(SPEAKER_EN, 0);	// add by xyz - 2014.09.11
 	
 	video_encode_sensor_stop();
 	rtc_int_set(GPX_RTC_HR_IEN|GPX_RTC_MIN_IEN|GPX_RTC_SEC_IEN|GPX_RTC_HALF_SEC_IEN,
@@ -352,20 +353,24 @@ void ap_state_handling_power_off(void)
 	spi_disable(SPI_0);
 	adc_vref_enable_set(FALSE);
 	system_da_ad_pll_en_set(FALSE);
-	//DBG_PRINT("POWER OFF IO OFF\r\n");
-	//gpio_write_io(POWER_EN,0);	
 	drvl2_sd_card_remove();
 	/* set SD data pin to low */
 	gpio_write_io(IO_C6, 0);
-    gpio_write_io(IO_C8, 0);
-    gpio_write_io(IO_C9, 0);
-	timer_stop(0); /* stop timer0 */
-    timer_stop(1); /* stop timer1 */
-    timer_stop(2); /* stop timer2 */
-    timer_stop(3); /* stop timer2 */
-    time_base_stop(0); /* stop timebase A */
-    time_base_stop(1);
-    time_base_stop(2); /* stop timebase C */
+	gpio_write_io(IO_C8, 0);
+	gpio_write_io(IO_C9, 0);
+
+	// add by xyz begin - 2014.09.11
+	DBG_PRINT("POWER OFF IO OFF\r\n");
+	gpio_write_io(POWER_EN, 0);	
+	// add by xyz end   - 2014.09.11
+
+	timer_stop(0);		/* stop timer0 */
+	timer_stop(1);		/* stop timer1 */
+	timer_stop(2);		/* stop timer2 */
+	timer_stop(3);		/* stop timer2 */
+	time_base_stop(0);	/* stop timebase A */
+	time_base_stop(1);
+	time_base_stop(2);	/* stop timebase C */
 	
 #if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
 

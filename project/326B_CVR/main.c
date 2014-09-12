@@ -88,7 +88,7 @@ void Main(void *free_memory)
 	OSInit();
 
 	// Initiate drvier layer 1 modules
-    drv_l1_init();
+	drv_l1_init();
 
 	timer_freq_setup(0, OS_TICKS_PER_SEC, 0, OSTimeTick);
 
