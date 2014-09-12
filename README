@@ -1,6 +1,7 @@
 [feature]
 ( 1) GP6813 + ZT3120
 ( 2) AD key without over battery
-( 3) screen saving function
-( 4) power off latency (10 sec)
-( 5) 
+( 3) screen saving
+( 4) power off latency (5 sec)
+( 5) gp_cardvr_upgrade.bin change to ztkvr_upgrade.bin
+( 6) 

@@ -1,6 +1,6 @@
 #include "ap_peripheral_handling.h"
 
-#define ADKEY_WITH_BAT			0
+#define ADKEY_WITH_BAT			1
 #define PRINT_ADKEY_VAL			0	// print ad key value
 
 #define C_AD_VALUE_0			0

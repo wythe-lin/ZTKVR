@@ -965,7 +965,7 @@ INT32S ap_storage_service_storage_mount(void)
 			
 			if (sd_upgrade_file_flag == 0) {
 				chdir("C:\\");
-				fd = open((CHAR*)"C:\\gp_cardvr_upgrade.bin", O_RDONLY);
+				fd = open((CHAR*)"C:\\ztkvr_upgrade.bin", O_RDONLY);
 				if (fd < 0) {
 					sd_upgrade_file_flag = 1; //no need upgrade
 					chdir("C:\\DCIM");

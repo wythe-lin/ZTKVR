@@ -33,7 +33,7 @@ void ap_state_firmware_upgrade(void)
 		return;
 	}
 	
-	fd = open("C:\\gp_cardvr_upgrade.bin", O_RDONLY);
+	fd = open("C:\\ztkvr_upgrade.bin", O_RDONLY);
 	if (fd < 0) {
 		return;
 	}

@@ -19,7 +19,7 @@ void task_peripheral_handling_entry(void *para)
 {
 	INT32U msg_id;
 	st_key_para *sys_key_para;
-	
+
 	task_peripheral_handling_init();
 	
 	while(1) {
