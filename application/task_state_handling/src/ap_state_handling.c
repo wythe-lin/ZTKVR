@@ -320,21 +320,22 @@ void ap_state_handling_power_off(void)
 #endif
 
 	ap_state_config_store();
-			SPI_LOCK();
+	SPI_LOCK();
 #if 0			
-			tmp = R_SPI0_CTRL;
-			R_SPI0_CTRL = 0;
-			Write_COMMAND16i(0xf6);   
-	 		Write_DATA16i(0x01);
-			Write_DATA16i(0x00);
-			Write_DATA16i(0x00);
-			Write_COMMAND16i(0x28);      //Display off
- 			cmd_delay(20); 
- 			Write_COMMAND16i(0x10);      //ENTER Sleep 
-  			cmd_delay(10);
-  			R_SPI0_CTRL = tmp;
+	tmp = R_SPI0_CTRL;
+	R_SPI0_CTRL = 0;
+	Write_COMMAND16i(0xf6);   
+	Write_DATA16i(0x01);
+	Write_DATA16i(0x00);
+	Write_DATA16i(0x00);
+	Write_COMMAND16i(0x28);      //Display off
+ 	cmd_delay(20); 
+ 	Write_COMMAND16i(0x10);      //ENTER Sleep 
+  	cmd_delay(10);
+  	R_SPI0_CTRL = tmp;
 #endif
-			SPI_UNLOCK();
+	SPI_UNLOCK();
+
 	R_INT_GMASK = 1;
 //	while(gpio_read_io(PW_KEY));
 	tft_backlight_en_set(FALSE);
