@@ -360,11 +360,6 @@ void ap_state_handling_power_off(void)
 	gpio_write_io(IO_C8, 0);
 	gpio_write_io(IO_C9, 0);
 
-	// add by xyz begin - 2014.09.11
-	DBG_PRINT("POWER_EN off\r\n");
-	gpio_write_io(POWER_EN, 0);
-	// add by xyz end   - 2014.09.11
-
 	timer_stop(0);		/* stop timer0 */
 	timer_stop(1);		/* stop timer1 */
 	timer_stop(2);		/* stop timer2 */
@@ -374,13 +369,12 @@ void ap_state_handling_power_off(void)
 	time_base_stop(2);	/* stop timebase C */
 
 #if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
-
-  	DBG_PRINT("POWER OFF IO OFF\r\n");
-	gpio_write_io(POWER_EN,0);
-
+	DBG_PRINT("Turn off POWER\r\n");
+	gpio_write_io(POWER_EN, 0);
+	DBG_PRINT("aa\r\n");
 #endif
 
-	while(gpio_read_io(PW_KEY));
+	while (gpio_read_io(PW_KEY));
 
 	sys_weak_6M_set(TRUE);
 	cache_disable();

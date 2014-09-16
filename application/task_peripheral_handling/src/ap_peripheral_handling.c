@@ -3,11 +3,11 @@
 #define ADKEY_WITH_BAT			0
 
 #define C_AD_VALUE_0			0
-#define C_AD_VALUE_1			((0x28e0 - 0x0400) >> 6)	// menu: 163
-#define C_AD_VALUE_2			((0x51f0 - 0x0400) >> 6)	// ok:   326
-#define C_AD_VALUE_3			((0x7e70 - 0x0400) >> 6)	// mode: 505
-#define C_AD_VALUE_4			((0xb190 - 0x0400) >> 6)	// down: 711
-#define C_AD_VALUE_5			((0xcd80 - 0x0400) >> 6)	// up:   822
+#define C_AD_VALUE_1			((0x28e0 - 0x0800) >> 6)	// menu: 163
+#define C_AD_VALUE_2			((0x51f0 - 0x0800) >> 6)	// ok:   326
+#define C_AD_VALUE_3			((0x7e70 - 0x0800) >> 6)	// mode: 505
+#define C_AD_VALUE_4			((0xb090 - 0x0800) >> 6)	// down: 711
+#define C_AD_VALUE_5			((0xcd80 - 0x0800) >> 6)	// up:   822
 #define C_AD_VALUE_6			0
 #define C_AD_VALUE_7			0
 #define C_AD_VALUE_8			0
@@ -26,7 +26,7 @@
 #define DEBUG_OPTION		(	\
 	DEBUG_MESSAGE		|	\
 /*	PRINT_ADKEY_VAL		|*/	\
-	PRINT_BAT_VAL		|	\
+/*	PRINT_BAT_VAL		|*/	\
 	DEBUG_NONE)
 
 #if (DEBUG_OPTION & DEBUG_MESSAGE)

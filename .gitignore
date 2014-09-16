@@ -22,7 +22,6 @@
 *.order
 modules.builtin
 *.elf
-*.bin
 *.gz
 *.zip
 *.bz2

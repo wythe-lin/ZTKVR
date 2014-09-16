@@ -832,29 +832,25 @@ INT32S ap_storage_service_storage_mount(void)
 	}
 
 #if MINI_DVR_STORAGE_TYPE==T_FLASH 
-	if (device_plug_phase==0)
-    {   
-	    nRet = ap_storage_mount(); //_devicemount(MINI_DVR_STORAGE_TYPE);        
-    } 
-    else 
-    {
-        nRet = drvl2_sdc_live_response();
-    }
+	if (device_plug_phase == 0) {
+		nRet = ap_storage_mount(); //_devicemount(MINI_DVR_STORAGE_TYPE);        
+	} else  {
+		nRet = drvl2_sdc_live_response();
+	}
 
-    if (nRet!=0)
-    {
-        device_plug_phase = 0;  // plug out phase
-        nRet = ap_storage_mount();//_devicemount(MINI_DVR_STORAGE_TYPE);  
-        if (nRet==0) {
-            DBG_PRINT ("Retry OK\r\n");
-            curr_storage_id = NO_STORAGE;
-            device_plug_phase = 1;  // plug in phase
-        } else {
-        	usbd_storage_exit = 0;
-        }
-    } else {
-        device_plug_phase = 1;  // plug in phase
-    }        
+	if (nRet != 0) {
+		device_plug_phase = 0;  // plug out phase
+		nRet = ap_storage_mount();//_devicemount(MINI_DVR_STORAGE_TYPE);  
+		if (nRet==0) {
+			DBG_PRINT ("Retry OK\r\n");
+			curr_storage_id = NO_STORAGE;
+			device_plug_phase = 1;  // plug in phase
+		} else {
+			usbd_storage_exit = 0;
+		}
+	} else {
+		device_plug_phase = 1;  // plug in phase
+	}        
 #else
     nRet = ap_storage_mount(); //_devicemount(MINI_DVR_STORAGE_TYPE);  
 #endif

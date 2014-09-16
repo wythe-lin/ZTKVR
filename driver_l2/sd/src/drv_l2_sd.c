@@ -868,6 +868,8 @@ INT32S drvl2_sd_write(INT32U start_sector, INT32U *buffer, INT32U sector_count)
 INT32S drvl2_sd_card_remove(void)
 {
 	INT32U response;
+
+	SD_IO_Release();	// add by xyz - 2014.09.16
 	SD_IO_Request(SD_PIN_IDX);
 	// Reset card to idle state
 	if (sd_card_state >= SD_CARD_STATE_TRANSFER) {
