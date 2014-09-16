@@ -1,7 +1,6 @@
 #include "ap_peripheral_handling.h"
 
-#define ADKEY_WITH_BAT			1
-#define PRINT_ADKEY_VAL			0	// print ad key value
+#define ADKEY_WITH_BAT			0
 
 #define C_AD_VALUE_0			0
 #define C_AD_VALUE_1			((0x28e0 - 0x0400) >> 6)	// menu: 163
@@ -16,12 +15,46 @@
 #define ENABLE				1
 #define DISABLE				0
 
+/*
+ * for debug
+ */
+#define DEBUG_NONE			0x0000
+#define DEBUG_MESSAGE			0x0001
+#define PRINT_ADKEY_VAL			0x0002	// print ad key value
+#define PRINT_BAT_VAL			0x0004	// print battery value
+
+#define DEBUG_OPTION		(	\
+	DEBUG_MESSAGE		|	\
+/*	PRINT_ADKEY_VAL		|*/	\
+	PRINT_BAT_VAL		|	\
+	DEBUG_NONE)
+
+#if (DEBUG_OPTION & DEBUG_MESSAGE)
+    #define _msg(x)		(x)
+#else
+    #define _msg(x)
+#endif
+
+#if (DEBUG_OPTION & PRINT_ADKEY_VAL)
+    #define _adkey(x)		(x)
+#else
+    #define _adkey(x)
+#endif
+
+#if (DEBUG_OPTION & PRINT_BAT_VAL)
+    #define _bat(x)		(x)
+#else
+    #define _bat(x)
+#endif
+
+
 #if C_MOTION_DETECTION == CUSTOM_ON
 	static INT32U md_work_memory_addr;
 	static INT32S motion_detect_cnt;
 	static INT8U md_cnt;
 #endif
 #if C_BATTERY_DETECT == CUSTOM_ON && USE_ADKEY_NO
+#if (ADKEY_WITH_BAT == 1)
 	static INT32U battery_value_sum = 0;
 	static INT8U battery_lvl = 3;
 	static INT8U bat_ck_cnt = 0;
@@ -33,6 +66,7 @@
 	static INT32U ad_18_value_sum = 0;
 	static INT32U ad_18_value_sum_bak = 0;
 	static INT16U ad_value_fifo[32] = {0};
+#endif
 #endif
 #if USE_ADKEY_NO
 	static INT8U ad_detect_timerid;
@@ -338,7 +372,8 @@ void ap_peripheral_ad_check_isr(INT16U value)
 		//adc_manual_ch_set(AD_DETECT_PIN);
 	}
 }
-
+/* modify by xyz, begin - 2014.09.15 */
+#if (ADKEY_WITH_BAT == 1)
 void ap_peripheral_ad_key_judge(void)
 {
 	INT8U i, adkey_lvl;
@@ -373,8 +408,6 @@ void ap_peripheral_ad_key_judge(void)
 	}
 
 	ad_valid = ad_value>>6;
-
-#if (ADKEY_WITH_BAT == 1)
 	if(ad_valid > last_ad_valid) {
 		diff = ad_valid - last_ad_valid;
 	} else {
@@ -401,19 +434,6 @@ void ap_peripheral_ad_key_judge(void)
 		
 		//DBG_PRINT("adkey_lvl = %d\r\n", adkey_lvl);
 	}
-#else
-	if (ad_valid > C_AD_VALUE_5) {
-		adkey_lvl = ADKEY_LVL_1;
-	} else if (ad_valid > C_AD_VALUE_4) {
-		adkey_lvl = ADKEY_LVL_2;
-	} else if (ad_valid > C_AD_VALUE_3) {
-		adkey_lvl = ADKEY_LVL_3;
-	} else if (ad_valid > C_AD_VALUE_2) {
-		adkey_lvl = ADKEY_LVL_4;
-	} else if (ad_valid > C_AD_VALUE_1) {
-		adkey_lvl = ADKEY_LVL_5;
-	}
-#endif
 
 	if (adkey_lvl != 0xFF) {
 		ad_key_map[adkey_lvl].key_cnt += 1;
@@ -449,15 +469,98 @@ void ap_peripheral_ad_key_judge(void)
 		}
 	}
 
-#if PRINT_ADKEY_VAL
 	// print ad key value
-	DBG_PRINT("adc: %04x\r\n", ad_value);
-#endif
+	_adkey(DBG_PRINT("adc: %04x\r\n", ad_value));
 }
+#else	// (ADKEY_WITH_BAT == 0)
+void ap_peripheral_ad_key_judge(void)
+{
+	INT8U	i, adkey_lvl;
+	INT32U  ad_valid;
+	INT32U  t;
+	static INT8U long_func_key_active_flag = 0;
+
+	t = OSTimeGet();
+	if ((t - ad_time_stamp) < 2) {
+		return ;
+	}
+	ad_time_stamp = t;
+	
+	adkey_lvl = 0xFF;
+	ad_line_select++;
+	if (ad_line_select & 0xF) {
+		adc_manual_ch_set(AD_DETECT_PIN);
+	} else {
+		adc_manual_ch_set(ADC_LINE_2);
+		ad_line_select = 0;
+	}
+	adc_manual_sample_start();
+
+	if (ad_line_select == 1) {
+		// Only ADC line2 sampling data is updated, not AD Key detection line
+		_adkey(DBG_PRINT("- adc: %04x\r\n", ad_18_value));
+		return;
+	}
+
+	// print ad key value
+	_adkey(DBG_PRINT("+ adc: %04x\r\n", ad_value));
+
+	ad_valid = ad_value >>6;
+	if (ad_valid > C_AD_VALUE_5) {
+		adkey_lvl = ADKEY_LVL_1;
+	} else if (ad_valid > C_AD_VALUE_4) {
+		adkey_lvl = ADKEY_LVL_2;
+	} else if (ad_valid > C_AD_VALUE_3) {
+		adkey_lvl = ADKEY_LVL_3;
+	} else if (ad_valid > C_AD_VALUE_2) {
+		adkey_lvl = ADKEY_LVL_4;
+	} else if (ad_valid > C_AD_VALUE_1) {
+		adkey_lvl = ADKEY_LVL_5;
+	}
+
+	if (adkey_lvl != 0xFF) {
+		ad_key_map[adkey_lvl].key_cnt += 1;
+		if (adkey_lvl == OK_KEY) {
+			if (long_func_key_active_flag == 0) {
+				if (ad_key_map[adkey_lvl].key_cnt > 56) {
+					long_func_key_active_flag = 1;
+					ad_key_map[adkey_lvl].key_function(&(ad_key_map[adkey_lvl].key_cnt));
+				}
+			} else {
+				ad_key_map[adkey_lvl].key_cnt = 0;
+			}
+		}
+/*
+		if (zoom_key_flag && ad_key_map[adkey_lvl].key_cnt>2 && (adkey_lvl == PREVIOUS_KEY || adkey_lvl == NEXT_KEY)) {
+			ad_key_map[adkey_lvl].key_function(&(ad_key_map[adkey_lvl].key_cnt));
+		}		
+*/
+	} else {
+		long_func_key_active_flag = 0;
+
+		for (i=0 ; i<USE_ADKEY_NO ; i++) {
+			if (ad_key_map[i].key_cnt > 2) {
+#if C_SCREEN_SAVER == CUSTOM_ON
+				key_active_cnt = 0;
+				ap_peripheral_lcd_backlight_set(BL_ON);
+#endif
+//				if(!zoom_key_flag || ((ad_key_map[i].key_io != PREVIOUS_KEY) && (ad_key_map[i].key_io != NEXT_KEY))) {
+					ad_key_map[i].key_function(&(ad_key_map[i].key_cnt));
+//				}
+			}
+			ad_key_map[i].key_cnt = 0;
+		}
+	}
+}
+#endif	// #if (ADKEY_WITH_BAT == 1)
+/* modify by xyz, end   - 2014.09.15 */
 #endif
 
 #if C_BATTERY_DETECT == CUSTOM_ON && USE_ADKEY_NO
 INT32U previous_direction = 0;
+
+/* modify by xyz, begin - 2014.09.15 */
+#if (ADKEY_WITH_BAT == 1)
 void ap_peripheral_battery_check_calculate(void)
 {
 	//INT32U vol_gap;
@@ -634,6 +737,73 @@ void ap_peripheral_battery_check_calculate(void)
 	}	
 }
 */
+#else	// (ADKEY_WITH_BAT == 0)
+static INT32U	samples[4]   = { 0, 0, 0, 0 };
+static INT32U	_filter	     = 0;
+static INT8U	_sampling    = 0;
+static INT8U	battery_lvl  = 0;
+void ap_peripheral_battery_check_calculate(void)
+{
+	INT8U	level;
+	INT32U	direction;
+
+	if (adp_status == 0) {
+		return;
+	} else if (adp_status == 1) {
+		direction = 1;	// low voltage to high voltage
+		if (previous_direction != direction) {
+			msgQSend(ApQ, MSG_APQ_BATTERY_CHARGED_SHOW, NULL, NULL, MSG_PRI_NORMAL);
+		}
+		previous_direction = direction;
+	} else {
+		direction = 0;	// high voltage to low voltage
+		if (previous_direction != direction) {
+			msgQSend(ApQ, MSG_APQ_BATTERY_CHARGED_CLEAR, NULL, NULL, MSG_PRI_NORMAL);
+		}
+		previous_direction = direction;
+	}
+
+	if (ad_line_select == 1) {
+		// Only ADC line2 sampling data is updated, not AD Key detection line
+		_bat(DBG_PRINT("- adc: %04x, sample: %04x %04x %04x %04x, filter: %04x\r\n", ad_18_value, samples[0], samples[1], samples[2], samples[3], _filter));
+
+		samples[3] = samples[2];
+		samples[2] = samples[1];
+		samples[1] = samples[0];
+		samples[0] = ad_18_value;
+		if (_sampling < 4) {
+			_sampling++;
+		} else {
+		   	_filter = samples[3] + samples[2] + samples[1] + samples[0];
+		  	_filter = _filter >> 2;					// digital filter
+			if (_filter >= 0xCF00) {				// 3.90V
+				level = 3;
+			} else if ((_filter >= 0xC800) && (_filter < 0xCF00)) {	// 3.80V
+				level = 2;
+			} else if ((_filter >= 0xC400) && (_filter < 0xC800)) {	// 3.70V
+				level = 1;
+			} else if (_filter < 0xC400) {				// 3.60V
+				level = 0;
+			}
+			msgQSend(ApQ, MSG_APQ_BATTERY_LVL_SHOW, &level, sizeof(INT8U), MSG_PRI_NORMAL);
+			battery_lvl = level;
+		}
+	} else {
+		if ((battery_lvl == 0) && (direction == 0) && (_filter < 0xC000)) {
+			low_voltage_cnt++;
+			if (low_voltage_cnt > 2) {
+				_bat(DBG_PRINT("power off (low battery)\r\n"));
+
+				low_voltage_cnt = 25;
+				ap_peripheral_pw_key_exe(&low_voltage_cnt);
+			}
+		} else {
+			low_voltage_cnt = 0;
+		}
+	}
+}
+#endif	// #if (ADKEY_WITH_BAT == 1)
+/* modify by xyz, end   - 2014.09.15 */
 
 void ap_peripheral_battery_sts_send(void)
 {
@@ -990,6 +1160,7 @@ void ap_peripheral_adaptor_out_judge(void)
 		case 2: //adaptor out state
 			if (!gpio_read_io(ADP_OUT_PIN)) {
 				if ((adp_out_cnt > PERI_ADP_OUT_PWR_OFF_TIME)/* && (usbd_exit == 0)*/) {	//wwj modify
+					DBG_PRINT("adaptor out\r\n");
 					ap_peripheral_pw_key_exe(&adp_out_cnt);
 				}
 				adp_cnt = 0;

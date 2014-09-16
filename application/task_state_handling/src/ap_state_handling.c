@@ -29,7 +29,7 @@ static STR_ICON sh_str;
 static DISPLAY_ICONMOVE zoom_idx;
 static INT8U sh_curr_storage_id;
 static INT32U jpeg_quality;
-#if C_BATTERY_DETECT == CUSTOM_ON 
+#if C_BATTERY_DETECT == CUSTOM_ON
 	static INT8U bat_icon = 3;
 	static INT8U charge_icon = 0;	//wwj add
 #endif
@@ -57,7 +57,7 @@ INT32S ap_state_handling_str_draw(INT16U str_index, INT16U str_color)
 	INT32U i, size;
 	t_STRING_TABLE_STRUCT str_res;
 	STRING_INFO str;
-	
+
 	if (sh_str.addr) {
 		gp_free((void *) sh_str.addr);
 	}
@@ -98,7 +98,7 @@ void ap_state_handling_str_draw_exit(void)
 
 //If you want to draw over 3 icons, pls call this function again.
 void ap_state_handling_icon_show_cmd(INT8U cmd1, INT8U cmd2, INT8U cmd3)
-{	
+{
 	if( ((cmd1 < 27) || (cmd1 > 34)) && ((cmd2 < 27) || (cmd2 > 34)) && ((cmd3 < 27) || (cmd3 > 34)) ){
 		OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_ICON_SHOW | (cmd1 | (cmd2<<8) | (cmd3<<16))));
 	}else{
@@ -109,7 +109,7 @@ void ap_state_handling_icon_show_cmd(INT8U cmd1, INT8U cmd2, INT8U cmd3)
 }
 
 void ap_state_handling_icon_clear_cmd(INT8U cmd1, INT8U cmd2, INT8U cmd3)
-{	
+{
 	if( ((cmd1 < 27) || (cmd1 > 34)) && ((cmd2 < 27) || (cmd2 > 34)) && ((cmd3 < 27) || (cmd3 > 34)) ){
 		OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_ICON_CLEAR | (cmd1 | (cmd2<<8) | (cmd3<<16))));
 	}else{
@@ -120,49 +120,49 @@ void ap_state_handling_icon_clear_cmd(INT8U cmd1, INT8U cmd2, INT8U cmd3)
 }
 
 void ap_state_handling_mp3_index_show_cmd(void)
-{	
+{
 	if( ((present_state == STATE_VIDEO_PREVIEW) || (present_state == STATE_VIDEO_RECORD)) && (fm_tx_status_get() == 1) ){
 		OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_MP3_INDEX_SHOW | ap_music_index_get()) );
 	}
 }
 
 void ap_state_handling_mp3_total_index_show_cmd(void)
-{	
+{
 	if( ((present_state == STATE_VIDEO_PREVIEW) || (present_state == STATE_VIDEO_RECORD)) && (fm_tx_status_get() == 1) ){
 		OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_MP3_TOTAL_INDEX_SHOW | storage_file_nums_get()) );
-	}			
+	}
 }
 
 void ap_state_handling_mp3_index_show_zero_cmd(void)
-{	
+{
 	if( ((present_state == STATE_VIDEO_PREVIEW) || (present_state == STATE_VIDEO_RECORD)) && (fm_tx_status_get() == 1) ){
 		OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_MP3_INDEX_SHOW | 0) );
 	}
 }
 
 void ap_state_handling_mp3_total_index_show_zero_cmd(void)
-{	
+{
 	if( ((present_state == STATE_VIDEO_PREVIEW) || (present_state == STATE_VIDEO_RECORD)) && (fm_tx_status_get() == 1) ){
 		OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_MP3_TOTAL_INDEX_SHOW | 0) );
-	}			
+	}
 }
 
 void ap_state_handling_mp3_volume_show_cmd(void)
-{	
+{
 	if( ((present_state == STATE_VIDEO_PREVIEW) || (present_state == STATE_VIDEO_RECORD)) && (fm_tx_status_get() == 1) ){
 		OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_MP3_VOLUME_SHOW | audio_fg_vol_get()) );
 	}
 }
 
 void ap_state_handling_mp3_FM_channel_show_cmd(void)
-{	
+{
 	if( ((present_state == STATE_VIDEO_PREVIEW) || (present_state == STATE_VIDEO_RECORD)) && (fm_tx_status_get() == 1) ){
 		OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_MP3_FM_CHANNEL_SHOW | audio_fm_freq_ch_get()) );
 	}
 }
 
 void ap_state_handling_mp3_all_index_clear_cmd(void)
-{	
+{
 	if( ((present_state == STATE_VIDEO_PREVIEW) || (present_state == STATE_VIDEO_RECORD)) && (fm_tx_status_get() == 1) ){
 		OSQPost(DisplayTaskQ, (void *)MSG_DISPLAY_TASK_MP3_ALL_INDEX_CLEAR );
 	}
@@ -172,9 +172,9 @@ extern INT8U s_usbd_pin;	// "extern" isn't good...   Neal
 void ap_state_handling_connect_to_pc(void)
 {
 	INT8U type;
-	
+
 	s_usbd_pin = 1;
-	
+
 	if (fm_tx_status_get()) {
 	    extab_enable_set(EXTA,FALSE);
     }
@@ -183,13 +183,13 @@ void ap_state_handling_connect_to_pc(void)
 	type = FALSE;
 	msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_FREESIZE_CHECK_SWITCH, &type, sizeof(INT8U), MSG_PRI_NORMAL);
 	type = USBD_DETECT;
-	msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_KEY_REGISTER, &type, sizeof(INT8U), MSG_PRI_NORMAL);	
+	msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_KEY_REGISTER, &type, sizeof(INT8U), MSG_PRI_NORMAL);
 	ap_state_handling_icon_show_cmd(ICON_USB_CONNECT, NULL, NULL);
-	
+
 	if (ap_state_config_usb_mode_get() == 0) {
 		ap_setting_sensor_command_switch(0x0E, 0x80, 0);	//night mode off
 	    ap_setting_sensor_command_switch(0x13, 0x04, 1);	//ISO
-    	ap_setting_sensor_command_switch(0xA6, 0x01, 0);	//Color	
+    	ap_setting_sensor_command_switch(0xA6, 0x01, 0);	//Color
 		jpeg_quality = video_encode_get_jpeg_quality();
 		video_encode_set_jpeg_quality(70);
 		OSQPost(USBAPPTaskQ, (void *) MSG_USBCAM_PLUG_IN);
@@ -202,17 +202,17 @@ void ap_state_handling_connect_to_pc(void)
 void ap_state_handling_disconnect_to_pc(void)
 {
 	INT8U type = GENERAL_KEY;
-	
+
 	//OSQPost(USBAPPTaskQ, (void *) MSG_USBD_PLUG_OUT);
 	s_usbd_pin = 0;
-	
+
 	if (ap_state_config_usb_mode_get() == 0) {
 		video_encode_set_jpeg_quality(jpeg_quality);
 		msgQSend(StorageServiceQ, MSG_STORAGE_USBD_PCAM_EXIT, NULL, NULL, MSG_PRI_NORMAL);
 	} else {
 		msgQSend(StorageServiceQ, MSG_STORAGE_USBD_EXIT, NULL, NULL, MSG_PRI_NORMAL);
 	}
-	
+
 	if ( (audio_playing_state_get() == STATE_IDLE) || (audio_playing_state_get() == STATE_PAUSED) ){
 		msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_TIMER_START, NULL, NULL, MSG_PRI_NORMAL);
 	}
@@ -234,26 +234,26 @@ INT8U ap_state_handling_storage_id_get(void)
 }
 
 void ap_state_handling_led_on(void)
-{	
+{
 	INT8U type = DATA_LOW;
-	
+
 	msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_LED_SET, &type, sizeof(INT8U), MSG_PRI_NORMAL);
 }
 
 void ap_state_handling_led_off(void)
-{	
+{
 	INT8U type = DATA_HIGH;
-	
+
 	msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_LED_SET, &type, sizeof(INT8U), MSG_PRI_NORMAL);
 }
 
 void ap_state_handling_led_flash_on(void)	//wwj add
-{	
+{
 	msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_LED_FLASH_SET, NULL, NULL, MSG_PRI_NORMAL);
 }
 
 void ap_state_handling_led_blink_on(void)	//wwj add
-{	
+{
 	msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_LED_BLINK_SET, NULL, NULL, MSG_PRI_NORMAL);
 }
 
@@ -321,16 +321,16 @@ void ap_state_handling_power_off(void)
 
 	ap_state_config_store();
 	SPI_LOCK();
-#if 0			
+#if 0
 	tmp = R_SPI0_CTRL;
 	R_SPI0_CTRL = 0;
-	Write_COMMAND16i(0xf6);   
+	Write_COMMAND16i(0xf6);
 	Write_DATA16i(0x01);
 	Write_DATA16i(0x00);
 	Write_DATA16i(0x00);
 	Write_COMMAND16i(0x28);      //Display off
- 	cmd_delay(20); 
- 	Write_COMMAND16i(0x10);      //ENTER Sleep 
+ 	cmd_delay(20);
+ 	Write_COMMAND16i(0x10);      //ENTER Sleep
   	cmd_delay(10);
   	R_SPI0_CTRL = tmp;
 #endif
@@ -343,7 +343,7 @@ void ap_state_handling_power_off(void)
 //	tft_tft_en_set(FALSE);
 	gpio_write_io(LED, 1);
 	gpio_write_io(SPEAKER_EN, 0);	// add by xyz - 2014.09.11
-	
+
 	video_encode_sensor_stop();
 	rtc_int_set(GPX_RTC_HR_IEN|GPX_RTC_MIN_IEN|GPX_RTC_SEC_IEN|GPX_RTC_HALF_SEC_IEN,
                (RTC_DIS&GPX_RTC_HR_IEN)|(RTC_DIS&GPX_RTC_MIN_IEN)|(RTC_DIS&GPX_RTC_SEC_IEN)|(RTC_DIS&GPX_RTC_HALF_SEC_IEN));
@@ -361,8 +361,8 @@ void ap_state_handling_power_off(void)
 	gpio_write_io(IO_C9, 0);
 
 	// add by xyz begin - 2014.09.11
-	DBG_PRINT("POWER OFF IO OFF\r\n");
-	gpio_write_io(POWER_EN, 0);	
+	DBG_PRINT("POWER_EN off\r\n");
+	gpio_write_io(POWER_EN, 0);
 	// add by xyz end   - 2014.09.11
 
 	timer_stop(0);		/* stop timer0 */
@@ -372,14 +372,14 @@ void ap_state_handling_power_off(void)
 	time_base_stop(0);	/* stop timebase A */
 	time_base_stop(1);
 	time_base_stop(2);	/* stop timebase C */
-	
+
 #if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
 
   	DBG_PRINT("POWER OFF IO OFF\r\n");
 	gpio_write_io(POWER_EN,0);
 
 #endif
-	
+
 	while(gpio_read_io(PW_KEY));
 
 	sys_weak_6M_set(TRUE);
@@ -412,7 +412,7 @@ void ap_state_handling_calendar_init(void)
 	calendar_init();
 }
 
-#if C_BATTERY_DETECT == CUSTOM_ON 
+#if C_BATTERY_DETECT == CUSTOM_ON
 void ap_state_handling_battery_icon_show(INT8U bat_lvl)
 {
 	if (bat_lvl < 4) {
@@ -455,12 +455,12 @@ void ap_state_handling_current_charge_icon_show(void)	//wwj add
 void ap_state_handling_lcd_backlight_switch(INT8U enable)
 {
 	INT8U type;
-	
+
 	if(enable){
 		type = BL_ON;
 	}else{
 		type = BL_OFF;
-	}	
+	}
 	msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_LCD_BACKLIGHT_SET, &type, sizeof(INT8U), MSG_PRI_NORMAL);
 }
 #endif
@@ -495,7 +495,7 @@ INT8U ap_state_handling_night_mode_get(void)	//wwj add
 void ap_state_handling_scroll_bar_init(void)
 {
 	INT8U type;
-	
+
 	type = CUSTOM_ON;
 	scroll_bar_timerid = 0xFF;
 	zoom_idx.idx = ICON_SCROLL_BAR_IDX;
@@ -507,7 +507,7 @@ void ap_state_handling_scroll_bar_init(void)
 void ap_state_handling_scroll_bar_exit(INT8U exit_type)
 {
 	INT8U type;
-	
+
 	type = CUSTOM_OFF;
 	ap_state_handling_icon_clear_cmd(ICON_SCROLL_BAR, ICON_SCROLL_BAR_IDX, NULL);
 	if (scroll_bar_timerid != 0xFF) {
@@ -564,7 +564,7 @@ INT32S ap_state_handling_jpeg_decode(STOR_SERV_PLAYINFO *info_ptr, INT32U jpg_ou
 		if (read(info_ptr->file_handle, (INT32U) &data_tmp, 4) != 4) {
 			return STATUS_FAIL;
 		}
-		
+
 		if (data_tmp == VIDEO_STREAM) {
 			shift_byte = 272;
 		} else {
@@ -630,7 +630,7 @@ INT32S jpeg_buffer_decode_and_scale(IMAGE_DECODE_STRUCT *img_decode_struct)
 	if (!img_decode_struct) {
 		return STATUS_FAIL;
 	}
-	
+
     jpeg_output_format = img_decode_struct->output_format;
     jpeg_output_ratio = 0;
     jpeg_output_buffer_width = img_decode_struct->output_buffer_width;
@@ -643,7 +643,7 @@ INT32S jpeg_buffer_decode_and_scale(IMAGE_DECODE_STRUCT *img_decode_struct)
 	// Initiate software header parser and hardware engine
 	jpeg_decode_init();
 
- 
+
 	parse_status = jpeg_decode_parse_header((INT8U *) img_decode_struct->image_source, img_decode_struct->source_size);
     if (parse_status != JPEG_PARSE_OK) {
 		DBG_PRINT("Parse header failed. Skip this file\r\n");
@@ -1013,7 +1013,7 @@ void ap_state_ir_key_init(void)
 	INT16U i;
 	INT8U *key_code;
 	INT32U *msg_id;
-	
+
 	ap_peripheral_irkey_message_init();
 	// Register IR keycode and event mapping to system task
 	num = ap_state_resource_ir_key_num_get();
@@ -1024,7 +1024,7 @@ void ap_state_ir_key_init(void)
 }
 
 INT32S ap_state_common_handling(INT32U msg_id)
-{		
+{
 	switch(msg_id) {
 		case MSG_APQ_AUDIO_EFFECT_OK:
 		case MSG_APQ_AUDIO_EFFECT_MENU:

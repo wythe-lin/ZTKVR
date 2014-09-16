@@ -30,7 +30,7 @@
 /*
  * for debug
  */
-#define DEBUG_ILI8961		1
+#define DEBUG_ILI8961		0
 #if DEBUG_ILI8961
     #define _D(x)		(x)
 #else
