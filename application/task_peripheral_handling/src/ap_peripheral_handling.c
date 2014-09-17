@@ -778,18 +778,18 @@ void ap_peripheral_battery_check_calculate(void)
 		  	_filter = _filter >> 2;					// digital filter
 			if (_filter >= 0xCF00) {				// 3.90V
 				level = 3;
-			} else if ((_filter >= 0xC800) && (_filter < 0xCF00)) {	// 3.80V
+			} else if ((_filter >= 0xCC00) && (_filter < 0xCF00)) {	// 3.??V
 				level = 2;
-			} else if ((_filter >= 0xC400) && (_filter < 0xC800)) {	// 3.70V
+			} else if ((_filter >= 0xC800) && (_filter < 0xCC00)) {	// 3.??V
 				level = 1;
-			} else if (_filter < 0xC400) {				// 3.60V
+			} else if (_filter < 0xC800) {				// 3.??V
 				level = 0;
 			}
 			msgQSend(ApQ, MSG_APQ_BATTERY_LVL_SHOW, &level, sizeof(INT8U), MSG_PRI_NORMAL);
 			battery_lvl = level;
 		}
 	} else {
-		if ((battery_lvl == 0) && (direction == 0) && (_filter < 0xC000)) {
+		if ((battery_lvl == 0) && (direction == 0) && (_filter < 0xC400)) {	// 3.7V
 			low_voltage_cnt++;
 			if (low_voltage_cnt > 2) {
 				_bat(DBG_PRINT("power off (low battery)\r\n"));
