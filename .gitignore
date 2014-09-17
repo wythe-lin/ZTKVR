@@ -36,7 +36,7 @@ modules.builtin
 *.tdt
 *.stg
 *.rom
-
+*_upgrade.bin
 
 
 #
@@ -47,7 +47,7 @@ modules.builtin
 #
 # build directory (make deb-pkg)
 #
-tool/G+CodePacker\1.0.9.27/OutputBin/*
+
 
 #
 # git files that we don't want to ignore even it they are dot-files
