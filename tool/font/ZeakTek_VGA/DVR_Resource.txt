@@ -1,7 +1,7 @@
 [Define]
 //screen resulation
-DPF_H   ,800
-DPF_V   ,480
+DPF_H   ,320
+DPF_V   ,240
 //how many rubber key on system
 RUBBER_KEY   ,7
 //how many osd item on system
@@ -49,13 +49,13 @@ STATE_MAIN_MENU   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
 //key in display & image item number must same as [define] MENU_ITEM	
 // but real display & real use image number can small it.
 //real display number, image number,bg image , bg music, hint_x, hint_y, hint_show_mode ,hint_color
-0x05,0x00,0x00,0x00,-67,-195,0x01,0xf8
+0x05,0x00,0x00,0x00,-27,-75,0x01,0xf8
 //(x0,y0,x1,y1,x3,y3,x4,y4)
--358,210,-189,170,-189,-180,-358,-220
--302,210,-133,170,-133,-180,-302,-220
--118,170,118,170,118,-180,-118,-180
-133,170,302,210,302,-220,133,-180
-189,170,358,210,358,-220,189,-180
+-118,90,-69,74,-69,-60,-118,-76
+-102,90,-53,74,-53,-60,-102,-76
+-38,74,38,74,38,-60,-38,-60
+53,74,102,90,102,-76,53,-60
+69,74,118,90,118,-76,69,-60
 //mode,image index,sound_index,hint_index,select
 0x00,0x00,0x00,0x00,NULL
 0x00,0x00,0x00,0x00,NULL
@@ -68,31 +68,31 @@ STATE_MAIN_MENU   ,NULL,NULL,NULL,NULL,NULL,NULL,NULL
 [String]
 //mode :  0->english , 1 -> unicode
 //font path , max length 128
-G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_font\
+D:\sharezone\github\ZTKVR\tool\font\ZeakTek_VGA\src_font\
 //languageN , mode , string file
-Font,GulimChe,14,0,0
+Font,GulimChe,14,1,0
 Language   ,0,English.txt
 Font,DFKai-SB,14,0,0
 Language   ,1,"Traditional Chinese.txt"
 Font,DFKai-SB,14,0,0
 Language   ,1,"Simplified Chinese.txt"
-Font,Dotum,14,0,0
+Font,Dotum,14,1,0
 Language   ,1,Japanese.txt
-Font,Dotum,14,0,0
+Font,Dotum,14,1,0
 Language   ,1,French.txt
-Font,Dotum,13,0,0
+Font,Dotum,13,1,0
 Language   ,1,German.txt
-Font,Dotum,14,0,0
+Font,Dotum,14,1,0
 Language   ,1,Korean.txt
-Font,Dotum,13,0,0
+Font,Dotum,13,1,0
 Language   ,1,Italian.txt
-Font,Dotum,13,0,0
+Font,Dotum,13,1,0
 Language   ,1,Portuguese.txt
-Font,Dotum,14,0,0
+Font,Dotum,14,1,0
 Language   ,1,Russian.txt
-Font,Dotum,13,0,0
+Font,Dotum,13,1,0
 Language   ,1,Spanish.txt
-Font,Dotum,14,0,0
+Font,Dotum,14,1,0
 Language   ,1,Arabic.txt
 Font,Arial,26,0,0
 Language   ,1,Thai.txt
@@ -103,14 +103,14 @@ Language   ,1,Dutch.txt
 
 [Palette]
 //path , max length 128
-G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_image
+D:\sharezone\github\ZTKVR\tool\font\ZeakTek_VGA\src_image
 //data
 
 
 
 [Image_With_Palette]
 //path , max length 128
-G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_image\
+D:\sharezone\github\ZTKVR\tool\font\ZeakTek_VGA\src_image\
 // Maximum number of image resource on system is 2048 
     // Palette, pal name
 // Image, color format, used pal index, char H_V, image name
@@ -120,7 +120,7 @@ G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_image\
 [Image]
 //max image resource on system is 2048
 //path , max length 128
-G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_image\
+D:\sharezone\github\ZTKVR\tool\font\ZeakTek_VGA\src_image\
 // Color format, palette index for 256 color, H_V, image file name
 
 
@@ -128,7 +128,7 @@ G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_image\
 [Audio]
 //max audio resource on system is 2048
 //path , max length 128
-G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_audio\
+D:\sharezone\github\ZTKVR\tool\font\ZeakTek_VGA\src_audio\
 //type , data
 
 
@@ -164,7 +164,7 @@ powertime_onoff2, 0, 08:00, 24:00
 
 [Other_Resource]
 //path , max length 128
-G:\Code\GP6_10\GP3268xxB_CVR_zealtek\tool\×Ö¿â\ZeakTek_VGA\Export\src_others\
+D:\sharezone\github\ZTKVR\tool\font\ZeakTek_VGA\src_others\
 //resource file name
 
 
