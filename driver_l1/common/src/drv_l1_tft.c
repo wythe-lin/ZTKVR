@@ -2132,14 +2132,13 @@ void ili8961_txdt270c_init(void)
 	drv_msec_wait(10);
 
 	ili8961_write(0x2b, 0x01);
-
 	ili8961_write(0x00, 0x09);
 	ili8961_write(0x01, 0x9f);
 	ili8961_write(0x03, 0x68);
 	ili8961_write(0x0d, 0x40);
 	ili8961_write(0x04, 0x1b);
 	ili8961_write(0x16, 0x04);
-//	ili8961_write(0x2f, 0x71);
+	ili8961_write(0x2f, 0x61/*0x71*/);
 
 	R_TFT_VS_WIDTH	= 0;
 	R_TFT_HS_WIDTH	= 0;
@@ -2153,7 +2152,7 @@ void ili8961_txdt270c_init(void)
 	R_TFT_H_END	= 1+240+1280;
 
 	R_TFT_LINE_RGB_ORDER = 0x00;
-	tft_signal_inv_set(TFT_VSYNC_INV | TFT_HSYNC_INV , (TFT_ENABLE & TFT_VSYNC_INV) | (TFT_ENABLE & TFT_HSYNC_INV));
+	tft_signal_inv_set(TFT_DCLK_INV | TFT_VSYNC_INV | TFT_HSYNC_INV, (TFT_ENABLE & TFT_DCLK_INV) | (TFT_ENABLE & TFT_VSYNC_INV) | (TFT_ENABLE & TFT_HSYNC_INV));
 	tft_mode_set(TFT_MODE_UPS052);
 	tft_data_mode_set(TFT_DATA_MODE_8);
 	tft_clk_set(TFT_CLK_DIVIDE_4);

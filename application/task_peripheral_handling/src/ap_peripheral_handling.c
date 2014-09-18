@@ -1,6 +1,7 @@
 #include "ap_peripheral_handling.h"
 
 #define ADKEY_WITH_BAT			0
+#define DUAL_ADP_IN			1
 
 #define C_AD_VALUE_0			0
 #define C_AD_VALUE_1			((0x28e0 - 0x0800) >> 6)	// menu: 163
@@ -168,10 +169,17 @@ void ap_peripheral_init(void)
   	led_cnt = 0;		//wwj add
   	
   	/* adpator detect pin */
+
   	gpio_init_io(ADP_OUT_PIN, GPIO_INPUT);
   	gpio_set_port_attribute(ADP_OUT_PIN, INPUT_WITH_RESISTOR);
   	gpio_write_io(ADP_OUT_PIN, DATA_LOW);
-  	
+
+#if (DUAL_ADP_IN == 1)
+  	gpio_init_io(IO_I8, GPIO_INPUT);
+  	gpio_set_port_attribute(IO_I8, INPUT_WITH_RESISTOR);
+  	gpio_write_io(IO_I8, DATA_LOW);
+#endif
+
   	/* TF-card detect pin */
   	gpio_init_io(SD_CD_PIN, GPIO_INPUT);
   	gpio_set_port_attribute(SD_CD_PIN, INPUT_WITH_RESISTOR);
@@ -1109,7 +1117,11 @@ void ap_peripheral_adaptor_out_judge(void)
 	adp_out_cnt++;
 	switch(adp_status) {
 		case 0: //unkown state
+#if (DUAL_ADP_IN == 0)
 			if (gpio_read_io(ADP_OUT_PIN)) {
+#else
+			if (gpio_read_io(ADP_OUT_PIN) || gpio_read_io(IO_I8)) {
+#endif
 				adp_cnt++;
 				if (adp_cnt > 16) {
 					adp_out_cnt = 0;
@@ -1129,14 +1141,18 @@ void ap_peripheral_adaptor_out_judge(void)
 			if (adp_out_cnt > 17) {
 				adp_out_cnt = 0;
 				adp_status = 3;
-			#if C_BATTERY_DETECT == CUSTOM_ON && USE_ADKEY_NO
+	#if C_BATTERY_DETECT == CUSTOM_ON && USE_ADKEY_NO
 				battery_lvl = 2;
 				low_voltage_cnt = 0;
-			#endif
+	#endif
 			}
 			break;
 		case 1: //adaptor in state
+#if (DUAL_ADP_IN == 0)
 			if (!gpio_read_io(ADP_OUT_PIN)) {
+#else
+			if (!gpio_read_io(ADP_OUT_PIN) && !gpio_read_io(IO_I8)) {
+#endif
 				if (adp_out_cnt > 8) {
 					adp_status = 2;
 					low_voltage_cnt = 0;
@@ -1145,7 +1161,7 @@ void ap_peripheral_adaptor_out_judge(void)
 			else {
 				adp_out_cnt = 0;
 			}
-			#if USB_PHY_SUSPEND == 1
+	#if USB_PHY_SUSPEND == 1
 			if (phy_cnt != 0xFFFF) {
 				phy_cnt++;
 			}
@@ -1155,10 +1171,14 @@ void ap_peripheral_adaptor_out_judge(void)
 				*P_USBD_CONFIG1 |= 0x100; //[8],SW Suspend For PHY
 				phy_cnt = 0xFFFF;
 			}
-			#endif
+	#endif
 			break;
 		case 2: //adaptor out state
+#if (DUAL_ADP_IN == 0)
 			if (!gpio_read_io(ADP_OUT_PIN)) {
+#else
+			if (!gpio_read_io(ADP_OUT_PIN) && !gpio_read_io(IO_I8)) {
+#endif
 				if ((adp_out_cnt > PERI_ADP_OUT_PWR_OFF_TIME)/* && (usbd_exit == 0)*/) {	//wwj modify
 					DBG_PRINT("adaptor out\r\n");
 					ap_peripheral_pw_key_exe(&adp_out_cnt);
@@ -1168,11 +1188,11 @@ void ap_peripheral_adaptor_out_judge(void)
 			else {
 				adp_cnt++;
 				if (adp_cnt > 3) {
-					#if USB_PHY_SUSPEND == 1
+	#if USB_PHY_SUSPEND == 1
 					//*P_USBD_CONFIG &= ~0x800;	//Switch to full speed
 					*P_USBD_CONFIG1 &= ~0x100; //phy wakeup
 					phy_cnt = 0;
-					#endif
+	#endif
 					adp_out_cnt = 0;
 					adp_status = 1;
 					usbd_exit = 0;
@@ -1181,13 +1201,17 @@ void ap_peripheral_adaptor_out_judge(void)
 			}
 			break;
 		case 3://adaptor initial out state
+#if (DUAL_ADP_IN == 0)
 			if (gpio_read_io(ADP_OUT_PIN)) {
+#else
+			if (gpio_read_io(ADP_OUT_PIN) || gpio_read_io(IO_I8)) {
+#endif
 				if (adp_out_cnt > 3) {
-					#if USB_PHY_SUSPEND == 1
+	#if USB_PHY_SUSPEND == 1
 					//*P_USBD_CONFIG &= ~0x800;	//Switch to full speed
 					*P_USBD_CONFIG1 &= ~0x100; //phy wakeup
 					phy_cnt = 0;
-					#endif
+	#endif
 					adp_out_cnt = 0;
 					adp_status = 1;
 					OSQPost(USBAPPTaskQ, (void *) MSG_USBD_INITIAL);
@@ -1206,10 +1230,10 @@ void ap_peripheral_adaptor_out_judge(void)
 		if (!gpio_read_io(C_USBDEVICE_PIN)) {
 			if (usbd_cnt > 3) {
 				usb_uninitial();
-				#if USB_PHY_SUSPEND == 1
+	#if USB_PHY_SUSPEND == 1
 				*P_USBD_CONFIG |= 0x800;	//Switch to USB20PHY
 				*P_USBD_CONFIG1 |= 0x100; //[8],SW Suspend For PHY
-				#endif
+	#endif
 				ap_peripheral_usbd_plug_out_exe(&usbd_cnt);	
 			} 
 		}
