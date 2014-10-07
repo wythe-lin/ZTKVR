@@ -339,7 +339,7 @@ void ap_video_record_func_key_active(INT32U event)
 			}
 
 			ap_video_record_sts_set(VIDEO_RECORD_BUSY);
-			ap_peripheral_auto_off_force_disable_set(1);	//wwj add, disable auto off
+			ap_peripheral_auto_off_force_disable_set(0/*1*/);	//wwj add, disable auto off
 			curr_file_info.file_handle = -1;				//wwj add
 			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VID_REQ, NULL, NULL, MSG_PRI_NORMAL);
 #if C_MOTION_DETECTION == CUSTOM_ON
@@ -383,7 +383,7 @@ void ap_video_record_start(void)
 {
 	ap_state_handling_str_draw_exit();
 	ap_video_record_sts_set(VIDEO_RECORD_BUSY);
-	ap_peripheral_auto_off_force_disable_set(1);
+	ap_peripheral_auto_off_force_disable_set(0/*1*/);
 	curr_file_info.file_handle = -1;
 	msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VID_REQ, NULL, NULL, MSG_PRI_NORMAL);
 #if C_MOTION_DETECTION == CUSTOM_ON

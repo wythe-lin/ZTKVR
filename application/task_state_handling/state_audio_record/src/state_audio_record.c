@@ -282,7 +282,7 @@ void state_audio_record_entry(void *para)
 					{
 						timer_counter_force_display(0);
 						audio_calculate_left_recording_time_disable();
-						ap_peripheral_auto_off_force_disable_set(0);
+						ap_peripheral_auto_off_force_disable_set(1/*0*/);
 						ap_audio_record_sts_set(~AUDIO_RECORD_BUSY);
 						ap_state_handling_led_on();
 						ap_state_handling_icon_clear_cmd(ICON_REC, NULL, NULL);

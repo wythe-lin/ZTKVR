@@ -37,7 +37,8 @@ modules.builtin
 *.stg
 *.rom
 *_upgrade.bin
-
+*.prj
+*.pui
 
 #
 # Top-level generic files

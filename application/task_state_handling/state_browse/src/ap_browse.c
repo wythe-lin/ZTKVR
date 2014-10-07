@@ -134,7 +134,7 @@ void ap_browse_func_key_active(void)
 	} else if (browse_sts == BROWSE_PLAYBACK_BUSY) {
 		ap_browse_sts_set(BROWSE_PLAYBACK_PAUSE);
 		ap_state_handling_icon_show_cmd(ICON_PLAY, NULL, NULL);
-		ap_peripheral_auto_off_force_disable_set(0); //wwj add
+		ap_peripheral_auto_off_force_disable_set(1/*0*/); //wwj add
 		ap_state_handling_led_on(); //wwj add
 		OSTimeDly(5);
 		if(browse_curr_avi.file_type == TK_IMAGE_TYPE_WAV) {

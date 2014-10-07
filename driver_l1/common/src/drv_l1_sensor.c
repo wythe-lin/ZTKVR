@@ -8949,7 +8949,7 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x81);
 	sccb_wr_r16d8(ZT3150_ID, 0x0083, 0x00);
 #elif (ZT3150_1280x480)
-#if 0
+#if 1
 	// side by side
 	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x03);
 	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);

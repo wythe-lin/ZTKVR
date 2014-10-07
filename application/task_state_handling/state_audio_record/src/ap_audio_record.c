@@ -288,7 +288,7 @@ INT8S ap_audio_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
 		}
  
 		// Start audio record timer display
-		ap_peripheral_auto_off_force_disable_set(1);	//wwj add, disable auto off
+		ap_peripheral_auto_off_force_disable_set(0/*1*/);	//wwj add, disable auto off
 		ap_state_handling_led_blink_on();//wwj add
 		//ap_audio_record_timer_start();
 		ap_state_handling_icon_show_cmd(ICON_REC, NULL, NULL);

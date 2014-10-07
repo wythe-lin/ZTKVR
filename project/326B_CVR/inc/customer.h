@@ -172,7 +172,7 @@
 	#define IR_CTRL                     	IO_A9
 	#define ADP_OUT_PIN                    	C_USBDEVICE_PIN
 	#define POWER_EN                       	IO_I4
-	#define AV_IN_DET                      	IO_C3
+	#define AV_IN_DET                      	IO_I0
 	#define SD_CD_PIN						IO_I6
 	#define SPEAKER_EN						IO_I9
 #else
