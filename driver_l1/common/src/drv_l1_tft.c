@@ -3767,6 +3767,7 @@ INT32S tft_backlight_en_set(BOOLEAN en)
 		gpio_init_io(TFT_BL, GPIO_INPUT);
 		gpio_write_io(TFT_BL,DATA_LOW);
 	}
+	return STATUS_OK;
 }
 #else
 INT32S tft_backlight_en_set(BOOLEAN status)

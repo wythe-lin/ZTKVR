@@ -1,8 +1,5 @@
 #include "ap_peripheral_handling.h"
 
-#define ADKEY_WITH_BAT			0
-#define DUAL_ADP_IN			1
-
 #define C_AD_VALUE_0			0
 #define C_AD_VALUE_1			((0x28e0 - 0x0800) >> 6)	// menu: 163
 #define C_AD_VALUE_2			((0x51f0 - 0x0800) >> 6)	// ok:   326
@@ -26,7 +23,7 @@
 
 #define DEBUG_OPTION		(	\
 	DEBUG_MESSAGE		|	\
-/*	PRINT_ADKEY_VAL		|*/	\
+	PRINT_ADKEY_VAL		|	\
 /*	PRINT_BAT_VAL		|*/	\
 	DEBUG_NONE)
 

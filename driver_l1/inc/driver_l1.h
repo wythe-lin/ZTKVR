@@ -7,6 +7,7 @@
 #include "os.h"
 #endif
 #include "driver_l1_cfg.h"
+#include "ztkconfigs.h"
 
 /* Nand driver pseudo header include */
 #if _DRV_L1_NAND == 1
