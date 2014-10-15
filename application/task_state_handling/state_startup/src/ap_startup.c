@@ -10,9 +10,10 @@ extern INT8U audio_done;
 void ap_startup_init(void)
 {
 	IMAGE_DECODE_STRUCT img_info;
-	INT32U size;
+	INT32U	size;
 	INT16U	logo_fd;
-	
+	INT8U	retry = 5;
+
 #if C_LOGO == CUSTOM_ON
 
 	ap_music_effect_resource_init(); //wwj add
@@ -23,8 +24,14 @@ void ap_startup_init(void)
 		DBG_PRINT("State startup allocate jpeg output buffer fail.\r\n");
 		return;
 	}
+
+retry_loop:
 	logo_fd = nv_open((INT8U *) "POWER_ON_LOGO.JPG");
 	if (logo_fd != 0xFFFF) {
+		if (retry) {
+			retry--;
+			goto retry_loop;
+		}
 		size = nv_rs_size_get(logo_fd);
 		startup_logo_img_ptr = (INT32S) gp_malloc(size);
 		if (!startup_logo_img_ptr) {

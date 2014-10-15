@@ -25,6 +25,8 @@
 #ifndef __ZTKCONFIGS_H__
 #define __ZTKCONFIGS_H__
 
+
+/* custom */
 #define DVR516_CFG			1
 #define DVR517_CFG			0
 #define K6000_CFG			0
@@ -56,5 +58,40 @@
    #error must be chioce one xxx_CFG
 #endif
 
+
+/* adkey threshold */
+#define ADKEY_VAL0			(0)
+#define ADKEY_VAL1			(0x28e0)
+#define ADKEY_VAL2			(0x51f0)
+#define ADKEY_VAL3			(0x7e70)
+#define ADKEY_VAL4			(0xb090)
+#define ADKEY_VAL5			(0xcd80)
+#define ADKEY_VAL6			(0)
+#define ADKEY_VAL7			(0)
+#define ADKEY_VAL8			(0)
+
+#if 0
+// sub some value
+   #define ADKEY_THRD_OFFSET		(0x1000)
+   #define C_AD_VALUE_0			ADKEY_VAL0
+   #define C_AD_VALUE_1			((ADKEY_VAL1 - ADKEY_THRD_OFFSET) >> 6)			// menu: 163
+   #define C_AD_VALUE_2			((ADKEY_VAL2 - ADKEY_THRD_OFFSET) >> 6)			// ok:   326
+   #define C_AD_VALUE_3			((ADKEY_VAL3 - ADKEY_THRD_OFFSET) >> 6)			// mode: 505
+   #define C_AD_VALUE_4			((ADKEY_VAL4 - ADKEY_THRD_OFFSET) >> 6)			// down: 711
+   #define C_AD_VALUE_5			((ADKEY_VAL5 - ADKEY_THRD_OFFSET) >> 6)			// up:   822
+   #define C_AD_VALUE_6			ADKEY_VAL6
+   #define C_AD_VALUE_7			ADKEY_VAL7
+   #define C_AD_VALUE_8			ADKEY_VAL8
+#else
+   #define C_AD_VALUE_0			ADKEY_VAL0
+   #define C_AD_VALUE_1			((ADKEY_VAL1 - ((ADKEY_VAL1 - ADKEY_VAL0) >> 1)) >> 6)	// menu
+   #define C_AD_VALUE_2			((ADKEY_VAL2 - ((ADKEY_VAL2 - ADKEY_VAL1) >> 1)) >> 6)	// ok
+   #define C_AD_VALUE_3			((ADKEY_VAL3 - ((ADKEY_VAL3 - ADKEY_VAL2) >> 1)) >> 6)	// mode
+   #define C_AD_VALUE_4			((ADKEY_VAL4 - ((ADKEY_VAL4 - ADKEY_VAL3) >> 1)) >> 6)	// down
+   #define C_AD_VALUE_5			((ADKEY_VAL5 - ((ADKEY_VAL5 - ADKEY_VAL4) >> 1)) >> 6)	// up
+   #define C_AD_VALUE_6			ADKEY_VAL6
+   #define C_AD_VALUE_7			ADKEY_VAL7
+   #define C_AD_VALUE_8			ADKEY_VAL8
+#endif
 
 #endif	// __ZTKCONFIGS_H__
