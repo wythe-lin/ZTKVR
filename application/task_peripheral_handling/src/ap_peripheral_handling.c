@@ -13,7 +13,7 @@
 
 #define DEBUG_OPTION		(	\
 	DEBUG_MESSAGE		|	\
-	PRINT_ADKEY_VAL		|	\
+/*	PRINT_ADKEY_VAL		|*/	\
 /*	PRINT_BAT_VAL		|*/	\
 	DEBUG_NONE)
 

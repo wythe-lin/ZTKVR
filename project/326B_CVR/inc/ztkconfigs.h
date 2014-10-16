@@ -36,11 +36,13 @@
 #undef C_DISPLAY_DEVICE
 #if   (DVR516_CFG == 1)
    #define C_DISPLAY_DEVICE		ILI8961//ILI9341
+   #define FLIP_ILI8961			1
    #define Z_SIDE_BY_SIDE		1
    #define ADKEY_WITH_BAT		0
    #define DUAL_ADP_IN			1
 #elif (DVR517_CFG == 1)
    #define C_DISPLAY_DEVICE		ILI8961
+   #define FLIP_ILI8961			0
    #define Z_SIDE_BY_SIDE		0
    #define ADKEY_WITH_BAT		0
    #define DUAL_ADP_IN			1
