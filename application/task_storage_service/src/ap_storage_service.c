@@ -838,6 +838,21 @@ INT32S ap_storage_service_storage_mount(void)
 //	} else  {
 //		nRet = drvl2_sdc_live_response();
 //	}
+//
+//	if (nRet != 0) {
+//		device_plug_phase = 0;  // plug out phase
+//		nRet = ap_storage_mount();//_devicemount(MINI_DVR_STORAGE_TYPE);  
+//		if (nRet==0) {
+//			DBG_PRINT ("Retry OK\r\n");
+//			curr_storage_id = NO_STORAGE;
+//			device_plug_phase = 1;  // plug in phase
+//		} else {
+//			usbd_storage_exit = 0;
+//		}
+//	} else {
+//		device_plug_phase = 1;  // plug in phase
+//	}        
+
 	if (device_plug_phase==0){
 		if(!drvl2_sdc_live_response()){
 			nRet = ap_storage_mount();
@@ -847,21 +862,15 @@ INT32S ap_storage_service_storage_mount(void)
 	}else{
 		nRet = drvl2_sdc_live_response();
 	}
-/* #END# modify by ShengHua - 2014.10.17 */
-
-	if (nRet != 0) {
+	
+	if (nRet!=0) {
 		device_plug_phase = 0;  // plug out phase
-		nRet = ap_storage_mount();//_devicemount(MINI_DVR_STORAGE_TYPE);  
-		if (nRet==0) {
-			DBG_PRINT ("Retry OK\r\n");
-			curr_storage_id = NO_STORAGE;
-			device_plug_phase = 1;  // plug in phase
-		} else {
-			usbd_storage_exit = 0;
-		}
+		usbd_storage_exit = 0;
 	} else {
 		device_plug_phase = 1;  // plug in phase
-	}        
+	}
+/* #END# modify by ShengHua - 2014.10.17 */
+
 #else
     nRet = ap_storage_mount(); //_devicemount(MINI_DVR_STORAGE_TYPE);  
 #endif
