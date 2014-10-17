@@ -832,11 +832,22 @@ INT32S ap_storage_service_storage_mount(void)
 	}
 
 #if MINI_DVR_STORAGE_TYPE==T_FLASH 
-	if (device_plug_phase == 0) {
-		nRet = ap_storage_mount(); //_devicemount(MINI_DVR_STORAGE_TYPE);        
-	} else  {
+/* #BEGIN# modify by ShengHua - 2014.10.17 */
+//	if (device_plug_phase == 0) {
+//		nRet = ap_storage_mount(); //_devicemount(MINI_DVR_STORAGE_TYPE);        
+//	} else  {
+//		nRet = drvl2_sdc_live_response();
+//	}
+	if (device_plug_phase==0){
+		if(!drvl2_sdc_live_response()){
+			nRet = ap_storage_mount();
+		}else{
+			nRet = 1;
+		}
+	}else{
 		nRet = drvl2_sdc_live_response();
 	}
+/* #END# modify by ShengHua - 2014.10.17 */
 
 	if (nRet != 0) {
 		device_plug_phase = 0;  // plug out phase
