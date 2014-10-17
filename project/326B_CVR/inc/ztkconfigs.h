@@ -96,4 +96,16 @@
    #define C_AD_VALUE_8			ADKEY_VAL8
 #endif
 
+/* battery threshold */
+#define BATT_LV0			0xCF00		
+#define BATT_LV1			0xCC00
+#define BATT_LV2			0xC800
+#define BATT_LV3			0xC400
+
+#define C_BATT_LEVEL0			BATT_LV0
+#define C_BATT_LEVEL1			BATT_LV1
+#define C_BATT_LEVEL2			BATT_LV2
+#define C_BATT_LEVEL3			BATT_LV3
+
+
 #endif	// __ZTKCONFIGS_H__
