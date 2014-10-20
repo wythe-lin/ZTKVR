@@ -13,15 +13,15 @@ extern void capture_mode_enter(void);
 void state_video_record_init(INT32U prev_state)
 {
 	DBG_PRINT("video_record state init enter\r\n");
-    if(prev_state != STATE_STARTUP){	
+	if(prev_state != STATE_STARTUP){	
 		OSQPost(scaler_task_q, (void *) MSG_SCALER_TASK_PREVIEW_OFF);
 	}
 	ap_setting_value_set_from_user_config();
 	ap_setting_sensor_command_switch(0x0E, 0x80, 0);	//night mode off
-    ap_setting_sensor_command_switch(0x13, 0x04, 1);	//ISO
-    ap_setting_sensor_command_switch(0xA6, 0x01, 0);	//Color
-    if(prev_state != STATE_STARTUP){
-	    OSQPost(scaler_task_q, (void *) MSG_SCALER_TASK_PREVIEW_ON);
+	ap_setting_sensor_command_switch(0x13, 0x04, 1);	//ISO
+	ap_setting_sensor_command_switch(0xA6, 0x01, 0);	//Color
+	if(prev_state != STATE_STARTUP){
+		OSQPost(scaler_task_q, (void *) MSG_SCALER_TASK_PREVIEW_ON);
 	}
 	ap_video_record_init();
 	ap_state_handling_scroll_bar_init();
@@ -29,6 +29,9 @@ void state_video_record_init(INT32U prev_state)
 
 	ap_video_clear_lock_flag();
 	if( (ap_state_handling_storage_id_get() != NO_STORAGE) && (prev_state == STATE_STARTUP) && (s_usbd_pin == 0) ) {
+/* #BEGIN# modify by ShengHua - 2014.10.20 */
+		OSTimeDly(70);
+/* #END# modify by ShengHua - 2014.10.20 */
 		ap_video_record_func_key_active(MSG_APQ_FUNCTION_KEY_ACTIVE);
 	}
 }
