@@ -97,10 +97,10 @@
 #endif
 
 /* battery threshold */
-#define BATT_LV0			0xCF00		
-#define BATT_LV1			0xCC00
-#define BATT_LV2			0xC800
-#define BATT_LV3			0xC400
+#define BATT_LV0			0xD200		
+#define BATT_LV1			0xCF00
+#define BATT_LV2			0xCC00
+#define BATT_LV3			0xCA00
 
 #define C_BATT_LEVEL0			BATT_LV0
 #define C_BATT_LEVEL1			BATT_LV1
