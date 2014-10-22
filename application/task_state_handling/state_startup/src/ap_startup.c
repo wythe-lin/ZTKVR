@@ -64,7 +64,7 @@ void ap_startup_init(void)
 	    if (audio_effect_play(EFFECT_BEEP)) {
 	    	audio_done++;
 	    }
-	    OSTimeDly(3);
+	    OSTimeDly(20);
 	    if (audio_effect_play(EFFECT_POWER_ON)) {
 	    	audio_done++;
 	    }
