@@ -12,6 +12,14 @@ void state_startup_init(void)
 {
 	DBG_PRINT("Startup state init enter\r\n");
 	ap_startup_init();
+
+/* #BEGIN# add by xyz - 2014.10.27 */
+#if defined(DVR516_CFG) && (DVR516_CFG == 1)
+  	gpio_init_io(IO_G5, GPIO_OUTPUT);
+  	gpio_set_port_attribute(IO_G5, ATTRIBUTE_HIGH);
+  	gpio_write_io(IO_G5, DATA_HIGH);
+#endif
+/* #END# add by xyz - 2014.10.27 */
 }
 
 void state_startup_entry(void *para)
