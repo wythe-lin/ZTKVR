@@ -28,8 +28,9 @@ void task_peripheral_handling_entry(void *para)
 			continue;
 		}
 	
-        switch (msg_id & 0xFFFF) {
+		switch (msg_id & 0xFFFF) {
         	case MSG_PERIPHERAL_TASK_KEY_DETECT:
+			camswitch_judge();
         		ap_peripheral_key_judge();
         		ap_peripheral_adaptor_out_judge();
         		ap_peripheral_config_store();

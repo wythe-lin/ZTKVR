@@ -131,6 +131,7 @@ INT8U ap_state_config_voice_record_switch_get(void)
 
 void ap_state_config_pic_size_set(INT8U pic_size)
 {
+	DBG_PRINT("\033[40;32m%s()\033[0m - pic_size=%02x\r\n", __func__, pic_size);
 	if (pic_size != ap_state_config_pic_size_get()) {
 		Global_User_Optins.item.slideshow_photo_date_on = pic_size;
 		Global_User_Optins.item.ifdirty = 1;

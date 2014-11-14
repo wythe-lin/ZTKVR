@@ -446,7 +446,7 @@ INT8U ap_setting_right_menu_active(STRING_INFO *str, INT8U type, INT8U *sub_tag)
 {
 	TIME_T	g_time;
 	INT8U curr_tag;
-	
+
 	switch (str->str_idx) {
 		//case STR_EV:	//wwj mark
 		case STR_EV1:
@@ -558,9 +558,9 @@ INT8U ap_setting_right_menu_active(STRING_INFO *str, INT8U type, INT8U *sub_tag)
 		case STR_SIZE1:	//marty add
 			curr_tag = ap_state_config_pic_size_get();
 			if (type == STRING_DRAW) {
-				str->str_idx = curr_tag + /*STR_5M*/STR_D_VGA;	//marty modify
+				str->str_idx = curr_tag + STR_D_VGA/*STR_5M*/;		//marty modify
 			} else if (type == SUB_MENU_DRAW) {
-				setting_item.sub_item_max = /*5*/3;					//marty modify
+				setting_item.sub_item_max = /*5*/3;			//marty modify
 				setting_item.sub_item_start = STR_D_VGA/*STR_5M*/;	//marty modify
 			} else if (type == FUNCTION_ACTIVE) {
 				ap_state_config_pic_size_set(str->font_color);
@@ -1039,7 +1039,7 @@ INT8U ap_setting_right_menu_active(STRING_INFO *str, INT8U type, INT8U *sub_tag)
 void ap_setting_func_key_active(INT8U *tag, INT8U *sub_tag, INT32U state)
 {
 	STRING_INFO str_fake;
-	
+
 	if (setting_item.stage == 0x55AA) {
 		return;
 	}

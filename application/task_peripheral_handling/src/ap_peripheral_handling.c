@@ -155,8 +155,10 @@ void ap_peripheral_init(void)
   	led_status = 0;		//wwj add
   	led_cnt = 0;		//wwj add
 
-  	/* adpator detect pin */
+	// camera switch initial
+	camswitch_init();
 
+  	/* adpator detect pin */
   	gpio_init_io(ADP_OUT_PIN, GPIO_INPUT);
   	gpio_set_port_attribute(ADP_OUT_PIN, INPUT_WITH_RESISTOR);
   	gpio_write_io(ADP_OUT_PIN, DATA_LOW);
@@ -216,6 +218,158 @@ void ap_peripheral_init(void)
 #endif
 	config_cnt = 0;
 }
+
+
+/* #BEGIN# add by xyz - 2014.11.14 */
+extern void	state_video_record_init(INT32U prev_state);
+extern void	state_video_record_exit(void);
+extern void	state_setting_exit(void);
+extern void	ap_state_config_pic_size_set(INT8U pic_size);
+extern void	ap_state_config_store(void);
+extern void	ap_peripheral_irkey_clean(void);
+
+/*
+ *
+ *
+ */
+#define MSG_DMSG	1
+#define MSG_CAMSM	0
+#if (MSG_DMSG)
+   #define dmsg(x)	DBG_PRINT x
+#else
+   #define dmsg(x)
+#endif
+#if (MSG_CAMSM)
+   #define camsg(x)	{ DBG_PRINT("[%s]: ", (camsw[i].io == WATCH_CAM0) ? "cam0" : "cam1");	DBG_PRINT x ; }
+#else
+   #define camsg(x)
+#endif
+
+typedef struct {
+	INT32U	io;
+	INT32U	bounce;
+	INT32U	repeat;
+	INT32U	status;		// 0=low level, 1=high level, 2=rising edge, 3=falling edge
+	INT32U	new_state;
+	INT32U	old_state;
+} camswitch_t;
+
+static camswitch_t	camsw[2];
+static INT32U		camsw_record;
+
+
+/*
+ *
+ *
+ */
+void camswitch_send_mode(INT8U mode)
+{
+	if (mode != camsw_record) {
+		switch (mode) {
+		case 0:		dmsg(("\033[1;32mcamsw\033[0m - 0 & 1\r\n"));	break;
+		case 1:		dmsg(("\033[1;32mcamsw\033[0m - 0\r\n"));	break;
+		case 2:		dmsg(("\033[1;32mcamsw\033[0m - 1\r\n"));	break;
+		default:	dmsg(("\033[1;32mcamsw\033[0m - unknown\r\n"));	break;
+		}
+		camsw_record = mode;
+		msgQSend(ApQ, MSG_APQ_CAMSWITCH_ACTIVE, &mode, sizeof(INT8U), MSG_PRI_NORMAL);
+	}
+}
+
+void camswitch_set_mode(INT8U mode)
+{
+	dmsg(("\033[1;32m%s()\033[0m - mode=%02x\r\n", __func__, mode));
+
+	state_video_record_exit();
+
+	ap_state_config_pic_size_set(mode);
+	ap_state_config_store();
+	state_setting_exit();
+
+	ap_peripheral_irkey_clean();
+	state_video_record_init(STATE_SETTING);
+}
+
+void camswitch_judge(void)
+{
+	INT32U	i, state;
+
+
+	for (i=0; i<2; i++) {
+		state = gpio_read_io(camsw[i].io);
+		if (state != camsw[i].new_state) {
+			camsg(("init bounce\r\n"));
+			camsw[i].bounce    = 20;
+			camsw[i].new_state = state;
+		} else {
+			if (camsw[i].bounce != 0) {
+				camsg(("debounce...\r\n"));
+				camsw[i].bounce--;
+			} else {
+				if (camsw[i].new_state != camsw[i].old_state) {
+					if (camsw[i].new_state) {
+						camsg(("rising edge\r\n"));
+						camsw[i].status = 2;
+					} else {
+						camsg(("falling edge\r\n"));
+						camsw[i].status = 3;
+					}
+					camsw[i].repeat = 0;
+				} else {
+					if (camsw[i].repeat) {
+						camsw[i].repeat--;
+					} else {
+						if (camsw[i].new_state) {
+							camsg(("high level\r\n"));
+							camsw[i].status = 1;
+						} else {
+							camsg(("low level\r\n"));
+							camsw[i].status = 0;
+						}
+						camsw[i].repeat = 40;
+					}
+				}
+				camsw[i].old_state = camsw[i].new_state;
+			}
+		}
+	}
+
+	if (camsw[0].status == camsw[1].status) {
+		camswitch_send_mode(0);
+	} else {
+		if (!camsw[0].status) {
+			camswitch_send_mode(1);
+		}
+		if (!camsw[1].status) {
+			camswitch_send_mode(2);
+		}
+	}
+}
+
+void camswitch_init(void)
+{
+	int	i;
+
+	camsw[0].io = WATCH_CAM0;
+	camsw[1].io = WATCH_CAM1;
+	for (i=0; i<2; i++) {
+		camsw[i].bounce    = 0;
+		camsw[i].repeat    = 0;
+		camsw[i].status    = 0;
+		camsw[i].new_state = 0;
+		camsw[i].old_state = 0;
+
+		// input with pull high
+		gpio_init_io(camsw[i].io,            GPIO_INPUT);
+		gpio_set_port_attribute(camsw[i].io, INPUT_WITH_RESISTOR);
+		gpio_write_io(camsw[i].io,           DATA_HIGH);
+	}
+
+	camsw_record = 0;
+	dmsg(("%s()\r\n", __func__));
+}
+/* #END# add by xyz - 2014.11.14 */
+
 
 #if C_MOTION_DETECTION == CUSTOM_ON
 void ap_peripheral_motion_detect_isr(void)
@@ -1256,13 +1410,23 @@ void ap_peripheral_next_key_exe(INT16U *tick_cnt_ptr)
 	INT8U data = 0;
 
 	DBG_PRINT("respond next key \r\n");
-
 	msgQSend(ApQ, MSG_APQ_AUDIO_EFFECT_DOWN, NULL, NULL, MSG_PRI_NORMAL); //wwj add
 	if(screen_saver_enable){
 		screen_saver_enable = 0;
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
 	}else{
+#if 0
 		msgQSend(ApQ, MSG_APQ_NEXT_KEY_ACTIVE, &data, sizeof(INT8U), MSG_PRI_NORMAL);
+#else
+		state_video_record_exit();
+
+		ap_state_config_pic_size_set(0x0001);
+		ap_state_config_store();
+		state_setting_exit();
+
+		ap_peripheral_irkey_clean();
+		state_video_record_init(STATE_SETTING);
+#endif
 	}
 	*tick_cnt_ptr = 0;
 }
@@ -1277,7 +1441,18 @@ void ap_peripheral_prev_key_exe(INT16U *tick_cnt_ptr)
 		screen_saver_enable = 0;
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
 	}else{
+#if 0
 		msgQSend(ApQ, MSG_APQ_PREV_KEY_ACTIVE, &data, sizeof(INT8U), MSG_PRI_NORMAL);
+#else
+		state_video_record_exit();
+
+		ap_state_config_pic_size_set(0x0002);
+		ap_state_config_store();
+		state_setting_exit();
+
+		ap_peripheral_irkey_clean();
+		state_video_record_init(STATE_SETTING);
+#endif
 	}
 	*tick_cnt_ptr = 0;
 }

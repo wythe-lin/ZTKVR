@@ -52,7 +52,6 @@ void state_video_record_entry(void *para)
 		if (msgQReceive(ApQ, &msg_id, (void *) ApQ_para, AP_QUEUE_MSG_MAX_LEN) == STATUS_FAIL) {
 			continue;
 		}
-		
 		switch (msg_id) {
 			case EVENT_APQ_ERR_MSG:
 				audio_temp = (STAudioConfirm *)ApQ_para;
@@ -133,6 +132,11 @@ void state_video_record_entry(void *para)
         			exit_flag = EXIT_BREAK;
         		}
         		break;	
+
+		case MSG_APQ_CAMSWITCH_ACTIVE:
+			camswitch_set_mode(ApQ_para[0]);
+			break;
+
         	case MSG_APQ_MODE:
 				if((ap_video_record_sts_get() & VIDEO_RECORD_BUSY) && ((curr_file_info.file_handle == -1)||(next_file_info.file_handle == -1))) {	//wwj add
 					break;

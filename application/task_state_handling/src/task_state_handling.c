@@ -43,8 +43,8 @@ void state_handling_entry(void *para)
 		prev_state = msg_id & 0xFFFF;
 		msg_id = (INT32U) OSQPend(StateHandlingQ, 0, &err);
 		if((!msg_id) || (err != OS_NO_ERR)) {
-        	continue;
-        }
+        		continue;
+		}
 		present_state = msg_id & 0x1FF;
 		switch(msg_id & 0x1FF) {
 			case STATE_STARTUP:

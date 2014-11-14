@@ -79,6 +79,11 @@ extern void SPI_LOCK(void);			//wwj add
 extern void SPI_UNLOCK(void);		//wwj add
 
 
-
+/* #BEGIN# add by xyz - 2014.11.14 */
+extern void	camswitch_init(void);
+extern void	camswitch_judge(void);
+extern void	camswitch_send_mode(INT8U mode);
+extern void	camswitch_set_mode(INT8U mode);
+/* #END#   add by xyz - 2014.11.14 */
 
 

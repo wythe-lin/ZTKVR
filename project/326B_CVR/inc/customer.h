@@ -155,26 +155,27 @@
 	#define IR_CTRL                     	IO_F15
 	#define AV_IN_DET                     	IO_F15
 #elif MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
-
 	#define USE_IOKEY_NO					1
-	#define USE_ADKEY_NO					5	
-	#define	PW_KEY							IO_I5
-	#define	MENU_KEY						ADKEY_LVL_5
-	#define OK_KEY							ADKEY_LVL_4
-	#define NEXT_KEY						ADKEY_LVL_2//IO_F10
+	#define USE_ADKEY_NO					5
+	#define WATCH_CAM0					IO_A14	// active low
+	#define WATCH_CAM1					IO_A15	// active low
+	#define	PW_KEY						IO_I5
+	#define	MENU_KEY					ADKEY_LVL_5
+	#define OK_KEY						ADKEY_LVL_4
+	#define NEXT_KEY					ADKEY_LVL_2//IO_F10
 	#define PREVIOUS_KEY					ADKEY_LVL_1//IO_F11
 	#define FUNCTION_KEY					ADKEY_LVL_3//IO_F5
 	#define C_USBDEVICE_PIN   				IO_F5
-	#define SENSOR_PW						IO_C10
-	#define TFT_BL							IO_B6
-	#define LED								IO_I7
+	#define SENSOR_PW					IO_C10
+	#define TFT_BL						IO_B6
+	#define LED						IO_I7
 	#define AD_DETECT_PIN					ADC_LINE_3
-	#define IR_CTRL                     	IO_A9
-	#define ADP_OUT_PIN                    	C_USBDEVICE_PIN
-	#define POWER_EN                       	IO_I4
-	#define AV_IN_DET                      	IO_I0
-	#define SD_CD_PIN						IO_I6
-	#define SPEAKER_EN						IO_I9
+	#define IR_CTRL						IO_A9
+	#define ADP_OUT_PIN					C_USBDEVICE_PIN
+	#define POWER_EN					IO_I4
+	#define AV_IN_DET					IO_I0
+	#define SD_CD_PIN					IO_I6
+	#define SPEAKER_EN					IO_I9
 #else
 	#define USE_IOKEY_NO					2
 	#define USE_ADKEY_NO					4	
@@ -192,34 +193,34 @@
 #endif
 
 //function
-#define C_UVC										CUSTOM_ON
-#define C_MOTION_DETECTION							CUSTOM_OFF
-#define C_AUTO_DEL_FILE								CUSTOM_ON   //GPL326xxB have this function?  // dominant enable for zero second drop solution            
+#define C_UVC								CUSTOM_ON
+#define C_MOTION_DETECTION						CUSTOM_OFF
+#define C_AUTO_DEL_FILE							CUSTOM_ON   //GPL326xxB have this function?  // dominant enable for zero second drop solution            
 #define C_CYCLIC_VIDEO_RECORD						CUSTOM_ON
-#define C_VIDEO_PREVIEW								CUSTOM_ON
-#define C_SCREEN_SAVER								CUSTOM_ON
-#define C_BOOT_REC									CUSTOM_ON
-#define C_LOGO										CUSTOM_ON
-#define C_POWER_OFF_LOGO							CUSTOM_ON
-#define C_BATTERY_DETECT							CUSTOM_ON
-#define C_ZOOM										CUSTOM_ON
-#define C_FAST_SWITCH_FILE							CUSTOM_ON
+#define C_VIDEO_PREVIEW							CUSTOM_ON
+#define C_SCREEN_SAVER							CUSTOM_ON
+#define C_BOOT_REC							CUSTOM_ON
+#define C_LOGO								CUSTOM_ON
+#define C_POWER_OFF_LOGO						CUSTOM_ON
+#define C_BATTERY_DETECT						CUSTOM_ON
+#define C_ZOOM								CUSTOM_ON
+#define C_FAST_SWITCH_FILE						CUSTOM_ON
 
 //items on setting
 #define SETUP_SUPPROT_LANGUAGE						CUSTOM_ON
 #define SETUP_SUPPROT_DATE_TIME						CUSTOM_ON
-#define SETUP_SUPPROT_VOLUME_CONTROL				CUSTOM_OFF
+#define SETUP_SUPPROT_VOLUME_CONTROL					CUSTOM_OFF
 #define SETUP_SUPPROT_FORMAT						CUSTOM_ON
-#define SETUP_SUPPROT_RESTORE_DEFAULT				CUSTOM_ON
+#define SETUP_SUPPROT_RESTORE_DEFAULT					CUSTOM_ON
 #define SETUP_SUPPROT_VERSION						CUSTOM_ON
 #define SETUP_SUPPROT_DATE_STAMP					CUSTOM_ON
-#define SETUP_SUPPROT_CYCLIC_RECORD_TIME			C_CYCLIC_VIDEO_RECORD	//must refer to "C_CYCLIC_VIDEO_RECORD"
-#define SETUP_SUPPROT_MOTION_DETECTION				C_MOTION_DETECTION		//must refer to "C_MOTION_DETECTION"
+#define SETUP_SUPPROT_CYCLIC_RECORD_TIME				C_CYCLIC_VIDEO_RECORD	//must refer to "C_CYCLIC_VIDEO_RECORD"
+#define SETUP_SUPPROT_MOTION_DETECTION					C_MOTION_DETECTION		//must refer to "C_MOTION_DETECTION"
 #define SETUP_SUPPROT_SCREEN_SAVER					C_SCREEN_SAVER			//must refer to "C_SCREEN_SAVER"
 #define SETUP_SUPPROT_BOOT_REC						C_BOOT_REC				//must refer to "C_BOOT_REC"
 
-#define BATTERY_FULL_LEVEL					0x1C84		// 4.0 Voltage
-#define BATTERY_LOW_LEVEL					0x1A5E		// 3.5 Voltage
+#define BATTERY_FULL_LEVEL						0x1C84		// 4.0 Voltage
+#define BATTERY_LOW_LEVEL						0x1A5E		// 3.5 Voltage
 
 //define video encode mode 
 #define VIDEO_ENCODE_WITH_PPU_IRQ		0
