@@ -1415,7 +1415,7 @@ void ap_peripheral_next_key_exe(INT16U *tick_cnt_ptr)
 		screen_saver_enable = 0;
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
 	}else{
-#if 0
+#if 1
 		msgQSend(ApQ, MSG_APQ_NEXT_KEY_ACTIVE, &data, sizeof(INT8U), MSG_PRI_NORMAL);
 #else
 		state_video_record_exit();
@@ -1441,7 +1441,7 @@ void ap_peripheral_prev_key_exe(INT16U *tick_cnt_ptr)
 		screen_saver_enable = 0;
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
 	}else{
-#if 0
+#if 1
 		msgQSend(ApQ, MSG_APQ_PREV_KEY_ACTIVE, &data, sizeof(INT8U), MSG_PRI_NORMAL);
 #else
 		state_video_record_exit();
