@@ -122,13 +122,13 @@ void state_browse_entry(void *para, INT16U play_index)
 	        		if ((audio_playing_state_get() == STATE_PAUSED) && (pre_audio_state == STATE_PLAY)) {
 
 	        			#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
-						  #if DV185	//wwj add
+						#if DV185	//wwj add
 							gpio_write_io(SPEAKER_EN, DATA_LOW);
-						  #elif DV188
+						#elif DV188
 							gpx_rtc_write(8,0x08);
-						  #endif
-						Chip_powerup();
 						#endif
+						Chip_powerup();
+					#endif
 
 						audio_send_resume();
 					}

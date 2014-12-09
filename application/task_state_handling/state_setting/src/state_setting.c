@@ -59,6 +59,7 @@ void state_setting_entry(void *para)
         		ap_state_handling_power_off();
         		break;
         	case MSG_APQ_MENU_KEY_ACTIVE:
+			gpio_write_io(SPEAKER_EN, 1);	// add by xyz - 2014.12.09
         		exit_flag = ap_setting_menu_key_active(&curr_tag, &sub_tag, &prev_state, &prev_state1);
         		if(exit_flag == EXIT_BREAK) {
         			OSTimeDly(5);
@@ -194,6 +195,7 @@ void state_setting_entry(void *para)
 	}
 	
 	if (exit_flag == EXIT_BREAK) {
+		gpio_write_io(SPEAKER_EN, 0);	// add by xyz - 2014.12.09
 		state_setting_exit();
 	}
 }
