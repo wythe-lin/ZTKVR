@@ -46,7 +46,7 @@ void state_video_preview_entry(void *para)
 
 					#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
 					  #if DV185	//wwj add
-						gpio_write_io(SPEAKER_EN, DATA_LOW);
+//						gpio_write_io(SPEAKER_EN, DATA_LOW);	// mark by xyz - 2014.12.10
 					  #elif DV188
 						gpx_rtc_write(8,0x08);
 					  #endif

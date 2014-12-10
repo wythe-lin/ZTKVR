@@ -34,7 +34,7 @@ void state_setting_entry(void *para)
 
 					#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
 					  #if DV185	//wwj add
-						gpio_write_io(SPEAKER_EN, DATA_LOW);
+//						gpio_write_io(SPEAKER_EN, DATA_LOW);	// mark by xyz - 2014.12.10
 					  #elif DV188
 						gpx_rtc_write(8,0x08);
 					  #endif
@@ -59,7 +59,6 @@ void state_setting_entry(void *para)
         		ap_state_handling_power_off();
         		break;
         	case MSG_APQ_MENU_KEY_ACTIVE:
-			gpio_write_io(SPEAKER_EN, 1);	// add by xyz - 2014.12.09
         		exit_flag = ap_setting_menu_key_active(&curr_tag, &sub_tag, &prev_state, &prev_state1);
         		if(exit_flag == EXIT_BREAK) {
         			OSTimeDly(5);
@@ -195,7 +194,6 @@ void state_setting_entry(void *para)
 	}
 	
 	if (exit_flag == EXIT_BREAK) {
-		gpio_write_io(SPEAKER_EN, 0);	// add by xyz - 2014.12.09
 		state_setting_exit();
 	}
 }

@@ -47,13 +47,13 @@ void state_browse_entry(void *para, INT16U play_index)
 	  				msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_TIMER_START, NULL, NULL, MSG_PRI_NORMAL); //wwj add
 				} else if ((audio_temp->result == AUDIO_ERR_DEC_FINISH) && (audio_temp->source_type == AUDIO_SRC_TYPE_APP_RS)){
 
-					#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
-					  #if DV185	//wwj add
-						gpio_write_io(SPEAKER_EN, DATA_LOW);
-					  #elif DV188
-						gpx_rtc_write(8,0x08);
-					  #endif
-					#endif
+#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
+    #if DV185	//wwj add
+//					gpio_write_io(SPEAKER_EN, DATA_LOW);	// mark by xyz - 2014.12.10
+    #elif DV188
+					gpx_rtc_write(8,0x08);
+    #endif
+#endif
 
 				    if (func_key_act) {
 						if(g_browser_reply_action_flag) { //wwj add
@@ -123,7 +123,7 @@ void state_browse_entry(void *para, INT16U play_index)
 
 	        			#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
 						#if DV185	//wwj add
-							gpio_write_io(SPEAKER_EN, DATA_LOW);
+//							gpio_write_io(SPEAKER_EN, DATA_LOW);	// mark by xyz - 2014.12.10
 						#elif DV188
 							gpx_rtc_write(8,0x08);
 						#endif
@@ -141,7 +141,7 @@ void state_browse_entry(void *para, INT16U play_index)
 
 						#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
 						  #if DV185	//wwj add
-							gpio_write_io(SPEAKER_EN, DATA_LOW);
+//							gpio_write_io(SPEAKER_EN, DATA_LOW);	// mark by xyz - 2014.12.10
 						  #elif DV188
 							gpx_rtc_write(8,0x08);
 						  #endif
@@ -164,7 +164,7 @@ void state_browse_entry(void *para, INT16U play_index)
 
 					#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
 					  #if DV185	//wwj add
-						gpio_write_io(SPEAKER_EN, DATA_LOW);
+//						gpio_write_io(SPEAKER_EN, DATA_LOW);	// mark by xyz - 2014.12.10
 					  #elif DV188
 						gpx_rtc_write(8,0x08);
 					  #endif
@@ -249,7 +249,7 @@ void state_browse_entry(void *para, INT16U play_index)
 					#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
 					  #if DV185	//wwj add
 						if ((audio_playing_state_get() != STATE_PLAY)  && gpio_read_io(SPEAKER_EN)) {
-							gpio_write_io(SPEAKER_EN, DATA_LOW);
+//							gpio_write_io(SPEAKER_EN, DATA_LOW);	// mark by xyz - 2014.12.10
 					  #elif DV188
 						if (audio_playing_state_get() != STATE_PLAY) {
 							gpx_rtc_write(8,0x08);

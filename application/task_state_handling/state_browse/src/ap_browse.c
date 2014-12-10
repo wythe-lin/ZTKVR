@@ -166,13 +166,13 @@ void ap_browse_mjpeg_stop(void)
 	vid_dec_stop();
 	vid_dec_parser_stop();
 
-	#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
-	  #if DV185	//wwj add
-		gpio_write_io(SPEAKER_EN, DATA_LOW);
-	  #elif DV188
-		gpx_rtc_write(8,0x08);
-	  #endif
-	#endif
+#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
+    #if DV185	//wwj add
+//	gpio_write_io(SPEAKER_EN, DATA_LOW);	// mark by xyz - 2014.12.10
+    #elif DV188
+	gpx_rtc_write(8,0x08);
+    #endif
+#endif
 }
 
 void ap_browse_mjpeg_play_end(void)
@@ -465,14 +465,14 @@ void ap_browse_wav_play(void)
 	browse_curr_avi.file_handle = open((CHAR *) browse_curr_avi.file_path_addr, O_RDONLY);
 	if (browse_curr_avi.file_handle >= 0) {
 
-		#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
-		  #if DV185	//wwj add
-			gpio_write_io(SPEAKER_EN, 1);
-		  #elif DV188
-			gpx_rtc_write(8,0x28);		//lqy 2011.11.25
-		  #endif
+#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
+    #if DV185	//wwj add
+//		gpio_write_io(SPEAKER_EN, 1);	// mark by xyz - 2014.12.10
+    #elif DV188
+		gpx_rtc_write(8,0x28);		//lqy 2011.11.25
+    #endif
 		//Chip_powerdown();
-  		#endif
+#endif
 
 		audio_wav_play(browse_curr_avi.file_handle);
 
@@ -499,13 +499,13 @@ void ap_browse_wav_stop(void)
 	audio_wav_stop();
 	//close(browse_curr_avi.file_handle); //wwj mark
 
-	#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
-	  #if DV185	//wwj add
-		gpio_write_io(SPEAKER_EN, DATA_LOW);
-	  #elif DV188
-		gpx_rtc_write(8,0x08);
-	  #endif
-	#endif
+#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
+    #if DV185	//wwj add
+//	gpio_write_io(SPEAKER_EN, DATA_LOW);	// mark by xyz - 2014.12.10
+    #elif DV188
+	gpx_rtc_write(8,0x08);
+    #endif
+#endif
 }
 
 INT8S ap_browse_stop_handle(void)
@@ -635,14 +635,14 @@ INT32S ap_browse_mjpeg_decode(void)
 				msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_TIMER_START, NULL, NULL, MSG_PRI_NORMAL);
 			}
 		} else {
-			#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
-			  #if DV185	//wwj add
-				gpio_write_io(SPEAKER_EN, 1);
-			  #elif DV188
-				gpx_rtc_write(8,0x28);
-			  #endif
+#if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
+    #if DV185	//wwj add
+//			gpio_write_io(SPEAKER_EN, 1);	// mark by xyz - 2014.12.10
+   #elif DV188
+			gpx_rtc_write(8,0x28);
+   #endif
 			//Chip_powerdown();
-	  		#endif
+#endif
 
 			timer_counter_force_display_browser(1);	//wwj add
 			ap_peripheral_auto_off_force_disable_set(1); //wwj add
