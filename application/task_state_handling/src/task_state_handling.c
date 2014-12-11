@@ -24,7 +24,7 @@ void state_handling_init(void)
 	config_load_flag = ap_state_config_load();
 	ap_state_resource_init();
 	ap_state_config_initial(config_load_flag);
-//ap_state_config_initial(STATUS_FAIL);
+//	ap_state_config_initial(STATUS_FAIL);
 	ap_state_handling_calendar_init();
 	ap_state_ir_key_init();
 }

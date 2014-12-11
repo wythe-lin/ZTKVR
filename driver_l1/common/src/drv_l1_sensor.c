@@ -8844,6 +8844,8 @@ OV3640_MIPI_Init(
  * Return: None
  *****************************************************************************
  */
+extern INT8U	ap_state_config_light_freq_get(void);
+
 void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 {
 	INT16U	uCtrlReg1, uCtrlReg2;
@@ -8948,22 +8950,33 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 
 #if (ZT3150_VGA)
 	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);
-	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x81);
-	sccb_wr_r16d8(ZT3150_ID, 0x0083, 0x00);
+	if (!ap_state_config_light_freq_get()) {
+		_D(DBG_PRINT(" 50Hz\r\n"));
+		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x82);
+	} else {
+		_D(DBG_PRINT(" 60Hz\r\n"));
+		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x81);
+	}
+
 #elif (ZT3150_1280x480)
-#if Z_SIDE_BY_SIDE
+    #if Z_SIDE_BY_SIDE
 	// side by side
 	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x03);
-	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);
-#else
+    #else
 	// stitching
 	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);
-	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x01);
-#endif
-	sccb_wr_r16d8(ZT3150_ID, 0x0083, 0x00);
+    #endif
+	if (!ap_state_config_light_freq_get()) {
+		_D(DBG_PRINT(" 50Hz\r\n"));
+		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);
+	} else {
+		_D(DBG_PRINT(" 60Hz\r\n"));
+		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x01);
+	}
 #else
     #error "Wherein one of ZT3150_VGA or ZT3150_1280x480 must be set"
 #endif
+	sccb_wr_r16d8(ZT3150_ID, 0x0083, 0x00);
 
 	sccb_wr_r16d8(ZT3150_ID, 0x0080, 0x01);
 	drv_msec_wait(50);

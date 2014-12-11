@@ -21,6 +21,9 @@ void ap_state_config_default_set(void)
 	// some default config is 0
 	gp_memset((INT8S *)&Global_User_Optins, 0x00, sizeof(SYSTEM_USER_OPTION));
 	ap_state_resource_user_option_load(&Global_User_Optins);
+
+	ap_state_config_light_freq_set(1);	// add by xyz - 2014.12.11
+
 	//MP3 function reset value
 	if(fm_tx_status_get() == 1){
 		ap_state_music_fm_ch_set(989);	//default value for fm tx
@@ -35,19 +38,19 @@ void ap_state_config_store(void)
 		/* calculate CRC */
 		CRC_cal((INT8U*)&Global_User_Optins.item, sizeof(USER_ITEMS),Global_User_Optins.crc);
 		DBG_PRINT("store CRC = %02x %02x %02x %02x\r\n",Global_User_Optins.crc[0],Global_User_Optins.crc[1],Global_User_Optins.crc[2],Global_User_Optins.crc[3]);
-    	nvmemory_user_sector_store(0, (INT32U *)&Global_User_Optins, 1);
-    	#if 0 //Do not retry
-    	gp_memcpy((INT8S*)&user_item, (INT8S*)&Global_User_Optins.item, sizeof(USER_ITEMS));
-    	nvmemory_user_sector_load(0, (INT32U *)&Global_User_Optins, 1);
-    	if (gp_memcmp((INT8S*)&user_item, (INT8S*)&Global_User_Optins.item, sizeof(USER_ITEMS)) != 0) {
-    		DBG_PRINT("verify failed, store again\r\n");
+		nvmemory_user_sector_store(0, (INT32U *)&Global_User_Optins, 1);
+#if 0 //Do not retry
+		gp_memcpy((INT8S*)&user_item, (INT8S*)&Global_User_Optins.item, sizeof(USER_ITEMS));
+		nvmemory_user_sector_load(0, (INT32U *)&Global_User_Optins, 1);
+		if (gp_memcmp((INT8S*)&user_item, (INT8S*)&Global_User_Optins.item, sizeof(USER_ITEMS)) != 0) {
+			DBG_PRINT("verify failed, store again\r\n");
 			gp_memcpy((INT8S*)&Global_User_Optins.item,(INT8S*)&user_item, sizeof(USER_ITEMS));
-    		CRC_cal((INT8U*)&Global_User_Optins.item, sizeof(USER_ITEMS),Global_User_Optins.crc);
-    		nvmemory_user_sector_store(0, (INT32U *)&Global_User_Optins, 1);
+			CRC_cal((INT8U*)&Global_User_Optins.item, sizeof(USER_ITEMS),Global_User_Optins.crc);
+			nvmemory_user_sector_store(0, (INT32U *)&Global_User_Optins, 1);
 		}
-		#endif
+#endif
 		Global_User_Optins.item.ifdirty = 0;
-    }
+	}
 }
 
 INT32S ap_state_config_load(void)

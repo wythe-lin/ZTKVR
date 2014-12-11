@@ -61,47 +61,47 @@ typedef struct
 } FM_INFO;
 
 typedef struct {
-     INT8U  language;
-     INT8U  date_format_display;
-     INT8U  time_format_display;
-     INT8U  week_format_display;
-     INT8U  lcd_backlight;
-     INT8U  sound_volume;
-     INT8U  current_storage;
-     INT8U  current_photo_index[3];
-     INT8U  slideshow_duration;
-     INT8U  slideshow_bg_music[3];
-     INT8U  slideshow_transition;
-     INT8U  slideshow_photo_date_on;
-     INT8U  calendar_duration;
-     INT8U  calendar_displaymode;
-     INT8U  thumbnail_mode;
-     INT8U  music_play_mode;
-     INT8U  music_on_off;
-     INT8U  midi_exist_mode;
-     INT8U  factory_date[3];                //yy,mm,dd
-     INT8U  factory_time[3];                //hh:mm:ss
-     ALARM_STRUCT	nv_alarm_struct1;
-     ALARM_STRUCT	nv_alarm_struct2;
-     INT8U	alarm_modual;
-     INT8U	full_screen;
-     INT8U	sleep_time;
-     POWERONOFF_STRUCT powertime_onoff_struct1;
-     POWERONOFF_STRUCT powertime_onoff_struct2;
-     INT8U powertime_modual;
-	 INT8S powertime_active_id;
-	 INT8U powertime_happened;
-     INT32U copy_file_counter;
-     INT32U Pre_Pow_off_state;
-     FM_INFO FM_struct;
-	 INT8U	save_as_logo_flag;
-	 INT8S	alarm_volume1;
-	 INT8S	alarm_volume2;
-	 INT8U	alarm_mute1;
-	 INT8U	alarm_mute2;
-     INT8U	ui_style;
-     INT32U base_day;
-     INT8U  ifdirty;
+	INT8U		language;
+	INT8U		date_format_display;
+	INT8U		time_format_display;
+	INT8U		week_format_display;
+	INT8U		lcd_backlight;
+	INT8U		sound_volume;
+	INT8U		current_storage;
+	INT8U		current_photo_index[3];
+	INT8U		slideshow_duration;
+	INT8U		slideshow_bg_music[3];
+	INT8U		slideshow_transition;
+	INT8U		slideshow_photo_date_on;
+	INT8U		calendar_duration;
+	INT8U		calendar_displaymode;
+	INT8U		thumbnail_mode;
+	INT8U		music_play_mode;
+	INT8U		music_on_off;
+	INT8U		midi_exist_mode;
+	INT8U		factory_date[3];                //yy,mm,dd
+	INT8U		factory_time[3];                //hh:mm:ss
+	ALARM_STRUCT	nv_alarm_struct1;
+	ALARM_STRUCT	nv_alarm_struct2;
+	INT8U		alarm_modual;			//light freq
+	INT8U		full_screen;
+	INT8U		sleep_time;
+	POWERONOFF_STRUCT	powertime_onoff_struct1;
+	POWERONOFF_STRUCT	powertime_onoff_struct2;
+	INT8U		powertime_modual;
+	INT8S		powertime_active_id;
+	INT8U		powertime_happened;
+	INT32U		copy_file_counter;
+	INT32U		Pre_Pow_off_state;
+	FM_INFO		FM_struct;
+	INT8U		save_as_logo_flag;
+	INT8S		alarm_volume1;
+	INT8S		alarm_volume2;
+	INT8U		alarm_mute1;
+	INT8U		alarm_mute2;
+	INT8U		ui_style;
+	INT32U		base_day;
+	INT8U		ifdirty;
 } USER_ITEMS;
 
 typedef struct {
