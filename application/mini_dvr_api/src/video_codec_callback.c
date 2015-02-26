@@ -250,9 +250,9 @@ void video_encode_end(void *workmem)
 {
 	//add description to avi file
 	//int AviPackerV3_AddInfoStr(const char *fourcc, const char *info_string);
-	AviPackerV3_AddInfoStr(workmem, "ISRC", "ZealTek");
-	AviPackerV3_AddInfoStr(workmem, "IART", "ZealTek");
-	AviPackerV3_AddInfoStr(workmem, "ICOP", "ZealTek");
+	AviPackerV3_AddInfoStr(workmem, "ISRC", " ");  //Zealtek
+	AviPackerV3_AddInfoStr(workmem, "IART", " ");  //Zealtek
+	AviPackerV3_AddInfoStr(workmem, "ICOP", " ");  //Zealtek
 	AviPackerV3_AddInfoStr(workmem, "ICRD", "2010-06-29");
 }
 
