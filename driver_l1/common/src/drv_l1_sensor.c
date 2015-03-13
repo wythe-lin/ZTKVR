@@ -8950,7 +8950,7 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 
 #if (ZT3150_VGA)
 	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);
-	if (ap_state_config_light_freq_get()) {
+	if (!ap_state_config_light_freq_get()) {	
 		_D(DBG_PRINT(" 50Hz\r\n"));
 		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x82);
 	} else {
@@ -8966,7 +8966,7 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	// stitching
 	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);
     #endif
-	if (ap_state_config_light_freq_get()) {
+	if (!ap_state_config_light_freq_get()) {
 		_D(DBG_PRINT(" 50Hz\r\n"));
 		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);
 	} else {
@@ -9000,6 +9000,8 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	_D(DBG_PRINT(" R_CSI_TG_CTRL0   = 0x%04x\r\n", (INT16U) uCtrlReg1));
 	_D(DBG_PRINT(" R_CSI_TG_CTRL1   = 0x%04x\r\n", (INT16U) uCtrlReg2));
 	_D(DBG_PRINT("\033[1;36mZT3150 - done\r\n\033[0m"));
+	
+
 }
 
 /*
