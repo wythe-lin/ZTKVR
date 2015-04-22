@@ -908,15 +908,15 @@ INT8U ap_setting_right_menu_active(STRING_INFO *str, INT8U type, INT8U *sub_tag)
 					DBG_PRINT("menu - system reset\r\n");
 					ap_state_config_default_set();
 /* #BEGIN# modify by xyz - 2014.12.11 */
-//					ap_state_config_factory_date_get(&setup_date_time[0]);
-//					ap_state_config_factory_time_get(&setup_date_time[3]);
-//					g_time.tm_year = setup_date_time[0] + 2000;
-//					g_time.tm_mon  = setup_date_time[1];
-//					g_time.tm_mday = setup_date_time[2];
-//					g_time.tm_hour = setup_date_time[3];
-//					g_time.tm_min  = setup_date_time[4];
-//					g_time.tm_sec  = setup_date_time[5];
-//					cal_time_set(g_time);					
+					ap_state_config_factory_date_get(&setup_date_time[0]);
+					ap_state_config_factory_time_get(&setup_date_time[3]);
+					g_time.tm_year = setup_date_time[0] + 2000;
+					g_time.tm_mon  = setup_date_time[1];
+					g_time.tm_mday = setup_date_time[2];
+					g_time.tm_hour = setup_date_time[3];
+					g_time.tm_min  = setup_date_time[4];
+					g_time.tm_sec  = setup_date_time[5];
+					cal_time_set(g_time);					
 /* #END#   modify by xyz - 2014.12.11 */
 					ap_setting_value_set_from_user_config();
 				}

@@ -40,7 +40,7 @@
    #define Z_SIDE_BY_SIDE		1
    #define ADKEY_WITH_BAT		0
    #define DUAL_ADP_IN			1
-   #define TIME_ADP_OUT_DLY		10		// unit: second
+   #define TIME_ADP_OUT_DLY		3		// unit: second
 #elif (DVR517_CFG == 1)
    #define C_DISPLAY_DEVICE		ILI8961
    #define FLIP_ILI8961			0
