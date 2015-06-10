@@ -32,7 +32,7 @@
 #define K6000_CFG			1
 #define K12_CFG				0
 
-
+/* */
 #undef C_DISPLAY_DEVICE
 #if   (DVR516_CFG == 1)
    #define C_DISPLAY_DEVICE		ILI8961//ILI9341
@@ -41,6 +41,7 @@
    #define ADKEY_WITH_BAT		0
    #define DUAL_ADP_IN			1
    #define TIME_ADP_OUT_DLY		3		// unit: second
+   #define d_anti_flicker(x)		(!x)
 #elif (DVR517_CFG == 1)
    #define C_DISPLAY_DEVICE		ILI8961
    #define FLIP_ILI8961			0
@@ -48,18 +49,21 @@
    #define ADKEY_WITH_BAT		0
    #define DUAL_ADP_IN			1
    #define TIME_ADP_OUT_DLY		5		// unit: second
+   #define d_anti_flicker(x)		(!x)
 #elif (K6000_CFG == 1)
    #define C_DISPLAY_DEVICE		ILI9341
    #define Z_SIDE_BY_SIDE		1
    #define ADKEY_WITH_BAT		0
    #define DUAL_ADP_IN			1
    #define TIME_ADP_OUT_DLY		5		// unit: second
+   #define d_anti_flicker(x)		(x)
 #elif (K12_CFG == 1)
    #define C_DISPLAY_DEVICE		ILI9341
    #define Z_SIDE_BY_SIDE		1
    #define ADKEY_WITH_BAT		0
    #define DUAL_ADP_IN			1
    #define TIME_ADP_OUT_DLY		5		// unit: second
+   #define d_anti_flicker(x)		(!x)
 #else
    #error must be chioce one xxx_CFG
 #endif
