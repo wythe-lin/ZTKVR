@@ -29,8 +29,8 @@
 /* custom */
 #define DVR516_CFG			0
 #define DVR517_CFG			0
-#define K6000_CFG			1
-#define K12_CFG				0
+#define K6000_CFG			0
+#define K12_CFG				1
 
 /* */
 #undef C_DISPLAY_DEVICE
@@ -62,7 +62,7 @@
    #define Z_SIDE_BY_SIDE		1
    #define ADKEY_WITH_BAT		0
    #define DUAL_ADP_IN			1
-   #define TIME_ADP_OUT_DLY		5		// unit: second
+   #define TIME_ADP_OUT_DLY		1		// unit: second
    #define d_anti_flicker(x)		(!x)
 #else
    #error must be chioce one xxx_CFG
