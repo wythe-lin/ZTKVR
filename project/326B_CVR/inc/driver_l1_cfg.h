@@ -118,6 +118,7 @@
     #define TPO_TD025THD1	          	0x600B  // 320x240                                 //
 	#define ILI9341					    0x600C  // 320x240
 	#define ILI8961					    0x600D  // 320x240
+    #define HX8268C			0x6010
 	#define FOX_FL320WQC11	          	0x7000  // 400x240 
     #define GPM_LM765A0		          	0x8000  // 160x128
     #define GPM_LM765H0		          	0x8001  // 160x128                                  //

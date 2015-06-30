@@ -35,7 +35,7 @@
 /* */
 #undef C_DISPLAY_DEVICE
 #if   (DVR516_CFG == 1)
-   #define C_DISPLAY_DEVICE		ILI8961//ILI9341
+   #define C_DISPLAY_DEVICE		HX8268C//ILI8961//ILI9341
    #define FLIP_ILI8961			1
    #define Z_SIDE_BY_SIDE		1
    #define ADKEY_WITH_BAT		0
