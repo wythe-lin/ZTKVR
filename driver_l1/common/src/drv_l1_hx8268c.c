@@ -151,6 +151,7 @@ void hx8268c_write(unsigned char reg, unsigned char val)
 unsigned char hx8268c_read(unsigned char reg)
 {
 	int		i;
+	unsigned char	val;
 	unsigned char	addr;
 
 	_D(DBG_PRINT("hx8268c_read - start\r\n"));
