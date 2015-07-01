@@ -171,12 +171,15 @@ void tft_start(INT32U model)
         case TPO_TD025THD1:
         	tft_tpo_td025thd1_init();
         	break;
-		case ILI9341:
-			ILI9341_LX240A3602B_Initial();
-			break;
-		case ILI8961:
-			ili8961_txdt270c_init();
-			break;
+	case ILI9341:
+		ILI9341_LX240A3602B_Initial();
+		break;
+	case ILI8961:
+		ili8961_txdt270c_init();
+		break;
+	case HX8268C:
+		hx8268c_cpt27_init();
+		break;
 #endif
 #if (DPF_H_V==DPF_400x240)
 		case FOX_FL320WQC11:
@@ -2162,6 +2165,49 @@ void ili8961_txdt270c_init(void)
 	tft_clk_set(TFT_CLK_DIVIDE_4);
 #endif
 }
+
+/*
+ * HX8268C driver
+ */
+#include "drv_l1_hx8268c.h"
+
+// CPT2.7 driver
+void hx8268c_cpt27_init(void)
+{
+#if (C_DISPLAY_DEVICE == HX8268C)
+	hx8268c_init();
+	hx8268c_write(0x00, 0x0B);
+	hx8268c_write(0x01, 0x9C);
+	hx8268c_write(0x03, 0x40);
+	hx8268c_write(0x04, 0x0b);
+	hx8268c_write(0x05, 0x5C);
+	hx8268c_write(0x2f, 0x61);
+	hx8268c_write(0x55, 0x40/*0x00*/);
+	hx8268c_write(0x57, 0x00);
+	hx8268c_write(0x5a, 0x02);
+	hx8268c_write(0x66, 0x68);
+	hx8268c_write(0x20, 0xd0);
+	hx8268c_write(0x2b, 0x01);
+
+	R_TFT_VS_WIDTH	= 0;
+	R_TFT_HS_WIDTH	= 0;
+
+	R_TFT_V_PERIOD	= 21+240+1;
+	R_TFT_V_START	= 21;
+	R_TFT_V_END	= 21+240;
+
+	R_TFT_H_PERIOD	= 1+240+1280+39;
+	R_TFT_H_START	= 1+240;
+	R_TFT_H_END	= 1+240+1280;
+
+	R_TFT_LINE_RGB_ORDER = 0x00;
+	tft_signal_inv_set(TFT_DCLK_INV | TFT_VSYNC_INV | TFT_HSYNC_INV, (TFT_ENABLE & TFT_DCLK_INV) | (TFT_ENABLE & TFT_VSYNC_INV) | (TFT_ENABLE & TFT_HSYNC_INV));
+	tft_mode_set(TFT_MODE_UPS052);
+	tft_data_mode_set(TFT_DATA_MODE_8);
+	tft_clk_set(TFT_CLK_DIVIDE_4);
+#endif
+}
+
 
 #if 0
 void chilin_spi_write(INT32U cmd)

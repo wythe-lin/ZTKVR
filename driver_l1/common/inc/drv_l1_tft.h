@@ -154,6 +154,7 @@ void tft_chimei_q08009_701_init(void);
 void tft_auo_m150xn07_init(void);
 void ILI9341_LX240A3602B_Initial(void);
 void ili8961_txdt270c_init(void);
+void hx8268c_cpt27_init(void);
 
 void tft_tpo_spi_write(INT32U data, INT32U len);
 void tft_tpo_spi_data_build(INT8U *in_data,INT8U mode, INT8U *out_data, INT32U *out_len);
