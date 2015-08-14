@@ -1,16 +1,40 @@
 #include "ap_peripheral_handling.h"
 
-#define C_AD_VALUE_0			0
-#define C_AD_VALUE_1			70
-#define C_AD_VALUE_2			127+40
-#define C_AD_VALUE_3			280+40 
-#define C_AD_VALUE_4			410+40
-#define C_AD_VALUE_5			520+40 
-#define C_AD_VALUE_6			650+40
-#define C_AD_VALUE_7			760+40
-#define C_AD_VALUE_8			880+40
+#define ENABLE				1
+#define DISABLE				0
 
-	
+/*
+ * for debug
+ */
+#define DEBUG_NONE			0x0000
+#define DEBUG_MESSAGE			0x0001
+#define PRINT_ADKEY_VAL			0x0002	// print ad key value
+#define PRINT_BAT_VAL			0x0004	// print battery value
+
+#define DEBUG_OPTION		(	\
+	DEBUG_MESSAGE		|	\
+/*	PRINT_ADKEY_VAL		|*/	\
+/*	PRINT_BAT_VAL		|*/	\
+	DEBUG_NONE)
+
+#if (DEBUG_OPTION & DEBUG_MESSAGE)
+    #define _msg(x)		(x)
+#else
+    #define _msg(x)
+#endif
+
+#if (DEBUG_OPTION & PRINT_ADKEY_VAL)
+    #define _adkey(x)		(x)
+#else
+    #define _adkey(x)
+#endif
+
+#if (DEBUG_OPTION & PRINT_BAT_VAL)
+    #define _bat(x)		(x)
+#else
+    #define _bat(x)
+#endif
+
 
 #if C_MOTION_DETECTION == CUSTOM_ON
 	static INT32U md_work_memory_addr;
@@ -24,10 +48,11 @@
 
 	static INT8U ad_base_ck_cnt = 0;
 	static INT32U ad_base_ck_sum = 0;
-	
+
 	static INT8U ad_18_ck_cnt = 0;
 	static INT32U ad_18_value_sum = 0;
 	static INT32U ad_18_value_sum_bak = 0;
+	static INT16U ad_value_fifo[32] = {0};
 #endif
 #if USE_ADKEY_NO
 	static INT8U ad_detect_timerid;
@@ -105,7 +130,7 @@ void ap_peripheral_null_key_exe(INT16U *tick_cnt_ptr);
 	void ap_peripheral_ad_detect_init(INT8U adc_channel, void (*bat_detect_isr)(INT16U data));
 	void ap_peripheral_ad_check_isr(INT16U value);
 #endif
-void ap_peripheral_irkey_clean(void);	
+void ap_peripheral_irkey_clean(void);
 
 void ap_peripheral_init(void)
 {
@@ -118,7 +143,10 @@ void ap_peripheral_init(void)
   	gpio_write_io(LED, DATA_LOW);	//wwj modify
   	led_status = 0;		//wwj add
   	led_cnt = 0;		//wwj add
-  	
+
+	// camera switch initial
+	camswitch_init();
+
   	/* adpator detect pin */
   	gpio_init_io(ADP_OUT_PIN, GPIO_INPUT);
   	gpio_set_port_attribute(ADP_OUT_PIN, ATTRIBUTE_HIGH);
@@ -135,7 +163,7 @@ void ap_peripheral_init(void)
 	R_FUNPOS1 |= (1<<5);	//use sdram_cke as gpio
 	gpio_init_io(LIGHT_DETECT, GPIO_INPUT);
   	gpio_set_port_attribute(LIGHT_DETECT, 0);
-  	gpio_write_io(LIGHT_DETECT, 1); 
+  	gpio_write_io(LIGHT_DETECT, 1);
 #endif
 	/*	//wwj modify
 	gpio_init_io(IR_CTRL,GPIO_INPUT);
@@ -159,9 +187,162 @@ void ap_peripheral_init(void)
 #if USE_ADKEY_NO
 	ad_detect_timerid = 0xFF;
 	ap_peripheral_ad_detect_init(AD_DETECT_PIN, ap_peripheral_ad_check_isr);
+
 #endif
 	config_cnt = 0;
 }
+
+
+/* #BEGIN# add by xyz - 2014.11.14 */
+extern void	state_video_record_init(INT32U prev_state);
+extern void	state_video_record_exit(void);
+extern void	state_setting_exit(void);
+extern void	ap_state_config_pic_size_set(INT8U pic_size);
+extern void	ap_state_config_store(void);
+extern void	ap_peripheral_irkey_clean(void);
+
+/*
+ *
+ *
+ */
+#define MSG_DMSG	1
+#define MSG_CAMSM	0
+#if (MSG_DMSG)
+   #define dmsg(x)	DBG_PRINT x
+#else
+   #define dmsg(x)
+#endif
+#if (MSG_CAMSM)
+   #define camsg(x)	{ DBG_PRINT("[%s]: ", (camsw[i].io == WATCH_CAM0) ? "cam0" : "cam1");	DBG_PRINT x ; }
+#else
+   #define camsg(x)
+#endif
+
+typedef struct {
+	INT32U	io;
+	INT32U	bounce;
+	INT32U	repeat;
+	INT32U	status;		// 0=low level, 1=high level, 2=rising edge, 3=falling edge
+	INT32U	new_state;
+	INT32U	old_state;
+} camswitch_t;
+
+static camswitch_t	camsw[2];
+static INT32U		camsw_record;
+
+
+/*
+ *
+ *
+ */
+void camswitch_send_mode(INT8U mode)
+{
+	if (mode != camsw_record) {
+		switch (mode) {
+		case 0:		dmsg(("\033[1;32mcamsw\033[0m - 0 & 1\r\n"));	break;
+		case 1:		dmsg(("\033[1;32mcamsw\033[0m - 0\r\n"));	break;
+		case 2:		dmsg(("\033[1;32mcamsw\033[0m - 1\r\n"));	break;
+		default:	dmsg(("\033[1;32mcamsw\033[0m - unknown\r\n"));	break;
+		}
+		camsw_record = mode;
+		msgQSend(ApQ, MSG_APQ_CAMSWITCH_ACTIVE, &mode, sizeof(INT8U), MSG_PRI_NORMAL);
+	}
+}
+
+void camswitch_set_mode(INT8U mode)
+{
+	dmsg(("\033[1;32m%s()\033[0m - mode=%02x\r\n", __func__, mode));
+
+	state_video_record_exit();
+
+	ap_state_config_pic_size_set(mode);
+	ap_state_config_store();
+	state_setting_exit();
+
+	ap_peripheral_irkey_clean();
+	state_video_record_init(STATE_SETTING);
+}
+
+void camswitch_judge(void)
+{
+	INT32U	i, state;
+
+
+	for (i=0; i<2; i++) {
+		state = gpio_read_io(camsw[i].io);
+		if (state != camsw[i].new_state) {
+			camsg(("init bounce\r\n"));
+			camsw[i].bounce    = 20;
+			camsw[i].new_state = state;
+		} else {
+			if (camsw[i].bounce != 0) {
+				camsg(("debounce...\r\n"));
+				camsw[i].bounce--;
+			} else {
+				if (camsw[i].new_state != camsw[i].old_state) {
+					if (camsw[i].new_state) {
+						camsg(("rising edge\r\n"));
+						camsw[i].status = 2;
+					} else {
+						camsg(("falling edge\r\n"));
+						camsw[i].status = 3;
+					}
+					camsw[i].repeat = 0;
+				} else {
+					if (camsw[i].repeat) {
+						camsw[i].repeat--;
+					} else {
+						if (camsw[i].new_state) {
+							camsg(("high level\r\n"));
+							camsw[i].status = 1;
+						} else {
+							camsg(("low level\r\n"));
+							camsw[i].status = 0;
+						}
+						camsw[i].repeat = 40;
+					}
+				}
+				camsw[i].old_state = camsw[i].new_state;
+			}
+		}
+	}
+
+	if (camsw[0].status == camsw[1].status) {
+		camswitch_send_mode(0);
+	} else {
+		if (!camsw[0].status) {
+			camswitch_send_mode(1);
+		}
+		if (!camsw[1].status) {
+			camswitch_send_mode(2);
+		}
+	}
+}
+
+void camswitch_init(void)
+{
+	int	i;
+
+	camsw[0].io = WATCH_CAM0;
+	camsw[1].io = WATCH_CAM1;
+	for (i=0; i<2; i++) {
+		camsw[i].bounce    = 0;
+		camsw[i].repeat    = 0;
+		camsw[i].status    = 0;
+		camsw[i].new_state = 0;
+		camsw[i].old_state = 0;
+
+		// input with pull high
+		gpio_init_io(camsw[i].io,            GPIO_INPUT);
+		gpio_set_port_attribute(camsw[i].io, INPUT_WITH_RESISTOR);
+		gpio_write_io(camsw[i].io,           DATA_HIGH);
+	}
+
+	camsw_record = 0;
+	dmsg(("%s()\r\n", __func__));
+}
+/* #END# add by xyz - 2014.11.14 */
+
 
 #if C_MOTION_DETECTION == CUSTOM_ON
 void ap_peripheral_motion_detect_isr(void)
@@ -173,7 +354,7 @@ void ap_peripheral_motion_detect_judge(void)
 {
 	INT32U i, *ptr = (INT32U*) (0x80000000 | md_work_memory_addr), hit, value, threshold;
 	INT32S jj;
-	
+
 	jj = motion_detect_cnt;
 	hit = 0;
 	ptr+=2;
@@ -201,12 +382,12 @@ void ap_peripheral_motion_detect_judge(void)
 			motion_detect_cnt = 0;
 		}
 	}
-	
+
 	if (motion_detect_cnt > 5) {
 		msgQSend(ApQ, MSG_APQ_MOTION_DETECT_ACTIVE, NULL, NULL, MSG_PRI_NORMAL);
 		motion_detect_cnt = 5;
 	}
-	
+
 	if (jj != motion_detect_cnt) {
 		md_cnt++;
 		if ((motion_detect_cnt == 5) || (motion_detect_cnt == 0) ) {
@@ -262,25 +443,25 @@ void ap_peripheral_zoom_key_flag_set(INT8U flag)
 #if USE_ADKEY_NO
 void ap_peripheral_ad_detect_init(INT8U adc_channel, void (*ad_detect_isr)(INT16U data))
 {
-#if C_BATTERY_DETECT == CUSTOM_ON	
+#if C_BATTERY_DETECT == CUSTOM_ON
 //	battery_lvl = 3;
-#endif	
+#endif
 	switch (adc_channel) {
 		case ADC_LINE_0:
 			gpio_init_io(IO_F6, GPIO_INPUT);
 			gpio_set_port_attribute(IO_F6, ATTRIBUTE_HIGH);
 			break;
-			
+
 		case ADC_LINE_1:
 			gpio_init_io(IO_F7, GPIO_INPUT);
 			gpio_set_port_attribute(IO_F7, ATTRIBUTE_HIGH);
 			break;
-			
+
 		case ADC_LINE_2:
 			gpio_init_io(IO_F8, GPIO_INPUT);
 			gpio_set_port_attribute(IO_F8, ATTRIBUTE_HIGH);
 			break;
-			
+
 		case ADC_LINE_3:
 			gpio_init_io(IO_F9, GPIO_INPUT);
 			gpio_set_port_attribute(IO_F9, ATTRIBUTE_HIGH);
@@ -296,7 +477,7 @@ void ap_peripheral_ad_detect_init(INT8U adc_channel, void (*ad_detect_isr)(INT16
 	}
 #if C_BATTERY_DETECT == CUSTOM_ON
 //	msgQSend(ApQ, MSG_APQ_BATTERY_LVL_SHOW, &battery_lvl, sizeof(INT8U), MSG_PRI_NORMAL);
-#endif	
+#endif
 }
 
 void ap_peripheral_ad_check_isr(INT16U value)
@@ -325,7 +506,7 @@ void ap_peripheral_ad_key_judge(void)
 		return ;
 	}
 	ad_time_stamp = t;
-	
+
 	adkey_lvl = 0xFF;
 /*
 	ad_line_select++;
@@ -339,7 +520,7 @@ void ap_peripheral_ad_key_judge(void)
 	adc_manual_ch_set(AD_DETECT_PIN);
 	adc_manual_sample_start();
 
-	
+
 	ad_valid = ad_value>>6;
 
 	if(ad_valid<C_AD_VALUE_1)
@@ -651,7 +832,7 @@ void ap_peripheral_key_init(void)
 void ap_peripheral_key_register(INT8U type)
 {
 	INT32U i;
-	
+
 	if (type == GENERAL_KEY) {
 #if USE_IOKEY_NO == 5 && USE_ADKEY_NO == 0
 		key_map[0].key_io = FUNCTION_KEY;
@@ -673,7 +854,7 @@ void ap_peripheral_key_register(INT8U type)
 		//AD key
 		ad_key_map[MENU_KEY].key_io = MENU_KEY;
 		ad_key_map[MENU_KEY].key_function = (KEYFUNC) ap_peripheral_menu_key_exe;
-		
+
 		ad_key_map[FUNCTION_KEY].key_io = FUNCTION_KEY;
 		ad_key_map[FUNCTION_KEY].key_function = (KEYFUNC) ap_peripheral_function_key_exe;
 		ad_key_map[NEXT_KEY].key_io = NEXT_KEY;
@@ -683,7 +864,7 @@ void ap_peripheral_key_register(INT8U type)
 #elif USE_IOKEY_NO == 1 && USE_ADKEY_NO == 5
 		key_map[0].key_io = PW_KEY;
 		key_map[0].key_function = (KEYFUNC) ap_peripheral_pw_key_exe;
-		
+
 		ad_key_map[MENU_KEY].key_io = MENU_KEY;
 		ad_key_map[MENU_KEY].key_function = (KEYFUNC) ap_peripheral_menu_key_exe;
 		ad_key_map[FUNCTION_KEY].key_io = FUNCTION_KEY;
@@ -705,11 +886,11 @@ void ap_peripheral_key_register(INT8U type)
 			key_map[i].key_io = NULL;
 		}
 #endif
-#if USE_ADKEY_NO		
+#if USE_ADKEY_NO
 		for (i=0 ; i<USE_ADKEY_NO ; i++) {
 			ad_key_map[i].key_function = ap_peripheral_null_key_exe;
 		}
-#endif		
+#endif
 	} else if (type == DISABLE_KEY) {
 		for (i=0 ; i<USE_IOKEY_NO ; i++) {
 			key_map[i].key_io = NULL;
@@ -740,7 +921,7 @@ void LED_service(void)	//wwj add
 			}
 		}
 		break;
-	
+
 	case LED_STATUS_BLINK:	//2
 		if(led_cnt == 0)
 		{
@@ -755,7 +936,7 @@ void LED_service(void)	//wwj add
 			}
 		}
 		break;
-		
+
 	default:
 		break;
 	}
@@ -780,7 +961,7 @@ void ap_peripheral_key_judge(void)
 #if C_SCREEN_SAVER == CUSTOM_ON
 				key_active_cnt = 0;
 				//ap_peripheral_lcd_backlight_set(BL_ON);	//wwj mark
-#endif				
+#endif
 				key_map[i].key_cnt += 1;
 				if (key_map[i].key_io == PW_KEY) {
 					if (key_map[i].key_cnt > 24) {
@@ -811,7 +992,7 @@ void ap_peripheral_key_judge(void)
 							//wwj mark
 						if(key_map[i].key_cnt > 6) {	//wwj add
 							key_map[i].key_function(&(key_map[i].key_cnt));
-						} 
+						}
 						key_map[i].key_cnt = 0;
 					}
 				} else {
@@ -819,7 +1000,7 @@ void ap_peripheral_key_judge(void)
 					INT32U cnt_sec;
 					//INT8U screen_auto_off;
 					INT32U screen_auto_off;	//wwj modify
-					
+
 					screen_auto_off = ap_state_config_auto_off_get();//ap_state_config_auto_off_get();	//wwj modify
 					if ((screen_auto_off != 0) && !auto_off_force_disable && !s_usbd_pin && !ap_state_config_md_get()) { //don't auto off under conditions:
 																														 //1. recording & playing avi files(by auto_off_force_disable)
@@ -832,7 +1013,7 @@ void ap_peripheral_key_judge(void)
 							screen_auto_off = 5;
 						}
 						//wwj add end
-					
+
 						if (!lcd_bl_sts && i == 0) {	//wwj mark
 							key_active_cnt += PERI_TIME_INTERVAL_KEY_DETECT;
 							cnt_sec = (key_active_cnt >> 7) / USE_IOKEY_NO;
@@ -857,7 +1038,7 @@ void ap_peripheral_key_judge(void)
 #endif
 				}
 			}
-		}	
+		}
 	}
 }
 
@@ -897,10 +1078,10 @@ void ap_peripheral_adaptor_out_judge(void)
 			if (adp_out_cnt > 17) {
 				adp_out_cnt = 0;
 				adp_status = 3;
-			#if C_BATTERY_DETECT == CUSTOM_ON && USE_ADKEY_NO
+	#if C_BATTERY_DETECT == CUSTOM_ON && USE_ADKEY_NO
 				battery_lvl = 2;
 				low_voltage_cnt = 0;
-			#endif
+	#endif
 			}
 			break;
 		case 1: //adaptor in state
@@ -908,12 +1089,12 @@ void ap_peripheral_adaptor_out_judge(void)
 				if (adp_out_cnt > 8) {
 					adp_status = 2;
 					low_voltage_cnt = 0;
-				} 
+				}
 			}
 			else {
 				adp_out_cnt = 0;
 			}
-			#if USB_PHY_SUSPEND == 1
+	#if USB_PHY_SUSPEND == 1
 			if (phy_cnt != 0xFFFF) {
 				phy_cnt++;
 			}
@@ -923,7 +1104,7 @@ void ap_peripheral_adaptor_out_judge(void)
 				*P_USBD_CONFIG1 |= 0x100; //[8],SW Suspend For PHY
 				phy_cnt = 0xFFFF;
 			}
-			#endif
+	#endif
 			break;
 		case 2: //adaptor out state
 			if (!gpio_read_io(ADP_OUT_PIN)) {
@@ -935,11 +1116,11 @@ void ap_peripheral_adaptor_out_judge(void)
 			else {
 				adp_cnt++;
 				if (adp_cnt > 3) {
-					#if USB_PHY_SUSPEND == 1
+	#if USB_PHY_SUSPEND == 1
 					//*P_USBD_CONFIG &= ~0x800;	//Switch to full speed
 					*P_USBD_CONFIG1 &= ~0x100; //phy wakeup
 					phy_cnt = 0;
-					#endif
+	#endif
 					adp_out_cnt = 0;
 					adp_status = 1;
 					usbd_exit = 0;
@@ -950,15 +1131,15 @@ void ap_peripheral_adaptor_out_judge(void)
 		case 3://adaptor initial out state
 			if (gpio_read_io(ADP_OUT_PIN)) {
 				if (adp_out_cnt > 3) {
-					#if USB_PHY_SUSPEND == 1
+	#if USB_PHY_SUSPEND == 1
 					//*P_USBD_CONFIG &= ~0x800;	//Switch to full speed
 					*P_USBD_CONFIG1 &= ~0x100; //phy wakeup
 					phy_cnt = 0;
-					#endif
+	#endif
 					adp_out_cnt = 0;
 					adp_status = 1;
 					OSQPost(USBAPPTaskQ, (void *) MSG_USBD_INITIAL);
-				} 
+				}
 			}
 			else {
 				adp_out_cnt = 0;
@@ -967,25 +1148,25 @@ void ap_peripheral_adaptor_out_judge(void)
 		default:
 			break;
 	}
-	
+
 	if (s_usbd_pin == 1) {
 		usbd_cnt++;
 		if (!gpio_read_io(C_USBDEVICE_PIN)) {
 			if (usbd_cnt > 3) {
 				usb_uninitial();
-				#if USB_PHY_SUSPEND == 1
+	#if USB_PHY_SUSPEND == 1
 				*P_USBD_CONFIG |= 0x800;	//Switch to USB20PHY
 				*P_USBD_CONFIG1 |= 0x100; //[8],SW Suspend For PHY
-				#endif
-				ap_peripheral_usbd_plug_out_exe(&usbd_cnt);	
-			} 
+	#endif
+				ap_peripheral_usbd_plug_out_exe(&usbd_cnt);
+			}
 		}
 		else {
 			usbd_cnt = 0;
 		}
 	}
-		
-	
+
+
 }
 
 void ap_peripheral_function_key_exe(INT16U *tick_cnt_ptr)
@@ -1003,7 +1184,7 @@ void ap_peripheral_function_key_exe(INT16U *tick_cnt_ptr)
 	if(screen_saver_enable){
 		screen_saver_enable = 0;
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
-	}else{	
+	}else{
 		msgQSend(ApQ, MSG_APQ_MODE, NULL, NULL, MSG_PRI_NORMAL);
 	}
 	*tick_cnt_ptr = 0;
@@ -1014,12 +1195,12 @@ void ap_peripheral_next_key_exe(INT16U *tick_cnt_ptr)
 	INT8U data = 0;
 
 	DBG_PRINT("respond next key \r\n");
-	
+
 	msgQSend(ApQ, MSG_APQ_AUDIO_EFFECT_DOWN, NULL, NULL, MSG_PRI_NORMAL); //wwj add
 	if(screen_saver_enable){
 		screen_saver_enable = 0;
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
-	}else{	
+	}else{
 		msgQSend(ApQ, MSG_APQ_NEXT_KEY_ACTIVE, &data, sizeof(INT8U), MSG_PRI_NORMAL);
 	}
 	*tick_cnt_ptr = 0;
@@ -1034,7 +1215,7 @@ void ap_peripheral_prev_key_exe(INT16U *tick_cnt_ptr)
 	if(screen_saver_enable){
 		screen_saver_enable = 0;
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
-	}else{	
+	}else{
 		msgQSend(ApQ, MSG_APQ_PREV_KEY_ACTIVE, &data, sizeof(INT8U), MSG_PRI_NORMAL);
 	}
 	*tick_cnt_ptr = 0;
@@ -1065,19 +1246,18 @@ void ap_peripheral_usbd_plug_out_exe(INT16U *tick_cnt_ptr)
 
 void ap_peripheral_pw_key_exe(INT16U *tick_cnt_ptr)
 {
-	DBG_PRINT("respond PW key \r\n");
+	DBG_PRINT("respond PW key %d\r\n", *tick_cnt_ptr);
 	if(screen_saver_enable){
-		screen_saver_enable = 0;	
+		screen_saver_enable = 0;
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
 	}else{
-		if(*tick_cnt_ptr > 24)	//wwj add
-		{
+		if(*tick_cnt_ptr > 24){	//wwj add
 			msgQSend(ApQ, MSG_APQ_POWER_KEY_ACTIVE, NULL, NULL, MSG_PRI_NORMAL);
 		} else {
-			//msgQSend(ApQ, MSG_APQ_NIGHT_MODE_KEY, NULL, NULL, MSG_PRI_NORMAL);	//wwj add
+//			msgQSend(ApQ, MSG_APQ_NIGHT_MODE_KEY, NULL, NULL, MSG_PRI_NORMAL);	//wwj add
 			msgQSend(ApQ, MSG_APQ_KEY_IDLE, NULL, NULL, MSG_PRI_NORMAL);	//wwj add			
 			msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_SCREEN_SAVER_ENABLE, NULL, NULL, MSG_PRI_NORMAL);	//wwj add
-			
+
 		}
 	}
 	*tick_cnt_ptr = 0;
@@ -1088,9 +1268,9 @@ void ap_peripheral_menu_key_exe(INT16U *tick_cnt_ptr)
 	DBG_PRINT("respond menu key \r\n");
    	msgQSend(ApQ, MSG_APQ_AUDIO_EFFECT_MENU, NULL, NULL, MSG_PRI_NORMAL);
 	if(screen_saver_enable){
-		screen_saver_enable = 0;	
+		screen_saver_enable = 0;
 		msgQSend(ApQ, MSG_APQ_KEY_WAKE_UP, NULL, NULL, MSG_PRI_NORMAL);
-	}else{	
+	}else{
 		msgQSend(ApQ, MSG_APQ_MENU_KEY_ACTIVE, NULL, NULL, MSG_PRI_NORMAL);
 	}
 	*tick_cnt_ptr = 0;
@@ -1098,7 +1278,7 @@ void ap_peripheral_menu_key_exe(INT16U *tick_cnt_ptr)
 
 void ap_peripheral_null_key_exe(INT16U *tick_cnt_ptr)
 {
-	
+
 }
 
 INT32S ap_peripheral_irkey_message_init(void)
@@ -1227,7 +1407,7 @@ void ap_peripheral_irkey_handler_exe(INT8U key_code, INT8U key_type)
 	if (msg_id == 0x0) {
 		return;
 	}
-	
+
 	switch(msg_id) {
 		case EVENT_KEY_NUM_0:
 			num = 0;
@@ -1263,7 +1443,7 @@ void ap_peripheral_irkey_handler_exe(INT8U key_code, INT8U key_type)
 			is_num = 0;
 			break;
 	}
-	
+
 	if (is_num && !num_start) {
 		keynums = num;
 		num_start = 1;
@@ -1271,7 +1451,7 @@ void ap_peripheral_irkey_handler_exe(INT8U key_code, INT8U key_type)
 			OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_MP3_INPUT_NUM_SHOW | keynums) );
 		}
 		return;
-	}	
+	}
 	else if (is_num) {
 		if( (keynums > 0) && (keynums <= 999)){
 			keynums = keynums*10+num;
@@ -1285,7 +1465,7 @@ void ap_peripheral_irkey_handler_exe(INT8U key_code, INT8U key_type)
 		return;
 	}
 	else if (num_start && ((msg_id == EVENT_KEY_MEDIA_NEXT)||(msg_id == EVENT_KEY_MEDIA_PREV))) {
-		msg_id = EVENT_KEY_MEDIA_QUICK_SEL;	
+		msg_id = EVENT_KEY_MEDIA_QUICK_SEL;
 		num_start = 0;
 		msgQSend(ApQ, msg_id, (void *) &keynums, sizeof(INT32U), MSG_PRI_NORMAL);
 		if( (present_state_ID == STATE_VIDEO_PREVIEW) || (present_state_ID == STATE_VIDEO_RECORD) ){
@@ -1295,7 +1475,7 @@ void ap_peripheral_irkey_handler_exe(INT8U key_code, INT8U key_type)
 		return;
 	}
 	else if (num_start && ((msg_id == EVENT_KEY_FM_CH_UP)||(msg_id == EVENT_KEY_FM_CH_DOWN))) {
-		msg_id = EVENT_KEY_FM_CH_QUICK_SEL;	
+		msg_id = EVENT_KEY_FM_CH_QUICK_SEL;
 		num_start = 0;
 		msgQSend(ApQ, msg_id, (void *) &keynums, sizeof(INT32U), MSG_PRI_NORMAL);
 		if( (present_state_ID == STATE_VIDEO_PREVIEW) || (present_state_ID == STATE_VIDEO_RECORD) ){
@@ -1305,7 +1485,7 @@ void ap_peripheral_irkey_handler_exe(INT8U key_code, INT8U key_type)
 		return;
 	}
 	else if (num_start && ((msg_id == EVENT_KEY_MEDIA_VOL_UP)||(msg_id == EVENT_KEY_MEDIA_VOL_DOWN))) {
-		msg_id = EVENT_KEY_VOLUME_QUICK_SEL;	
+		msg_id = EVENT_KEY_VOLUME_QUICK_SEL;
 		num_start = 0;
 		msgQSend(ApQ, msg_id, (void *) &keynums, sizeof(INT32U), MSG_PRI_NORMAL);
 		if( (present_state_ID == STATE_VIDEO_PREVIEW) || (present_state_ID == STATE_VIDEO_RECORD) ){
@@ -1313,13 +1493,13 @@ void ap_peripheral_irkey_handler_exe(INT8U key_code, INT8U key_type)
 		}
 		keynums = 0;
 		return;
-	}	
+	}
 	else {
 		num_start = 0;
 		keynums = 0;
 		if( (present_state_ID == STATE_VIDEO_PREVIEW) || (present_state_ID == STATE_VIDEO_RECORD) ){
 			OSQPost(DisplayTaskQ, (void *)MSG_DISPLAY_TASK_MP3_INPUT_NUM_CLEAR );
-		}		
+		}
 	}
 
 	key_event.key_source = SOURCE_IR_KEY;
@@ -1334,13 +1514,13 @@ void ap_peripheral_irkey_clean(void)
 	num_start = 0;
 	keynums = 0;
 }
-#if LIGHT_DETECT_USE > LIGHT_DETECT_USE_RESISTOR   
+#if LIGHT_DETECT_USE > LIGHT_DETECT_USE_RESISTOR
 void ap_peripheral_light_detect(void){
 #if LIGHT_DETECT_USE == LIGHT_DETECT_USE_SENSOR
 	INT32U temp;
 #endif
 	if(ap_state_config_night_mode_get()){
-	
+
   #if LIGHT_DETECT_USE == LIGHT_DETECT_USE_SENSOR
   		SPI_LOCK()
 		temp = R_SPI0_CTRL;
@@ -1358,11 +1538,11 @@ void ap_peripheral_light_detect(void){
 		//	pio_write_io(IR_CTRL, DATA_HIGH);	//IR OFF
 			gpio_init_io(IR_CTRL, GPIO_INPUT);
   			gpio_set_port_attribute(IR_CTRL, 1);
-		//	gpio_write_io(IR_CTRL, 1); 
+		//	gpio_write_io(IR_CTRL, 1);
 		}
   #elif LIGHT_DETECT_USE ==  LIGHT_DETECT_USE_GPIO
 		if(gpio_read_io(LIGHT_DETECT)){
-		//	pio_write_io(IR_CTRL, DATA_HIGH);	//IR OFF 
+		//	pio_write_io(IR_CTRL, DATA_HIGH);	//IR OFF
 			gpio_init_io(IR_CTRL, GPIO_INPUT);
   			gpio_set_port_attribute(IR_CTRL, 1);
 		}
@@ -1370,7 +1550,7 @@ void ap_peripheral_light_detect(void){
 			gpio_init_io(IR_CTRL, GPIO_OUTPUT);
   			gpio_set_port_attribute(IR_CTRL, 1);
 			gpio_write_io(IR_CTRL, DATA_HIGH);	//IR ON
-		}	
+		}
   #endif
 	}
 
@@ -1386,7 +1566,7 @@ void ap_TFT_backlight_tmr_check(void)
 		backlight_tmr--;
 		if((backlight_tmr == 0) && (tv == 1))
 		{
-			gpio_write_io(TFT_BL, DATA_LOW);	
+			gpio_write_io(TFT_BL, DATA_LOW);
 		}
 	}
 }
@@ -1397,7 +1577,7 @@ void ap_peripheral_tv_detect(void)
 //	INT8U tv = 1;
 	INT32U tmp;
 	if(gpio_read_io(AV_IN_DET) != tv){
-		tv=gpio_read_io(AV_IN_DET);
+		tv = gpio_read_io(AV_IN_DET);
 		if(tv == 1){	//display use TFT
 		//	gpio_write_io(SPEAKER_EN, DATA_HIGH);	//enable speaker
 
@@ -1409,13 +1589,13 @@ void ap_peripheral_tv_detect(void)
 			SPI_LOCK();
 			tmp = R_SPI0_CTRL;
 			R_SPI0_CTRL = 0;
-			Write_COMMAND16i(0xf6);   
+			Write_COMMAND16i(0xf6);
 	 		Write_DATA16i(0x01);
 			Write_DATA16i(0x00);
-			Write_DATA16i(0x03); 
-			Write_COMMAND16i(0x11);     //Exit Sleep
- 			cmd_delay(120); 
- 			Write_COMMAND16i(0x29);     //Display on 
+			Write_DATA16i(0x03);
+			Write_COMMAND16i(0x11);		//Exit Sleep
+ 			cmd_delay(120);
+ 			Write_COMMAND16i(0x29);		//Display on
   			cmd_delay(10);
   			R_SPI0_CTRL = tmp;
 			SPI_UNLOCK();
@@ -1436,27 +1616,26 @@ void ap_peripheral_tv_detect(void)
 			SPI_LOCK();
 			tmp = R_SPI0_CTRL;
 			R_SPI0_CTRL = 0;
-			Write_COMMAND16i(0xf6);   
+			Write_COMMAND16i(0xf6);
 	 		Write_DATA16i(0x01);
 			Write_DATA16i(0x00);
 			Write_DATA16i(0x00);
-			Write_COMMAND16i(0x28);      //Display off
- 			cmd_delay(20); 
- 			Write_COMMAND16i(0x10);      //ENTER Sleep 
+			Write_COMMAND16i(0x28);		//Display off
+ 			cmd_delay(20);
+ 			Write_COMMAND16i(0x10);		//ENTER Sleep
   			cmd_delay(10);
   			R_SPI0_CTRL = tmp;
-			SPI_UNLOCK();		
+			SPI_UNLOCK();
 			gpio_write_io(TFT_BL, DATA_HIGH);
 		//	tft_tft_en_set(FALSE);	//wwj mark according to qingyu's testing result
-			if(ap_state_config_tv_out_get() == 0){
+			if (ap_state_config_tv_out_get() == 0) {
 				tv_start(TVSTD_NTSC_J, TV_QVGA, TV_NON_INTERLACE);
-			}
-			else{
+			} else {
 				tv_start(TVSTD_PAL_N, TV_QVGA, TV_NON_INTERLACE);
 			}
-			DBG_PRINT("tv out put \r\n");
+			DBG_PRINT("display use TV-out\r\n");
 			R_PPU_IRQ_EN &= ~0x00002000;
-			R_PPU_IRQ_EN |= 0x00000800;
+			R_PPU_IRQ_EN |=  0x00000800;
 		}
 	}
 }

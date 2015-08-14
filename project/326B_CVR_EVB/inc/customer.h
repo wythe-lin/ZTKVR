@@ -79,7 +79,7 @@
 
 /*=== alarm function configuration ===*/
 //---------------------------------------------------------------------------
-#define _ALARM_SETTING	CUSTOM_OFF      
+#define _ALARM_SETTING	CUSTOM_OFF
 
 
 //configure
@@ -104,7 +104,7 @@
 #define T_FLASH							2
 #define MINI_DVR_STORAGE_TYPE			T_FLASH
 
-//mic phone input source  
+//mic phone input source
 #define C_ADC_LINE_IN					0
 #define C_GPY0050_IN					1
 #define C_BUILDIN_MIC_IN				2  //only GPL32600 support
@@ -128,7 +128,7 @@
 #define LIGHT_DETECT_USE 				LIGHT_DETECT_USE_RESISTOR//LIGHT_DETECT_USE_GPIO	//wwj modify
 
 
-//define multi-media function use  
+//define multi-media function use
 #define DBG_MESSAGE						CUSTOM_ON		//for debug use	//wwj modify
 
 #define KEY_ACTIVE						DATA_LOW
@@ -139,7 +139,7 @@
 #define ADKEY_LVL_5						4
 #if MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_EMU_V2_0
 	#define USE_IOKEY_NO					5//2//4
-	#define USE_ADKEY_NO					0//4//0	
+	#define USE_ADKEY_NO					0//4//0
 	#define	PW_KEY							IO_F15
 	#define	MENU_KEY						IO_B14//ADKEY_LVL_1//IO_F9
 	#define OK_KEY							IO_F5
@@ -157,27 +157,30 @@
 #elif MINI_DVR_BOARD_VERSION == GPL32680_MINI_DVR_CAR_RECORD_V2
 
 	#define USE_IOKEY_NO					1
-	#define USE_ADKEY_NO					5	
-	#define	PW_KEY							IO_I5
-	#define	MENU_KEY						ADKEY_LVL_1
-	#define OK_KEY							ADKEY_LVL_5
-	#define NEXT_KEY						ADKEY_LVL_3//IO_F10
+	#define USE_ADKEY_NO					5
+	#define WATCH_CAM0					IO_A13	// active low
+	#define WATCH_CAM1					IO_A14	// active low
+	#define	PW_KEY						IO_I5
+	#define	MENU_KEY					ADKEY_LVL_1
+	#define OK_KEY						ADKEY_LVL_5
+	#define NEXT_KEY					ADKEY_LVL_3//IO_F10
 	#define PREVIOUS_KEY					ADKEY_LVL_4//IO_F11
 	#define FUNCTION_KEY					ADKEY_LVL_2//IO_F5
 	#define C_USBDEVICE_PIN   				IO_F5
-	#define SENSOR_PW						IO_C10
-	#define TFT_BL							IO_B6
-	#define LED								IO_I7
+	#define SENSOR_PW					IO_C10
+	#define TFT_BL						IO_B6
+	#define LED						IO_I7
 	#define AD_DETECT_PIN					ADC_LINE_3
-	#define IR_CTRL                     	IO_A9
-	#define ADP_OUT_PIN                    	C_USBDEVICE_PIN
-	#define POWER_EN                       	IO_I4
-	#define AV_IN_DET                      	IO_C3
-	#define SD_CD_PIN						IO_I6
-	#define AMP_EN							IO_I9
+	#define IR_CTRL						IO_A9
+	#define ADP_OUT_PIN					C_USBDEVICE_PIN
+	#define POWER_EN					IO_I4
+	#define AV_IN_DET					IO_C3
+	#define SD_CD_PIN					IO_I6
+	#define AMP_EN						IO_I9
+	#define SPEAKER_EN					AMP_EN
 #else
 	#define USE_IOKEY_NO					2
-	#define USE_ADKEY_NO					4	
+	#define USE_ADKEY_NO					4
 	#define	PW_KEY							IO_F9
 	#define	MENU_KEY						ADKEY_LVL_1
 	#define OK_KEY							IO_B15
@@ -194,7 +197,7 @@
 //function
 #define C_UVC										CUSTOM_ON
 #define C_MOTION_DETECTION							CUSTOM_OFF
-#define C_AUTO_DEL_FILE								CUSTOM_ON   //GPL326xxB have this function?  // dominant enable for zero second drop solution            
+#define C_AUTO_DEL_FILE								CUSTOM_ON   //GPL326xxB have this function?  // dominant enable for zero second drop solution
 #define C_CYCLIC_VIDEO_RECORD						CUSTOM_ON
 #define C_VIDEO_PREVIEW								CUSTOM_ON
 #define C_SCREEN_SAVER								CUSTOM_OFF
@@ -221,7 +224,7 @@
 #define BATTERY_FULL_LEVEL					0x1C84		// 4.0 Voltage
 #define BATTERY_LOW_LEVEL					0x1A5E		// 3.5 Voltage
 
-//define video encode mode 
+//define video encode mode
 #define VIDEO_ENCODE_WITH_PPU_IRQ		0
 #define VIDEO_ENCODE_WITH_TG_IRQ		1	//only gpl32600 support
 #define VIDEO_ENCODE_WITH_FIFO_IRQ		2	//only gpl32600 support
