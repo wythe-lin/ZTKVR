@@ -27,11 +27,11 @@
 
 
 /* custom */
-#define DVR516_CFG			1
+#define DVR516_CFG			0
 #define DVR517_CFG			0
 #define K6000_CFG			0
-#define K12_CFG				0
-#define EVB_CFG				1
+#define K12_CFG				1
+#define EVB_CFG				0
 
 /* */
 #undef C_DISPLAY_DEVICE
