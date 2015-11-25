@@ -27,53 +27,68 @@
 
 
 /* custom */
-#define DVR516_CFG			0
-#define DVR517_CFG			0
+#define DVR516_CFG			1
+#define DVR517_CFG			0//1
 #define K6000_CFG			0
-#define K12_CFG				1
+#define K12_CFG				0
 #define EVB_CFG				0
+
+/* ZT3150 resolution selection */
+#define ZT_VGA_W_PANORAMA		0	// SOU:  640 x 480
+#define ZT_VAG				1	// SOU: 1280 x 480
+#define ZT_HD				2	// SOU: 1920 x 544
+
+/* ZT3150 operating mode */
+#define ZT_H_SIDE_BY_SIDE		0
+#define ZT_V_SIDE_BY_SIDE		1
+#define ZT_STITCHING			2
 
 /* */
 #undef C_DISPLAY_DEVICE
 #if   (DVR516_CFG == 1)
-   #define C_DISPLAY_DEVICE		ILI8961//HX8268C//ILI9341
-   #define FLIP_ILI8961			1
-   #define Z_SIDE_BY_SIDE		1
-   #define ADKEY_WITH_BAT		0
-   #define DUAL_ADP_IN			1
-   #define TIME_ADP_OUT_DLY		3		// unit: second
-   #define d_anti_flicker(x)		(!x)
+    #define FLIP_ILI8961		1
+    #define C_DISPLAY_DEVICE		ILI8961//HX8268C//ILI9341
+    #define zt_opmode()			ZT_H_SIDE_BY_SIDE
+    #define zt_resolution()		ZT_HD//ZT_VAG
+    #define zt_anti_flicker(x)		(!x)
+    #define ADKEY_WITH_BAT		0
+    #define DUAL_ADP_IN			1
+    #define TIME_ADP_OUT_DLY		3		// unit: second
 #elif (DVR517_CFG == 1)
-   #define C_DISPLAY_DEVICE		ILI8961
-   #define FLIP_ILI8961			0
-   #define Z_SIDE_BY_SIDE		0
-   #define ADKEY_WITH_BAT		0
-   #define DUAL_ADP_IN			1
-   #define TIME_ADP_OUT_DLY		5		// unit: second
-   #define d_anti_flicker(x)		(!x)
+    #define FLIP_ILI8961		0
+    #define C_DISPLAY_DEVICE		ILI8961
+    #define zt_opmode()			ZT_STITCHING
+    #define zt_resolution()		ZT_VAG
+    #define zt_anti_flicker(x)		(!x)
+    #define ADKEY_WITH_BAT		0
+    #define DUAL_ADP_IN			1
+    #define TIME_ADP_OUT_DLY		5		// unit: second
 #elif (K6000_CFG == 1)
-   #define C_DISPLAY_DEVICE		ILI9341
-   #define Z_SIDE_BY_SIDE		1
-   #define ADKEY_WITH_BAT		0
-   #define DUAL_ADP_IN			1
-   #define TIME_ADP_OUT_DLY		5		// unit: second
-   #define d_anti_flicker(x)		(x)
+    #define C_DISPLAY_DEVICE		ILI9341
+    #define zt_opmode()			ZT_H_SIDE_BY_SIDE
+    #define zt_resolution()		ZT_VAG
+    #define zt_anti_flicker(x)		(x)
+    #define ADKEY_WITH_BAT		0
+    #define DUAL_ADP_IN			1
+    #define TIME_ADP_OUT_DLY		5		// unit: second
 #elif (K12_CFG == 1)
-   #define C_DISPLAY_DEVICE		ILI9341
-   #define Z_SIDE_BY_SIDE		1
-   #define ADKEY_WITH_BAT		0
-   #define DUAL_ADP_IN			1
-   #define TIME_ADP_OUT_DLY		1		// unit: second
-   #define d_anti_flicker(x)		(!x)
+    #define C_DISPLAY_DEVICE		ILI9341
+    #define zt_opmode()			ZT_H_SIDE_BY_SIDE
+    #define zt_resolution()		ZT_VAG
+    #define zt_anti_flicker(x)		(!x)
+    #define ADKEY_WITH_BAT		0
+    #define DUAL_ADP_IN			1
+    #define TIME_ADP_OUT_DLY		1		// unit: second
 #elif (EVB_CFG == 1)
-   #define C_DISPLAY_DEVICE		TPO_TD025THD1
-   #define Z_SIDE_BY_SIDE		1
-   #define ADKEY_WITH_BAT		0
-   #define DUAL_ADP_IN			1
-   #define TIME_ADP_OUT_DLY		1		// unit: second
-   #define d_anti_flicker(x)		(!x)
+    #define C_DISPLAY_DEVICE		TPO_TD025THD1
+    #define zt_opmode()			ZT_H_SIDE_BY_SIDE
+    #define zt_resolution()		ZT_VAG
+    #define zt_anti_flicker(x)		(!x)
+    #define ADKEY_WITH_BAT		0
+    #define DUAL_ADP_IN			1
+    #define TIME_ADP_OUT_DLY		1		// unit: second
 #else
-   #error must be chioce one xxx_CFG
+    #error must be chioce one xxx_CFG
 #endif
 
 
@@ -135,5 +150,23 @@
 #define C_BATT_LEVEL2			BATT_LV2
 #define C_BATT_LEVEL3			BATT_LV3
 
+
+/* colours */
+#define NONE				"\033[m"
+#define RED				"\033[0;32;31m"
+#define LIGHT_RED			"\033[1;31m"
+#define GREEN				"\033[0;32;32m"
+#define LIGHT_GREEN			"\033[1;32m"
+#define BLUE				"\033[0;32;34m"
+#define LIGHT_BLUE			"\033[1;34m"
+#define DARY_GRAY			"\033[1;30m"
+#define CYAN				"\033[0;36m"
+#define LIGHT_CYAN			"\033[1;36m"
+#define PURPLE				"\033[0;35m"
+#define LIGHT_PURPLE			"\033[1;35m"
+#define BROWN				"\033[0;33m"
+#define YELLOW				"\033[1;33m"
+#define LIGHT_GRAY			"\033[0;37m"
+#define WHITE				"\033[1;37m"
 
 #endif	// __ZTKCONFIGS_H__

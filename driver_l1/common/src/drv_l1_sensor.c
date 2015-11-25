@@ -8804,35 +8804,6 @@ OV3640_MIPI_Init(
 #endif //_DRV_L1_MIPI
 #endif //__OV3640_MIPI_DRV_C__
 
-#ifdef __ZT3150_DRV_C__
-
-/*
- * for debug
- */
-#define DEBUG_ZT3150		1
-#if DEBUG_ZT3150
-    #define _D(x)		(x)
-#else
-    #define _D(x)
-#endif
-
-/*
- * definitions
- */
-#define ZT3150_ID		0x04
-
-#define ZT3150_VGA		0
-#define ZT3150_1280x480		1
-
-#define ZT3150_RESET		IO_C3 //IO_A15
-
-/*
- * macros
- */
-#define sccb_rd_r16d8		sccb_read_Reg16Data8
-#define sccb_wr_r16d8		sccb_write_Reg16Data8
-
-
 /*
  *****************************************************************************
  * Description:	ZT3150 Initialization
@@ -8844,17 +8815,35 @@ OV3640_MIPI_Init(
  * Return: None
  *****************************************************************************
  */
+#ifdef __ZT3150_DRV_C__
+
+/* for debug */
+#define DEBUG_ZT3150		1
+#if DEBUG_ZT3150
+    #define _D(x)		(x)
+#else
+    #define _D(x)
+#endif
+
+/* definitions */
+#define ZT3150_ID		0x04
+#define ZT3150_RESET		IO_C3 //IO_A15
+
+/* macros */
+#define sccb_rd_r16d8		sccb_read_Reg16Data8
+#define sccb_wr_r16d8		sccb_write_Reg16Data8
+
+/* */
 extern INT8U	ap_state_config_light_freq_get(void);
 
+/* function */
 void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 {
 	INT16U	uCtrlReg1, uCtrlReg2;
-	INT8U	inreso = 1;		//1:VGA, 0:QVGA
 	INT8U	tmp;
 	INT32S	nack;
 
-
-	_D(DBG_PRINT("\033[1;36mZT3150 - mount 1\r\n\033[0m"));
+	DBG_PRINT(LIGHT_CYAN "[ZT]: mount\r\n" NONE);
 
 	// Enable CSI clock to let sensor initialize at first
 //	uCtrlReg2      = CLKOEN | CSI_RGB565 | CSI_HIGHPRI | CSI_NOSTOP | CLK_SEL48M;
@@ -8880,36 +8869,6 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	if (uFlag & FT_CSI_YUVOUT) {		// YUVOUT?
 		uCtrlReg1 |= YUVOUT;
 	}
-#if 0
-	// Whether compression or not?
-	if ((nWidthH == 320) && (nWidthV == 240)) {
-		if (inreso == 1) {
-			// VGA in, QVGA out
-#if ZT3150_VGA
-			R_CSI_TG_HRATIO  = 0x0102;	// Scale to 1/2
-			R_CSI_TG_HWIDTH  = nWidthH*2;	// Horizontal frame width
-#elif ZT3150_1280x480
-			R_CSI_TG_HRATIO  = 0x0104;	// Scale to 1/4
-			R_CSI_TG_HWIDTH  = nWidthH*4;	// Horizontal frame width
-#else
-    #error "Wherein one of ZT3150_VGA or ZT3150_1280x480 must be set"
-#endif
-
-			R_CSI_TG_VRATIO  = 0x0102;	// Scale to 1/2
-			R_CSI_TG_VHEIGHT = nWidthV*2;	// Vertical frame width
-		}
-	} else {
-		R_CSI_TG_HRATIO  = 0;
-		R_CSI_TG_VRATIO  = 0;
-	}
-#endif
-
-#if 0// (ZT3150_1280x480)
-		R_CSI_TG_HRATIO  = 0x0104;	// Scale to 1/2
-		R_CSI_TG_HWIDTH  = nWidthH*4;	// Horizontal frame width
-		R_CSI_TG_VRATIO  = 0x0104;	// Scale to 1/2
-		R_CSI_TG_VHEIGHT = nWidthV*4;	// Vertical frame width
-#endif
 
 	R_CSI_TG_VL0START = 0x0000;		// Sensor field 0 vertical latch start register.
 	R_CSI_TG_VL1START = 0x0000;		//*P_Sensor_TG_V_L1Start = 0x0000;
@@ -8924,7 +8883,7 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	sccb_delay(200);
 
 	// ZT3150 reset
-	_D(DBG_PRINT(" hard reset\r\n"));
+	DBG_PRINT("[ZT]: hardware reset\r\n");
 	gpio_write_io(ZT3150_RESET, 1);
 	gpio_init_io(ZT3150_RESET, GPIO_OUTPUT);
 	gpio_drving_init_io(ZT3150_RESET, (IO_DRV_LEVEL) IO_DRIVING_4mA);
@@ -8934,50 +8893,53 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	gpio_write_io(ZT3150_RESET, 1);
 
 	// ZT3150 ready?
-	_D(DBG_PRINT(" wait ready\r\n"));
+	_D(DBG_PRINT("[ZT]: wait ready - "));
 	for (;;) {
 		nack = sccb_rd_r16d8(ZT3150_ID, 0x0080, &tmp);
-		_D(DBG_PRINT("tmp =%d\r\n",tmp));
+		_D(DBG_PRINT(" %02x", tmp));
 		//if (tmp == 0x80||tmp == 0x81) {
 		if (tmp == 0x80){
 			break;
 		}
 		drv_msec_wait(100);
 	}
+	_D(DBG_PRINT("\r\n"));
 
-	// ZT3150 init
-	_D(DBG_PRINT(" write command\r\n"));
+	// ZT3150 init (0x0080, 0x0081, 0x0082, 0x0083 register)
+	DBG_PRINT("[ZT]: send command -");
 
-#if (ZT3150_VGA)
-	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);
-	if (d_anti_flicker(ap_state_config_light_freq_get())) {	
-		_D(DBG_PRINT(" 50Hz\r\n"));
-		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x82);
-	} else {
-		_D(DBG_PRINT(" 60Hz\r\n"));
-		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x81);
+	// set operation mode
+	switch (zt_opmode()) {
+	case ZT_H_SIDE_BY_SIDE:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x03);	DBG_PRINT(" (h) side by side,");break;	// horizontal side by side
+	case ZT_V_SIDE_BY_SIDE:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x05);	DBG_PRINT(" (v) side by side,");break;	// vertical   side by side
+	case ZT_STITCHING:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);	DBG_PRINT(" stitching,");	break;	// stitching
+	default:		DBG_PRINT(WHITE "\r\n[ZT]: ERROR!!! zt_opmode() must be set\r\n" NONE);	break;
 	}
 
-#elif (ZT3150_1280x480)
-    #if Z_SIDE_BY_SIDE
-	// side by side
-	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x03);
-    #else
-	// stitching
-	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);
-    #endif
-	if (d_anti_flicker(ap_state_config_light_freq_get())) {
-		_D(DBG_PRINT(" 50Hz\r\n"));
-		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);
+	// set resolution
+	if (zt_anti_flicker(ap_state_config_light_freq_get())) {
+		DBG_PRINT(" 50Hz");
+		switch(zt_resolution()) {
+		case ZT_VGA_W_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x82);	DBG_PRINT(" VGA with panorama");break;	// 50Hz VGA with panorama enabled
+		case ZT_VAG:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);	DBG_PRINT(" VGA (1280x480)");	break;	// 50Hz VGA
+		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x04);	DBG_PRINT(" HD (1920x544)");	break;	// 50Hz HD
+		default:		DBG_PRINT(WHITE "\r\n[ZT]: ERROR!!! zt_resolution() must be set" NONE);	break;
+		}
 	} else {
-		_D(DBG_PRINT(" 60Hz\r\n"));
-		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x01);
+		DBG_PRINT(" 60Hz");
+		switch(zt_resolution()) {
+		case ZT_VGA_W_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x81);	DBG_PRINT(" VGA with panorama");break;	// 60Hz VGA with panorama enabled
+		case ZT_VAG:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x01);	DBG_PRINT(" VGA (1280x480)");	break;	// 60Hz VGA
+		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x03);	DBG_PRINT(" HD (1920x544)");	break;	// 60Hz HD
+		default:		DBG_PRINT(WHITE "\r\n[ZT]: ERROR!!! zt_resolution() must be set" NONE);	break;
+		}
 	}
-#else
-    #error "Wherein one of ZT3150_VGA or ZT3150_1280x480 must be set"
-#endif
+	DBG_PRINT("\r\n");
+
+	// dummy parameter 3
 	sccb_wr_r16d8(ZT3150_ID, 0x0083, 0x00);
 
+	// set command ID
 	sccb_wr_r16d8(ZT3150_ID, 0x0080, 0x01);
 	drv_msec_wait(50);
 
@@ -8994,14 +8956,13 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 #elif CSI_IRQ_MODE == CSI_IRQ_TG_FIFO32_IRQ
 	R_CSI_TG_CTRL0 = uCtrlReg1 | (3 << 20) | (1 << 16);
 #endif
-	_D(DBG_PRINT(" nWidthH=%04d, nWidthV=%04d, uFlag=0x%04x\r\n", nWidthH, nWidthV, uFlag));
-	_D(DBG_PRINT(" R_CSI_TG_HRATIO  = 0x%04x, R_CSI_TG_HWIDTH  = %04d\r\n", (INT16U) R_CSI_TG_HRATIO, (INT16U) R_CSI_TG_HWIDTH));
-	_D(DBG_PRINT(" R_CSI_TG_VRATIO  = 0x%04x, R_CSI_TG_VHEIGHT = %04d\r\n", (INT16U) R_CSI_TG_VRATIO, (INT16U) R_CSI_TG_VHEIGHT));
-	_D(DBG_PRINT(" R_CSI_TG_CTRL0   = 0x%04x\r\n", (INT16U) uCtrlReg1));
-	_D(DBG_PRINT(" R_CSI_TG_CTRL1   = 0x%04x\r\n", (INT16U) uCtrlReg2));
-	_D(DBG_PRINT("\033[1;36mZT3150 - done\r\n\033[0m"));
-	
+	_D(DBG_PRINT("[ZT]: nWidthH=%04d, nWidthV=%04d, uFlag=0x%04x\r\n", nWidthH, nWidthV, uFlag));
+	_D(DBG_PRINT("[ZT]: R_CSI_TG_HRATIO  = 0x%04x, R_CSI_TG_HWIDTH  = %04d\r\n", (INT16U) R_CSI_TG_HRATIO, (INT16U) R_CSI_TG_HWIDTH));
+	_D(DBG_PRINT("[ZT]: R_CSI_TG_VRATIO  = 0x%04x, R_CSI_TG_VHEIGHT = %04d\r\n", (INT16U) R_CSI_TG_VRATIO, (INT16U) R_CSI_TG_VHEIGHT));
+	_D(DBG_PRINT("[ZT]: R_CSI_TG_CTRL0   = 0x%04x\r\n", (INT16U) uCtrlReg1));
+	_D(DBG_PRINT("[ZT]: R_CSI_TG_CTRL1   = 0x%04x\r\n", (INT16U) uCtrlReg2));
 
+	DBG_PRINT(LIGHT_CYAN "[ZT]: done\r\n" NONE);
 }
 
 /*
@@ -9038,10 +8999,10 @@ void CSI_Init (
 	// In others, one pixel is 2 bytes
 	R_CSI_TG_HWIDTH = nWidthH/2;			// Horizontal frame width
 #else
-	R_CSI_TG_HWIDTH = nWidthH;				// Horizontal frame width
+	R_CSI_TG_HWIDTH = nWidthH;			// Horizontal frame width
 #endif
 
-	R_CSI_TG_VHEIGHT = nWidthV;				// Vertical frame width
+	R_CSI_TG_VHEIGHT = nWidthV;			// Vertical frame width
 	//
 	//	CMOS Sensor Interface (CSI) H/W Initialization
 	//

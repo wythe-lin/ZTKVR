@@ -1,5 +1,14 @@
 #include "avi_encoder_state.h"
  
+/* for debug */
+#define DEBUG_AVI_ENCODER_STATE	1
+#if DEBUG_AVI_ENCODER_STATE
+    #define _dmsg(x)		{ DBG_PRINT("\033[1;34m[D]"); DBG_PRINT(x); DBG_PRINT("\033[0m"); }
+#else
+    #define _dmsg(x)
+#endif
+
+/* */
 #define C_AVI_ENCODE_STATE_STACK_SIZE   512
 #define AVI_ENCODE_QUEUE_MAX_LEN    	200  //5->200 avoid frame insert fail
 
@@ -126,7 +135,9 @@ INT32S vid_enc_preview_start(void)
 {
 	INT8U  err;
 	INT32S nRet, msg;
-	
+
+	_dmsg("[S]: vid_enc_preview_start()\r\n");
+
 	nRet = STATUS_OK;
 	// start scaler
 	if((avi_encode_get_status()&C_AVI_ENCODE_SCALER) == 0)
@@ -163,6 +174,7 @@ INT32S vid_enc_preview_start(void)
 	}
 #endif	
 Return:	
+	_dmsg("[E]: vid_enc_preview_start()\r\n");
 	return nRet;
 }
 

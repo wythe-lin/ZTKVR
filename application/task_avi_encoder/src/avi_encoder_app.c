@@ -2,6 +2,14 @@
 #include "jpeg_header.h"
 #include "video_codec_callback.h"
 
+/* for debug */
+#define DEBUG_AVI_ENCODER_APP	1
+#if DEBUG_AVI_ENCODER_APP
+    #define _dmsg(x)		{ DBG_PRINT("\033[1;34m[D]"); DBG_PRINT(x); DBG_PRINT("\033[0m"); }
+#else
+    #define _dmsg(x)
+#endif
+
 /* global varaible */
 AviEncPara_t AviEncPara, *pAviEncPara;
 AviEncAudPara_t AviEncAudPara, *pAviEncAudPara;
@@ -49,18 +57,18 @@ static void scaler_app_unlock(void)
 
 void avi_encode_init(void)
 {
-    pAviEncPara = &AviEncPara;
-    gp_memset((INT8S *)pAviEncPara, 0, sizeof(AviEncPara_t));
+	pAviEncPara = &AviEncPara;
+	gp_memset((INT8S *)pAviEncPara, 0, sizeof(AviEncPara_t));
 
-    pAviEncAudPara = &AviEncAudPara;
-    gp_memset((INT8S *)pAviEncAudPara, 0, sizeof(AviEncAudPara_t));
+	pAviEncAudPara = &AviEncAudPara;
+	gp_memset((INT8S *)pAviEncAudPara, 0, sizeof(AviEncAudPara_t));
 	pAviEncVidPara = &AviEncVidPara;
-    gp_memset((INT8S *)pAviEncVidPara, 0, sizeof(AviEncVidPara_t));
+	gp_memset((INT8S *)pAviEncVidPara, 0, sizeof(AviEncVidPara_t));
 
-    pAviEncPacker0 = &AviEncPacker0;
-    gp_memset((INT8S *)pAviEncPacker0, 0, sizeof(AviEncPacker_t));
-    pAviEncPacker1 = &AviEncPacker1;
-    gp_memset((INT8S *)pAviEncPacker1, 0, sizeof(AviEncPacker_t));
+	pAviEncPacker0 = &AviEncPacker0;
+	gp_memset((INT8S *)pAviEncPacker0, 0, sizeof(AviEncPacker_t));
+	pAviEncPacker1 = &AviEncPacker1;
+	gp_memset((INT8S *)pAviEncPacker1, 0, sizeof(AviEncPacker_t));
 
 	pAviEncPacker0->file_handle = -1;
 	pAviEncPacker0->index_handle = -1;
@@ -565,7 +573,7 @@ INT32U avi_encode_get_video_frame(void)
 static INT32S sensor_mem_alloc(void)
 {
 	INT32S i, buffer_size, nRet;
-	
+
 #if VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FRAME_MODE
 	buffer_size = pAviEncVidPara->sensor_capture_width * pAviEncVidPara->sensor_capture_height << 1;
 #elif VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FIFO_MODE
@@ -716,42 +724,44 @@ Return:
 static INT32S AviPacker_mem_alloc(AviEncPacker_t *pAviEncPacker)
 {
 	INT32S nRet;
-	
+
+	_dmsg("[S]: AviPacker_mem_alloc()\r\n");
+
 #if AVI_ENCODE_VIDEO_ENCODE_EN == 1		
 	pAviEncPacker->file_buffer_size = FileWriteBuffer_Size;
-	if(!pAviEncPacker->file_write_buffer) {
-		pAviEncPacker->file_write_buffer = (INT32U *)gp_malloc(FileWriteBuffer_Size);
-    }
+	if (!pAviEncPacker->file_write_buffer) {
+		pAviEncPacker->file_write_buffer = (INT32U *) gp_malloc(FileWriteBuffer_Size);
+	}
 	
-    if(!pAviEncPacker->file_write_buffer) {
-        RETURN(STATUS_FAIL);
-    }
+	if (!pAviEncPacker->file_write_buffer) {
+		RETURN(STATUS_FAIL);
+	}
 	
 	pAviEncPacker->index_buffer_size = IndexBuffer_Size;
-	if(!pAviEncPacker->index_write_buffer) {
-		pAviEncPacker->index_write_buffer = (INT32U *)gp_malloc(IndexBuffer_Size);
-    }
+	if (!pAviEncPacker->index_write_buffer) {
+		pAviEncPacker->index_write_buffer = (INT32U *) gp_malloc(IndexBuffer_Size);
+	}
 	
-	if(!pAviEncPacker->index_write_buffer) {
-        RETURN(STATUS_FAIL);
-    }
+	if (!pAviEncPacker->index_write_buffer) {
+		RETURN(STATUS_FAIL);
+	}
 	
-    if(!pAviEncPacker->avi_workmem) {
-	pAviEncPacker->avi_workmem = (void *)gp_malloc(AviPackerV3_GetWorkMemSize());
-    }
-	if(!pAviEncPacker->avi_workmem ) {
-        RETURN(STATUS_FAIL);
-    }
-	gp_memset((INT8S*)pAviEncPacker->avi_workmem, 0x00, AviPackerV3_GetWorkMemSize());
+	if (!pAviEncPacker->avi_workmem) {
+		pAviEncPacker->avi_workmem = (void *) gp_malloc(AviPackerV3_GetWorkMemSize());
+	}
+	if (!pAviEncPacker->avi_workmem) {
+		RETURN(STATUS_FAIL);
+	}
+	gp_memset((INT8S*) pAviEncPacker->avi_workmem, 0x00, AviPackerV3_GetWorkMemSize());
 	DEBUG_MSG(DBG_PRINT("file_write_buffer = 0x%x\r\n", pAviEncPacker->file_write_buffer));
 	DEBUG_MSG(DBG_PRINT("index_write_buffer= 0x%x\r\n", pAviEncPacker->index_write_buffer));
 #endif
 	nRet = STATUS_OK;
 Return:
-    if (nRet!=STATUS_OK) {  // Dominant add
-        AviPacker_mem_free(pAviEncPacker);
-    }
-    
+	if (nRet != STATUS_OK) {	// Dominant add
+		AviPacker_mem_free(pAviEncPacker);
+	}
+	_dmsg("[E]: AviPacker_mem_alloc()\r\n");
 	return nRet;
 } 
 

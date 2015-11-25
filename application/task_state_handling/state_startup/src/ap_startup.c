@@ -1,5 +1,15 @@
+#include "ztkconfigs.h"
 #include "ap_startup.h"
 
+/* for debug */
+#define DEBUG_AP_STARTUP	1
+#if DEBUG_AP_STARTUP
+    #define _dmsg(x)		{ DBG_PRINT("\033[1;34m[D]"); DBG_PRINT(x); DBG_PRINT("\033[0m"); }
+#else
+    #define _dmsg(x)
+#endif
+
+/* */
 #if C_LOGO == CUSTOM_ON
 	static INT32S startup_logo_img_ptr;
 	static INT32U startup_logo_decode_buff;
@@ -88,21 +98,58 @@ void ap_startup_exit(void)
 	VIDEO_ARGUMENT arg;
 
 	arg.bScaler = 1;
-	arg.TargetWidth = AVI_WIDTH*2;
-	arg.TargetHeight = AVI_HEIGHT;
-	arg.SensorWidth	= 1280;
-	arg.SensorHeight = 480;
-	arg.DisplayWidth = AVI_WIDTH;
-	arg.DisplayHeight = AVI_HEIGHT;
-	arg.DisplayBufferWidth = TFT_WIDTH;
-	arg.DisplayBufferHeight = TFT_HEIGHT;	
-	arg.VidFrameRate = AVI_FRAME_RATE;
-	arg.AudSampleRate = 8000;
-	arg.OutputFormat = IMAGE_OUTPUT_FORMAT_RGB565; 
+
+	switch (zt_resolution()) {
+	case ZT_VGA_W_PANORAMA:
+		arg.TargetWidth		= 640;
+		arg.TargetHeight	= 480;
+		arg.SensorWidth		= 640;
+		arg.SensorHeight	= 480;
+		arg.DisplayWidth	= 640;
+		arg.DisplayHeight	= 480;
+		break;
+
+	case ZT_VAG:
+		arg.TargetWidth		= AVI_WIDTH*2;		// AVI_WIDTH  = 640
+		arg.TargetHeight	= AVI_HEIGHT;		// AVI_HEIGHT = 480
+		arg.SensorWidth		= 1280;
+		arg.SensorHeight	= 480;
+		arg.DisplayWidth	= AVI_WIDTH;
+		arg.DisplayHeight	= AVI_HEIGHT;
+		break;
+
+	case ZT_HD:
+#if 0
+		arg.TargetWidth		= 1920;
+		arg.TargetHeight	= 540;
+		arg.SensorWidth		= 1920;
+		arg.SensorHeight	= 540;
+		arg.DisplayWidth	= 1920/2;
+		arg.DisplayHeight	= 540;
+#else
+		arg.TargetWidth		= AVI_WIDTH*2;		// AVI_WIDTH  = 640
+		arg.TargetHeight	= AVI_HEIGHT;		// AVI_HEIGHT = 480
+		arg.SensorWidth		= 1280;
+		arg.SensorHeight	= 480;
+		arg.DisplayWidth	= AVI_WIDTH;
+		arg.DisplayHeight	= AVI_HEIGHT;
+#endif
+		break;
+	}
+
+	arg.DisplayBufferWidth	= TFT_WIDTH;	// TFT_WIDTH  = 320
+	arg.DisplayBufferHeight = TFT_HEIGHT;	// TFT_HEIGHT = 240
+	arg.VidFrameRate	= AVI_FRAME_RATE;
+	arg.AudSampleRate	= 8000;
+	arg.OutputFormat	= IMAGE_OUTPUT_FORMAT_RGB565; 
+
+	_dmsg("[S]: ap_startup_exit()\r\n");
 
 	video_encode_entrance();
 	video_encode_preview_start(arg);
-    #if DYNAMIC_QVALUE==0  // dominant add
+#if DYNAMIC_QVALUE==0  // dominant add
 	  video_encode_set_jpeg_quality(QUALITY_FACTOR);
-	#endif
+#endif
+
+	_dmsg("[E]: ap_startup_exit()\r\n");
 }

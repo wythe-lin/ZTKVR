@@ -1,29 +1,36 @@
 #include "video_encoder.h"
 
+/* for debug */
+#define DEBUG_VIDEO_ENCODER	1
+#if DEBUG_VIDEO_ENCODER
+    #define _dmsg(x)		{ DBG_PRINT("\033[1;34m[D]"); DBG_PRINT(x); DBG_PRINT("\033[0m"); }
+#else
+    #define _dmsg(x)
+#endif
 
+/* */
 void video_encode_entrance(void)
 {
 	INT32S nRet;
 
-	DBG_PRINT("Video encode entrance\r\n");
-    avi_encode_init();
-    nRet = avi_encode_state_task_create(AVI_ENC_PRIORITY);
-    if(nRet < 0)
-    	DBG_PRINT("avi_encode_state_task_create fail !!!");
+	avi_encode_init();
+	nRet = avi_encode_state_task_create(AVI_ENC_PRIORITY);
+	if(nRet < 0)
+    		DBG_PRINT("avi_encode_state_task_create fail !!!");
     	
-    nRet = scaler_task_create(SCALER_PRIORITY);
-    if(nRet < 0)
-    	DBG_PRINT("scaler_task_create fail !!!");
+	nRet = scaler_task_create(SCALER_PRIORITY);
+	if(nRet < 0)
+    		DBG_PRINT("scaler_task_create fail !!!");
     
-    nRet = video_encode_task_create(JPEG_ENC_PRIORITY);
-    if(nRet < 0)
-    	DBG_PRINT("video_encode_task_create fail !!!");
+	nRet = video_encode_task_create(JPEG_ENC_PRIORITY);
+	if(nRet < 0)
+    		DBG_PRINT("video_encode_task_create fail !!!");
     	
-    nRet = avi_adc_record_task_create(AUD_ENC_PRIORITY);
-    if(nRet < 0)
-    	DBG_PRINT("avi_adc_record_task_create fail !!!");
+	nRet = avi_adc_record_task_create(AUD_ENC_PRIORITY);
+	if(nRet < 0)
+    		DBG_PRINT("avi_adc_record_task_create fail !!!");
     	
-    DBG_PRINT("avi encode all task create success!!!\r\n");
+	DBG_PRINT("avi encode all task create success!!!\r\n");
 }
 
 void video_encode_exit(void)
@@ -59,50 +66,57 @@ void video_encode_exit(void)
 
 CODEC_START_STATUS video_encode_preview_start(VIDEO_ARGUMENT arg)
 {
-    INT32S nRet;
+	INT32S nRet;
 
-	if(ap_state_config_voice_record_switch_get()==0) {	//wwj add
+	_dmsg("[S]: video_encode_preview_start()\r\n");
+
+	if (ap_state_config_voice_record_switch_get() == 0) {	//wwj add
 	    pAviEncAudPara->audio_format = AVI_ENCODE_AUDIO_FORMAT;
 	} else {
 	    pAviEncAudPara->audio_format = 0;
 	}
 
 	pAviEncAudPara->channel_no = 1; //mono
-    pAviEncAudPara->audio_sample_rate = arg.AudSampleRate;
+	pAviEncAudPara->audio_sample_rate = arg.AudSampleRate;
     
-    pAviEncVidPara->video_format = AVI_ENCODE_VIDEO_FORMAT;
-    pAviEncVidPara->dwScale = arg.bScaler;
-    pAviEncVidPara->dwRate = arg.VidFrameRate;
+	pAviEncVidPara->video_format = AVI_ENCODE_VIDEO_FORMAT;
+	pAviEncVidPara->dwScale = arg.bScaler;
+	pAviEncVidPara->dwRate = arg.VidFrameRate;
     
-    avi_encode_set_display_format(arg.OutputFormat);
-    avi_encode_set_sensor_format(BITMAP_YUYV);
+	avi_encode_set_display_format(arg.OutputFormat);
+	avi_encode_set_sensor_format(BITMAP_YUYV);
     
-    pAviEncVidPara->sensor_capture_width = arg.SensorWidth;
-    pAviEncVidPara->sensor_capture_height = arg.SensorHeight;
-    pAviEncVidPara->encode_width = arg.TargetWidth;
-    pAviEncVidPara->encode_height = arg.TargetHeight;
-    pAviEncVidPara->display_width = arg.DisplayWidth;
-    pAviEncVidPara->display_height = arg.DisplayHeight;
+	pAviEncVidPara->sensor_capture_width = arg.SensorWidth;
+	pAviEncVidPara->sensor_capture_height = arg.SensorHeight;
+	pAviEncVidPara->encode_width = arg.TargetWidth;
+	pAviEncVidPara->encode_height = arg.TargetHeight;
+	pAviEncVidPara->display_width = arg.DisplayWidth;
+	pAviEncVidPara->display_height = arg.DisplayHeight;
     
-    if(arg.DisplayBufferWidth == 0)
-    	arg.DisplayBufferWidth = arg.DisplayWidth;
-    else if(arg.DisplayWidth > arg.DisplayBufferWidth)
-    	arg.DisplayWidth = arg.DisplayBufferWidth;
-    
-    if(arg.DisplayBufferHeight == 0)
-    	arg.DisplayBufferHeight = arg.DisplayHeight;
-    else if(arg.DisplayHeight > arg.DisplayBufferHeight)
-    	arg.DisplayHeight = arg.DisplayBufferHeight;
-   
-    pAviEncVidPara->display_buffer_width = arg.DisplayBufferWidth;
-    pAviEncVidPara->display_buffer_height = arg.DisplayBufferHeight;
-    avi_encode_set_display_scaler(); 
-    
-   	nRet = vid_enc_preview_start();
-   	if(nRet < 0)
-   		return CODEC_START_STATUS_ERROR_MAX;
-    
-    return START_OK;
+	if (arg.DisplayBufferWidth == 0) {
+		arg.DisplayBufferWidth = arg.DisplayWidth;
+	} else if (arg.DisplayWidth > arg.DisplayBufferWidth) {
+		arg.DisplayWidth = arg.DisplayBufferWidth;
+	}    
+
+	if (arg.DisplayBufferHeight == 0) {
+    		arg.DisplayBufferHeight = arg.DisplayHeight;
+	} else if (arg.DisplayHeight > arg.DisplayBufferHeight) {
+    		arg.DisplayHeight = arg.DisplayBufferHeight;
+	}   
+
+	pAviEncVidPara->display_buffer_width = arg.DisplayBufferWidth;
+	pAviEncVidPara->display_buffer_height = arg.DisplayBufferHeight;
+	avi_encode_set_display_scaler(); 
+
+	nRet = vid_enc_preview_start();
+   	if (nRet < 0) {
+		_dmsg("[E]: video_encode_preview_start(), fail\r\n");
+		return CODEC_START_STATUS_ERROR_MAX;
+	}
+
+	_dmsg("[E]: video_encode_preview_start(), pass\r\n");
+	return START_OK;
 }
 
 CODEC_START_STATUS video_encode_preview_stop(void)
