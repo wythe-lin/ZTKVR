@@ -109,7 +109,7 @@ void ap_startup_exit(void)
 		arg.DisplayHeight	= 480;
 		break;
 
-	case ZT_VAG:
+	case ZT_VGA:
 		arg.TargetWidth		= AVI_WIDTH*2;		// AVI_WIDTH  = 640
 		arg.TargetHeight	= AVI_HEIGHT;		// AVI_HEIGHT = 480
 		arg.SensorWidth		= 1280;

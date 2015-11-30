@@ -8905,7 +8905,7 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	}
 	_D(DBG_PRINT("\r\n"));
 
-	// ZT3150 init (0x0080, 0x0081, 0x0082, 0x0083 register)
+	// ZT3150 init (0x0080 - 0x0083 mailbox command register)
 	DBG_PRINT("[ZT]: send command -");
 
 	// set operation mode
@@ -8919,24 +8919,24 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	// set resolution
 	if (zt_anti_flicker(ap_state_config_light_freq_get())) {
 		DBG_PRINT(" 50Hz");
-		switch(zt_resolution()) {
+		switch (zt_resolution()) {
 		case ZT_VGA_W_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x82);	DBG_PRINT(" VGA with panorama");break;	// 50Hz VGA with panorama enabled
-		case ZT_VAG:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);	DBG_PRINT(" VGA (1280x480)");	break;	// 50Hz VGA
+		case ZT_VGA:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);	DBG_PRINT(" VGA (1280x480)");	break;	// 50Hz VGA
 		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x04);	DBG_PRINT(" HD (1920x544)");	break;	// 50Hz HD
 		default:		DBG_PRINT(WHITE "\r\n[ZT]: ERROR!!! zt_resolution() must be set" NONE);	break;
 		}
 	} else {
 		DBG_PRINT(" 60Hz");
-		switch(zt_resolution()) {
+		switch (zt_resolution()) {
 		case ZT_VGA_W_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x81);	DBG_PRINT(" VGA with panorama");break;	// 60Hz VGA with panorama enabled
-		case ZT_VAG:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x01);	DBG_PRINT(" VGA (1280x480)");	break;	// 60Hz VGA
+		case ZT_VGA:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x01);	DBG_PRINT(" VGA (1280x480)");	break;	// 60Hz VGA
 		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x03);	DBG_PRINT(" HD (1920x544)");	break;	// 60Hz HD
 		default:		DBG_PRINT(WHITE "\r\n[ZT]: ERROR!!! zt_resolution() must be set" NONE);	break;
 		}
 	}
 	DBG_PRINT("\r\n");
 
-	// dummy parameter 3
+	// parameter 3 - dummy
 	sccb_wr_r16d8(ZT3150_ID, 0x0083, 0x00);
 
 	// set command ID
