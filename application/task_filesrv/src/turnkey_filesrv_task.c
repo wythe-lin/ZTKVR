@@ -10,9 +10,18 @@
 */
 #include "turnkey_filesrv_task.h"
 
+/* for debug */
+#define DEBUG_TURNKEY_FILESRV_TASK	0
+#if DEBUG_TURNKEY_FILESRV_TASK
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
 //#define TK_FILESRV_DEBUG
 
-
+/* */
 #define C_FS_Q_MAX				128
 #define C_FS_MAX_MSG			128
 #define C_FS_MSG_LENGTH			128
@@ -61,6 +70,8 @@ static void FileSrvScanFileStart(STScanFilePara *para);
 
 void filesrv_task_init(void)
 {
+	_dmsg(("[S]: filesrv_task_init()\r\n"));
+
 	fs_msg_q_id = msgQCreate(C_FS_Q_MAX, C_FS_MAX_MSG, C_FS_MSG_LENGTH);
 	if(fs_msg_q_id == NULL) {
 		DBG_PRINT("Create file service message queue faile\r\n");
@@ -72,9 +83,10 @@ void filesrv_task_init(void)
 		DBG_PRINT("Create file scan service message queue faile\r\n");
 	}
 
-    FileSrvScanFileInit();
-    
-    msgQSend(StorageServiceQ, MSG_FILESRV_TASK_READY, NULL, NULL, MSG_PRI_NORMAL);
+	FileSrvScanFileInit();
+
+	_dmsg(("[E]: filesrv_task_init()\r\n"));   
+	msgQSend(StorageServiceQ, MSG_FILESRV_TASK_READY, NULL, NULL, MSG_PRI_NORMAL);
 }
 
 void filesrv_task_entry(void *parm)
@@ -372,10 +384,9 @@ static void FileSrvScanFileInit(void)
 	INT32S i;
 
 	gFileScanCount = 0;
-    for(i = 0; i < C_FILE_SCAN_COUNT; i++)
-    {
-    	gstFileScanCtrl[i].flag = 0;
-    }
+	for(i = 0; i < C_FILE_SCAN_COUNT; i++) {
+		gstFileScanCtrl[i].flag = 0;
+	}
 }
 
 // if scan file faile, what to do??

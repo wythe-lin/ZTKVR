@@ -1,9 +1,11 @@
+#include "ztkconfigs.h"
 #include "avi_encoder_state.h"
  
 /* for debug */
-#define DEBUG_AVI_ENCODER_STATE	1
+#define DEBUG_AVI_ENCODER_STATE		1
 #if DEBUG_AVI_ENCODER_STATE
-    #define _dmsg(x)		{ DBG_PRINT("\033[1;34m[D]"); DBG_PRINT(x); DBG_PRINT("\033[0m"); }
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
 #else
     #define _dmsg(x)
 #endif
@@ -80,7 +82,7 @@ INT32U avi_enc_packer_start(AviEncPacker_t *pAviEncPacker)
 			break;
 		}		
 		avi_encode_set_status(bflag);
-		DEBUG_MSG(DBG_PRINT("a.AviPackerOpen[0x%x] = 0x%x\r\n", bflag, nRet));
+		_dmsg((PURPLE "a.AviPackerOpen[0x%x] = 0x%x\r\n"  NONE, bflag, nRet));
 	}
 	else
 	{
@@ -136,45 +138,41 @@ INT32S vid_enc_preview_start(void)
 	INT8U  err;
 	INT32S nRet, msg;
 
-	_dmsg("[S]: vid_enc_preview_start()\r\n");
-
 	nRet = STATUS_OK;
 	// start scaler
-	if((avi_encode_get_status()&C_AVI_ENCODE_SCALER) == 0)
-	{
-		if(scaler_task_start() < 0) RETURN(STATUS_FAIL);
+	if ((avi_encode_get_status() & C_AVI_ENCODE_SCALER) == 0) {
+		if (scaler_task_start() < 0)
+			return(STATUS_FAIL);
 		avi_encode_set_status(C_AVI_ENCODE_SCALER);
-		DEBUG_MSG(DBG_PRINT("a.scaler start\r\n")); 
+		_dmsg((BLUE "a.scaler start\r\n" NONE)); 
 	}
 	// start video
 #if AVI_ENCODE_VIDEO_ENCODE_EN == 1 
-	if((avi_encode_get_status()&C_AVI_ENCODE_VIDEO) == 0)
-	{	
-		if(video_encode_task_start() < 0) RETURN(STATUS_FAIL);
+	if ((avi_encode_get_status() & C_AVI_ENCODE_VIDEO) == 0) {	
+		if (video_encode_task_start() < 0)
+			RETURN(STATUS_FAIL);
 		avi_encode_set_status(C_AVI_ENCODE_VIDEO);
-		DEBUG_MSG(DBG_PRINT("b.video start\r\n"));
+		_dmsg((BLUE "b.video start\r\n" NONE));
 	}
 #endif
 	// start sensor
-	if((avi_encode_get_status()&C_AVI_ENCODE_SENSOR) == 0)
-	{
+	if ((avi_encode_get_status() & C_AVI_ENCODE_SENSOR) == 0) {
 		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_SENSOR, avi_encode_ack_m, 5000, msg, err);	
 		avi_encode_set_status(C_AVI_ENCODE_SENSOR);
-		DEBUG_MSG(DBG_PRINT("c.sensor start\r\n")); 
+		_dmsg((BLUE "c.sensor start\r\n" NONE)); 
 	}
 	// start audio 
 #if AVI_ENCODE_PRE_ENCODE_EN == 1
-	if(pAviEncAudPara->audio_format && ((avi_encode_get_status()&C_AVI_ENCODE_AUDIO) == 0))
-	{
-		if(avi_audio_record_start() < 0) RETURN(STATUS_FAIL);
+	if (pAviEncAudPara->audio_format && ((avi_encode_get_status() & C_AVI_ENCODE_AUDIO) == 0)) {
+		if (avi_audio_record_start() < 0)
+			RETURN(STATUS_FAIL);
 		avi_encode_set_status(C_AVI_VID_ENC_START); 
 		avi_encode_set_status(C_AVI_ENCODE_AUDIO);
 		avi_encode_audio_timer_start();
-		DEBUG_MSG(DBG_PRINT("d.audio start\r\n"));
+		_dmsg((BLUE "d.audio start\r\n" NONE));
 	}
 #endif	
 Return:	
-	_dmsg("[E]: vid_enc_preview_start()\r\n");
 	return nRet;
 }
 
@@ -221,32 +219,38 @@ INT32S avi_enc_start(void)
 {
 	INT8U  err;
 	INT32S nRet, msg;
-	
+
+	_dmsg((GREEN "[S]: avi_enc_start()\r\n" NONE));
+
 	nRet = STATUS_OK;
 	// start audio 
-	if(pAviEncAudPara->audio_format && ((avi_encode_get_status()&C_AVI_ENCODE_AUDIO) == 0))
-	{
-		if(avi_audio_record_start() < 0) RETURN(STATUS_FAIL);
+	if (pAviEncAudPara->audio_format && ((avi_encode_get_status() & C_AVI_ENCODE_AUDIO) == 0)) {
+		if (avi_audio_record_start() < 0) {
+			_dmsg((GREEN "[E]: avi_enc_start() - audio start fail\r\n" NONE));
+			return (STATUS_FAIL);
+		}
 		avi_encode_set_status(C_AVI_ENCODE_AUDIO);
 		DEBUG_MSG(DBG_PRINT("b.audio start\r\n"));
 	}
 	// restart audio 
 #if AVI_ENCODE_PRE_ENCODE_EN == 1
-	if(pAviEncAudPara->audio_format && (avi_encode_get_status()&C_AVI_ENCODE_AUDIO))
-	{
-		if(avi_audio_record_restart() < 0) RETURN(STATUS_FAIL);
+	if (pAviEncAudPara->audio_format && (avi_encode_get_status() & C_AVI_ENCODE_AUDIO)) {
+		if (avi_audio_record_restart() < 0) {
+			_dmsg((GREEN "[E]: avi_enc_start() - audio restart fail\r\n" NONE));
+			return (STATUS_FAIL);
+		}
 		DEBUG_MSG(DBG_PRINT("b.audio restart\r\n"));
 	}
 #endif
 	// start avi encode
-	if((avi_encode_get_status()&C_AVI_ENCODE_START) == 0)
-	{
+	if ((avi_encode_get_status() & C_AVI_ENCODE_START) == 0) {
 		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_ENCODE, avi_encode_ack_m, 5000, msg, err);	
 		avi_encode_set_status(C_AVI_ENCODE_START);
 		avi_encode_set_status(C_AVI_VID_ENC_START);
 		DEBUG_MSG(DBG_PRINT("c.encode start\r\n")); 
 	}
-Return:	
+Return:
+	_dmsg((GREEN "[E]: avi_enc_start() - pass (%0x)\r\n" NONE, nRet));
 	return nRet;
 }
 

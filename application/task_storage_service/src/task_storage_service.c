@@ -1,5 +1,16 @@
+#include "ztkconfigs.h"
 #include "task_storage_service.h"
 
+/* for debug */
+#define DEBUG_TASK_STORAGE_SERVICE	1
+#if DEBUG_TASK_STORAGE_SERVICE
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/*  */
 MSG_Q_ID StorageServiceQ;
 
 #define SYS_FS_Q_SIZE           1
@@ -34,13 +45,14 @@ void task_storage_service_entry(void *para)
 	
 	task_storage_service_init();
 	
-	while(1) {	
+	while (1) {	
 		if (msgQReceive(StorageServiceQ, &msg_id, storage_service_para, STORAGE_SERVICE_QUEUE_MAX_MSG_LEN) == STATUS_FAIL) {
 			continue;
 		}		
-        switch (msg_id) {
+		switch (msg_id) {
         	case MSG_FILESRV_TASK_READY:
-				ap_storage_service_init();        		
+			_dmsg(("[D]: MSG_FILESRV_TASK_READY\r\n"));
+			ap_storage_service_init();        		
         		break;
         	case MSG_STORAGE_SERVICE_STORAGE_CHECK:
         		if (FNodeInfo[SD_SLOT_ID].audio.flag != 2 && s_usbd_pin == 0) { // don't mount when scaning files

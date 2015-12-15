@@ -1370,7 +1370,6 @@ void ap_setting_show_software_version(void)
 
 	STRING_ASCII_INFO ascii_str;
 	INT8U *pDate,date_time[25] ;
-	INT16U i;
 	DISPLAY_ICONSHOW cursor_icon = {320, 234, TRANSPARENT_COLOR, 0, 0};
 	
 	ap_setting_icon_draw((INT16U *)setting_frame_buff, background_c, &cursor_icon, SETTING_ICON_NORMAL_DRAW);

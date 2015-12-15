@@ -1,10 +1,9 @@
-#include	"drv_l1_sensor.h"
+#include "ztkconfigs.h"
+#include "drv_l1_sensor.h"
 
 #if (defined _DRV_L1_MIPI) && (_DRV_L1_MIPI == 1)  
 #include "drv_l1_mipi.h"
 #endif
-
-#include "ztkconfigs.h"
 
 //=== This is for code configuration DON'T REMOVE or MODIFY it ===//
 #if (defined _DRV_L1_SENSOR) && (_DRV_L1_SENSOR == 1)             //
@@ -8816,13 +8815,21 @@ OV3640_MIPI_Init(
  *****************************************************************************
  */
 #ifdef __ZT3150_DRV_C__
+#include "gplib.h"
 
 /* for debug */
+#define DEBUG_ZT3150_REG	0
+#if DEBUG_ZT3150_REG
+    #define _dreg(x)		print_string x
+#else
+    #define _dreg(x)
+#endif
+
 #define DEBUG_ZT3150		1
 #if DEBUG_ZT3150
-    #define _D(x)		(x)
+    #define _dmsg(x)		print_string x
 #else
-    #define _D(x)
+    #define _dmsg(x)
 #endif
 
 /* definitions */
@@ -8843,7 +8850,7 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	INT8U	tmp;
 	INT32S	nack;
 
-	DBG_PRINT(LIGHT_CYAN "[ZT]: mount\r\n" NONE);
+	_dmsg((LIGHT_CYAN "[ZT31XX]: mount\r\n" NONE));
 
 	// Enable CSI clock to let sensor initialize at first
 //	uCtrlReg2      = CLKOEN | CSI_RGB565 | CSI_HIGHPRI | CSI_NOSTOP | CLK_SEL48M;
@@ -8883,7 +8890,7 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	sccb_delay(200);
 
 	// ZT3150 reset
-	DBG_PRINT("[ZT]: hardware reset\r\n");
+	_dmsg(("[ZT31XX]: hardware reset\r\n"));
 	gpio_write_io(ZT3150_RESET, 1);
 	gpio_init_io(ZT3150_RESET, GPIO_OUTPUT);
 	gpio_drving_init_io(ZT3150_RESET, (IO_DRV_LEVEL) IO_DRIVING_4mA);
@@ -8893,48 +8900,50 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	gpio_write_io(ZT3150_RESET, 1);
 
 	// ZT3150 ready?
-	_D(DBG_PRINT("[ZT]: wait ready - "));
+	_dmsg(("[ZT31XX]: wait ready - "));
 	for (;;) {
 		nack = sccb_rd_r16d8(ZT3150_ID, 0x0080, &tmp);
-		_D(DBG_PRINT(" %02x", tmp));
+		_dmsg((" %02x", tmp));
 		//if (tmp == 0x80||tmp == 0x81) {
 		if (tmp == 0x80){
 			break;
 		}
 		drv_msec_wait(100);
 	}
-	_D(DBG_PRINT("\r\n"));
+	_dmsg(("\r\n"));
 
 	// ZT3150 init (0x0080 - 0x0083 mailbox command register)
-	DBG_PRINT("[ZT]: send command -");
+	_dmsg(("[ZT31XX]: send command -"));
 
 	// set operation mode
 	switch (zt_opmode()) {
-	case ZT_H_SIDE_BY_SIDE:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x03);	DBG_PRINT(" (h) side by side,");break;	// horizontal side by side
-	case ZT_V_SIDE_BY_SIDE:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x05);	DBG_PRINT(" (v) side by side,");break;	// vertical   side by side
-	case ZT_STITCHING:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);	DBG_PRINT(" stitching,");	break;	// stitching
-	default:		DBG_PRINT(WHITE "\r\n[ZT]: ERROR!!! zt_opmode() must be set\r\n" NONE);	break;
+	case ZT_H_SIDE_BY_SIDE:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x03);	_dmsg((" (h) side by side,")); break;		// horizontal side by side
+	case ZT_V_SIDE_BY_SIDE:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x05);	_dmsg((" (v) side by side,")); break;		// vertical   side by side
+	case ZT_STITCHING:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);	_dmsg((" stitching,")); break;			// stitching
+	default:		_dmsg((WHITE "\r\n[ZT31XX]: ERROR!!! zt_opmode() must be set\r\n" NONE)); break;
 	}
 
 	// set resolution
 	if (zt_anti_flicker(ap_state_config_light_freq_get())) {
-		DBG_PRINT(" 50Hz");
+		_dmsg((" 50Hz"));
 		switch (zt_resolution()) {
-		case ZT_VGA_W_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x82);	DBG_PRINT(" VGA with panorama");break;	// 50Hz VGA with panorama enabled
-		case ZT_VGA:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);	DBG_PRINT(" VGA (1280x480)");	break;	// 50Hz VGA
-		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x04);	DBG_PRINT(" HD (1920x544)");	break;	// 50Hz HD
-		default:		DBG_PRINT(WHITE "\r\n[ZT]: ERROR!!! zt_resolution() must be set" NONE);	break;
+		case ZT_VGA_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x82);	_dmsg((" VGA with panorama")); break;	// 50Hz VGA with panorama enabled
+		case ZT_VGA:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);	_dmsg((" VGA")); break;			// 50Hz VGA
+		case ZT_HD_SCALED:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x04);	_dmsg((" HD with scaled")); break;	// 50Hz HD with scaled
+		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x04);	_dmsg((" HD")); break;			// 50Hz HD
+		default:		_dmsg((WHITE "\r\n[ZT31XX]: ERROR!!! zt_resolution() must be set" NONE)); break;
 		}
 	} else {
-		DBG_PRINT(" 60Hz");
+		_dmsg((" 60Hz"));
 		switch (zt_resolution()) {
-		case ZT_VGA_W_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x81);	DBG_PRINT(" VGA with panorama");break;	// 60Hz VGA with panorama enabled
-		case ZT_VGA:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x01);	DBG_PRINT(" VGA (1280x480)");	break;	// 60Hz VGA
-		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x03);	DBG_PRINT(" HD (1920x544)");	break;	// 60Hz HD
-		default:		DBG_PRINT(WHITE "\r\n[ZT]: ERROR!!! zt_resolution() must be set" NONE);	break;
+		case ZT_VGA_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x81);	_dmsg((" VGA with panorama")); break;	// 60Hz VGA with panorama enabled
+		case ZT_VGA:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x01);	_dmsg((" VGA")); break;			// 60Hz VGA
+		case ZT_HD_SCALED:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x03);	_dmsg((" HD with scaled")); break;	// 60Hz HD with scaled
+		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x03);	_dmsg((" HD")); break;			// 60Hz HD
+		default:		_dmsg((WHITE "\r\n[ZT31XX]: ERROR!!! zt_resolution() must be set" NONE)); break;
 		}
 	}
-	DBG_PRINT("\r\n");
+	_dmsg((" (%0dx%0d), null\r\n", nWidthH, nWidthV));
 
 	// parameter 3 - dummy
 	sccb_wr_r16d8(ZT3150_ID, 0x0083, 0x00);
@@ -8956,13 +8965,13 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 #elif CSI_IRQ_MODE == CSI_IRQ_TG_FIFO32_IRQ
 	R_CSI_TG_CTRL0 = uCtrlReg1 | (3 << 20) | (1 << 16);
 #endif
-	_D(DBG_PRINT("[ZT]: nWidthH=%04d, nWidthV=%04d, uFlag=0x%04x\r\n", nWidthH, nWidthV, uFlag));
-	_D(DBG_PRINT("[ZT]: R_CSI_TG_HRATIO  = 0x%04x, R_CSI_TG_HWIDTH  = %04d\r\n", (INT16U) R_CSI_TG_HRATIO, (INT16U) R_CSI_TG_HWIDTH));
-	_D(DBG_PRINT("[ZT]: R_CSI_TG_VRATIO  = 0x%04x, R_CSI_TG_VHEIGHT = %04d\r\n", (INT16U) R_CSI_TG_VRATIO, (INT16U) R_CSI_TG_VHEIGHT));
-	_D(DBG_PRINT("[ZT]: R_CSI_TG_CTRL0   = 0x%04x\r\n", (INT16U) uCtrlReg1));
-	_D(DBG_PRINT("[ZT]: R_CSI_TG_CTRL1   = 0x%04x\r\n", (INT16U) uCtrlReg2));
+	_dreg(("[ZT31XX]: nWidthH=%04d, nWidthV=%04d, uFlag=0x%04x\r\n", nWidthH, nWidthV, uFlag));
+	_dreg(("[ZT31XX]: R_CSI_TG_HRATIO  = 0x%04x, R_CSI_TG_HWIDTH  = %04d\r\n", (INT16U) R_CSI_TG_HRATIO, (INT16U) R_CSI_TG_HWIDTH));
+	_dreg(("[ZT31XX]: R_CSI_TG_VRATIO  = 0x%04x, R_CSI_TG_VHEIGHT = %04d\r\n", (INT16U) R_CSI_TG_VRATIO, (INT16U) R_CSI_TG_VHEIGHT));
+	_dreg(("[ZT31XX]: R_CSI_TG_CTRL0   = 0x%04x\r\n", (INT16U) uCtrlReg1));
+	_dreg(("[ZT31XX]: R_CSI_TG_CTRL1   = 0x%04x\r\n", (INT16U) uCtrlReg2));
 
-	DBG_PRINT(LIGHT_CYAN "[ZT]: done\r\n" NONE);
+	_dmsg((LIGHT_CYAN "[ZT31XX]: done\r\n" NONE));
 }
 
 /*

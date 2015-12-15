@@ -1,5 +1,16 @@
+#include "ztkconfigs.h"
 #include "ap_storage_service.h"
 
+/* for debug */
+#define DEBUG_AP_STORAGE_SERVICE	1
+#if DEBUG_AP_STORAGE_SERVICE
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/*  */
 #define AVI_REC_MAX_BYTE_SIZE   0x70000000  //1879048192 Bytes
 #define AP_STG_MAX_FILE_NUMS    625
 #define AUDIO_FILE_SCAN_BUF_FIX   1   // Dominant add to fix file scan index buffer
@@ -72,13 +83,12 @@ void ap_storage_service_init(void)
 	storage_freesize_timerid = 0xFF;
 #endif
 	g_play_index = -1;
-	
+
 	if (ap_storage_service_storage_mount() == STATUS_FAIL) {	
 		storage_mount_timerid = STORAGE_SERVICE_MOUNT_TIMER_ID;
 		sys_set_timer((void*)msgQSend, (void*)StorageServiceQ, MSG_STORAGE_SERVICE_STORAGE_CHECK, storage_mount_timerid, STORAGE_TIME_INTERVAL_MOUNT);
 		sd_upgrade_file_flag = 1;
-	}
-	else {
+	} else {
 		storage_mount_timerid = 0xFF;
 	}
 }
@@ -822,11 +832,11 @@ INT16S ap_storage_mount(void)
 
 INT32S ap_storage_service_storage_mount(void)
 {
-    INT16S nRet;
+	INT16S nRet;
 	INT32S i;
 	INT16S fd;
-    INT32U max_temp;
-	
+	INT32U max_temp;
+
 	if (storage_mount_timerid == 0xFF) {
 		return STATUS_OK;
 	}
@@ -872,95 +882,94 @@ INT32S ap_storage_service_storage_mount(void)
 /* #END# modify by ShengHua - 2014.10.17 */
 
 #else
-    nRet = ap_storage_mount(); //_devicemount(MINI_DVR_STORAGE_TYPE);  
+	nRet = ap_storage_mount(); //_devicemount(MINI_DVR_STORAGE_TYPE);  
 #endif
         
 #if 0  // Dominant add for format test
-    if (nRet==0 && fff!=0x888) 
-    {
-        INT32U ft;
+	if (nRet==0 && fff!=0x888)  {
+		INT32U ft;
 
-        ft = sw_timer_get_counter_L();
-        DBG_PRINT ("Format Start....\r\n");
-        _format(MINI_DVR_STORAGE_TYPE , FAT32_Type);
-        DBG_PRINT ("Format Time: %d ms....\r\n", sw_timer_get_counter_L()-ft);
-        DBG_PRINT ("Remount....\r\n");
-        _devicemount(MINI_DVR_STORAGE_TYPE);
-        fff = 0x888;
-        //while(1);
-    }
+		ft = sw_timer_get_counter_L();
+		DBG_PRINT ("Format Start....\r\n");
+		_format(MINI_DVR_STORAGE_TYPE , FAT32_Type);
+		DBG_PRINT ("Format Time: %d ms....\r\n", sw_timer_get_counter_L()-ft);
+		DBG_PRINT ("Remount....\r\n");
+		_devicemount(MINI_DVR_STORAGE_TYPE);
+		fff = 0x888;
+		//while(1);
+	}
 #endif
 
-    if (nRet != 0) {
-        if (curr_storage_id != NO_STORAGE) {
-            curr_storage_id = NO_STORAGE;
-            OSTaskChangePrio(STORAGE_SERVICE_PRIORITY, STORAGE_SERVICE_PRIORITY2);
-            msgQSend(ApQ, MSG_STORAGE_SERVICE_NO_STORAGE, &curr_storage_id, sizeof(INT8U), MSG_PRI_NORMAL);
-            msgQSend(ApQ, MSG_SYS_STORAGE_SCAN_DONE, NULL, 0, MSG_PRI_NORMAL);
-            audio_present = 0;
-            audio_send_stop();
-            storage_free_buf();
-        }
-        return STATUS_FAIL;
-    } else {
-        if ((curr_storage_id != MINI_DVR_STORAGE_TYPE) || (usbd_storage_exit == 1)) {
-            curr_storage_id = MINI_DVR_STORAGE_TYPE;
-            OSTaskChangePrio(STORAGE_SERVICE_PRIORITY2, STORAGE_SERVICE_PRIORITY);
+	if (nRet != 0) {
+		if (curr_storage_id != NO_STORAGE) {
+			curr_storage_id = NO_STORAGE;
+			OSTaskChangePrio(STORAGE_SERVICE_PRIORITY, STORAGE_SERVICE_PRIORITY2);
+			msgQSend(ApQ, MSG_STORAGE_SERVICE_NO_STORAGE, &curr_storage_id, sizeof(INT8U), MSG_PRI_NORMAL);
+			msgQSend(ApQ, MSG_SYS_STORAGE_SCAN_DONE, NULL, 0, MSG_PRI_NORMAL);
+			audio_present = 0;
+			audio_send_stop();
+			storage_free_buf();
+		}
+		return STATUS_FAIL;
+	} else {
+		if ((curr_storage_id != MINI_DVR_STORAGE_TYPE) || (usbd_storage_exit == 1)) {
+			curr_storage_id = MINI_DVR_STORAGE_TYPE;
+			OSTaskChangePrio(STORAGE_SERVICE_PRIORITY2, STORAGE_SERVICE_PRIORITY);
 
-            mkdir("C:\\DCIM");
-            chdir("C:\\DCIM");
+			mkdir("C:\\DCIM");
+			chdir("C:\\DCIM");
 
-            g_jpeg_index = 0;
-            g_avi_index = 0;
-            g_wav_index = 0;
-            g_file_index = 0;
-            g_file_num = 0;
-            g_same_index_num = 0;
-            g_play_index = -1;
-            for (i=0 ; i<AP_STG_MAX_FILE_NUMS ; i++) {
-                avi_file_table[i] = 0;
-                jpg_file_table[i] = 0;
-                wav_file_table[i] = 0;
-            }
+			g_jpeg_index = 0;
+			g_avi_index = 0;
+			g_wav_index = 0;
+			g_file_index = 0;
+			g_file_num = 0;
+			g_same_index_num = 0;
+			g_play_index = -1;
+			for (i=0 ; i<AP_STG_MAX_FILE_NUMS ; i++) {
+				avi_file_table[i] = 0;
+				jpg_file_table[i] = 0;
+				wav_file_table[i] = 0;
+			}
 			get_file_final_avi_index(1);
 			get_file_final_jpeg_index(1);
 			get_file_final_wav_index(1);
 
-            if(g_avi_index_9999_exist) {
-                if (g_avi_index == 10000) {
-                    g_file_index = 0;
-                } else if (g_jpeg_index == 10000) {
-                    g_file_index = 0;
-                } else if (g_wav_index == 10000) {
-                    g_file_index = 0;
-                } else {
+			if (g_avi_index_9999_exist) {
+				if (g_avi_index == 10000) {
+					g_file_index = 0;
+				} else if (g_jpeg_index == 10000) {
+					g_file_index = 0;
+				} else if (g_wav_index == 10000) {
+					g_file_index = 0;
+				} else {
 					if(g_avi_file_time > g_jpg_file_time) {
-                        max_temp = g_avi_index;
+                        			max_temp = g_avi_index;
 						if (g_avi_file_time > g_wav_file_time) {
-                        	g_file_index = max_temp;
+                        				g_file_index = max_temp;
 						} else {
-                        	g_file_index = g_wav_index;
-                    	}
+                        				g_file_index = g_wav_index;
+                    				}
 					} else {
-                        max_temp = g_jpeg_index;
+                        			max_temp = g_jpeg_index;
 						if (g_jpg_file_time > g_wav_file_time) {
-                        	g_file_index = max_temp;
+                        				g_file_index = max_temp;
 						} else {
-                        	g_file_index = g_wav_index;
-                    	}                        
+                        				g_file_index = g_wav_index;
+                    				}                        
 					}
 				}
 			} else {
-                if (g_avi_index > g_jpeg_index) {
-                    max_temp = g_avi_index;
+				if (g_avi_index > g_jpeg_index) {
+					max_temp = g_avi_index;
 				} else {
-                    max_temp = g_jpeg_index;
-                }
+					max_temp = g_jpeg_index;
+				}
 
-                if(max_temp > g_wav_index) {
-                    g_file_index = max_temp;
+				if(max_temp > g_wav_index) {
+					g_file_index = max_temp;
 				} else {
-                    g_file_index = g_wav_index;
+					g_file_index = g_wav_index;
 				}
 			}
 			g_same_index_num = get_same_index_file_number();
@@ -981,18 +990,35 @@ INT32S ap_storage_service_storage_mount(void)
 			
 			if (sd_upgrade_file_flag == 0) {
 				chdir("C:\\");
-				fd = open((CHAR*)"C:\\ztkvr_upgrade.bin", O_RDONLY);
+
+				// firmware upgrade for GP chip
+				_dmsg(("[ZT]: ztkvr_upgrade.bin  - "));
+				fd = open((CHAR *) "C:\\ztkvr_upgrade.bin", O_RDONLY);
 				if (fd < 0) {
-					sd_upgrade_file_flag = 1; //no need upgrade
-					chdir("C:\\DCIM");
+					_dmsg((WHITE  "not found\r\n" NONE));
+
+					// firmware update for ZT31XX
+					_dmsg(("[ZT]: zt31xx_upgrade.bin - "));
+					fd = open((CHAR *) "C:\\zt31xx_upgrade.bin", O_RDONLY);
+					if (fd < 0) {
+						_dmsg((WHITE  "not found\r\n" NONE));
+						chdir("C:\\DCIM");
+						sd_upgrade_file_flag = 1; //no need upgrade
+
+					} else {
+						_dmsg((WHITE "found, update firmware\r\n" NONE));
+						close(fd);
+//						sd_upgrade_file_flag = 2; //want to upgrade
+					}
 				} else {
+					_dmsg((WHITE "found, update firmware\r\n" NONE));
 					close(fd);
 					sd_upgrade_file_flag = 2; //want to upgrade
 				}
 			}
 			ap_storage_service_del_thread_mb_set();
 			msgQSend(ApQ, MSG_SYS_STORAGE_SCAN_DONE, NULL, 0, MSG_PRI_NORMAL);
-		}		
+		}
 		return STATUS_OK;
 	}
 }

@@ -3,7 +3,8 @@
 /* for debug */
 #define DEBUG_VIDEO_ENCODER	1
 #if DEBUG_VIDEO_ENCODER
-    #define _dmsg(x)		{ DBG_PRINT("\033[1;34m[D]"); DBG_PRINT(x); DBG_PRINT("\033[0m"); }
+    #include "gplib.h"
+    #define _dmsg(x)		print_string x
 #else
     #define _dmsg(x)
 #endif
@@ -68,7 +69,7 @@ CODEC_START_STATUS video_encode_preview_start(VIDEO_ARGUMENT arg)
 {
 	INT32S nRet;
 
-	_dmsg("[S]: video_encode_preview_start()\r\n");
+	_dmsg((GREEN "[S]: video_encode_preview_start()\r\n" NONE));
 
 	if (ap_state_config_voice_record_switch_get() == 0) {	//wwj add
 	    pAviEncAudPara->audio_format = AVI_ENCODE_AUDIO_FORMAT;
@@ -86,36 +87,41 @@ CODEC_START_STATUS video_encode_preview_start(VIDEO_ARGUMENT arg)
 	avi_encode_set_display_format(arg.OutputFormat);
 	avi_encode_set_sensor_format(BITMAP_YUYV);
     
-	pAviEncVidPara->sensor_capture_width = arg.SensorWidth;
+	pAviEncVidPara->sensor_capture_width  = arg.SensorWidth;
 	pAviEncVidPara->sensor_capture_height = arg.SensorHeight;
-	pAviEncVidPara->encode_width = arg.TargetWidth;
-	pAviEncVidPara->encode_height = arg.TargetHeight;
-	pAviEncVidPara->display_width = arg.DisplayWidth;
-	pAviEncVidPara->display_height = arg.DisplayHeight;
+	pAviEncVidPara->encode_width	      = arg.TargetWidth;
+	pAviEncVidPara->encode_height	      = arg.TargetHeight;
+	pAviEncVidPara->display_width	      = arg.DisplayWidth;
+	pAviEncVidPara->display_height	      = arg.DisplayHeight;
     
 	if (arg.DisplayBufferWidth == 0) {
 		arg.DisplayBufferWidth = arg.DisplayWidth;
+		_dmsg((GREEN "[D]: (arg.DisplayBufferWidth == 0)\r\n" NONE));
 	} else if (arg.DisplayWidth > arg.DisplayBufferWidth) {
 		arg.DisplayWidth = arg.DisplayBufferWidth;
+		_dmsg((GREEN "[D]: (arg.DisplayWidth > arg.DisplayBufferWidth)\r\n" NONE));
 	}    
 
 	if (arg.DisplayBufferHeight == 0) {
     		arg.DisplayBufferHeight = arg.DisplayHeight;
+		_dmsg((GREEN "[D]: (arg.DisplayBufferHeight == 0)\r\n" NONE));
 	} else if (arg.DisplayHeight > arg.DisplayBufferHeight) {
     		arg.DisplayHeight = arg.DisplayBufferHeight;
+		_dmsg((GREEN "[D]: (arg.DisplayHeight > arg.DisplayBufferHeight)\r\n" NONE));
 	}   
 
-	pAviEncVidPara->display_buffer_width = arg.DisplayBufferWidth;
+	_dmsg((GREEN "[D]: display buffer = %0d x %0d\r\n" NONE, arg.DisplayBufferWidth, arg.DisplayBufferHeight));
+	pAviEncVidPara->display_buffer_width  = arg.DisplayBufferWidth;
 	pAviEncVidPara->display_buffer_height = arg.DisplayBufferHeight;
 	avi_encode_set_display_scaler(); 
 
 	nRet = vid_enc_preview_start();
    	if (nRet < 0) {
-		_dmsg("[E]: video_encode_preview_start(), fail\r\n");
+		_dmsg((GREEN "[E]: video_encode_preview_start(), fail\r\n" NONE));
 		return CODEC_START_STATUS_ERROR_MAX;
 	}
 
-	_dmsg("[E]: video_encode_preview_start(), pass\r\n");
+	_dmsg((GREEN "[E]: video_encode_preview_start(), pass\r\n" NONE));
 	return START_OK;
 }
 
@@ -163,36 +169,33 @@ CODEC_START_STATUS video_encode_start(MEDIA_SOURCE src)
 
     }
     
-    avi_encode_set_curworkmem((void *)pAviEncPacker0); 
-    nRet = avi_encode_set_file_handle_and_caculate_free_size(pAviEncPara->AviPackerCur, src.type_ID.FileHandle);
-    if(nRet < 0) {
-    	ret_status = RESOURCE_WRITE_ERROR;
-        goto VDO_START_END;
-    }
+	avi_encode_set_curworkmem((void *)pAviEncPacker0); 
+	nRet = avi_encode_set_file_handle_and_caculate_free_size(pAviEncPara->AviPackerCur, src.type_ID.FileHandle);
+	if (nRet < 0) {
+		ret_status = RESOURCE_WRITE_ERROR;
+		goto VDO_START_END;
+	}
     	
-    //start avi packer
-    nRet = avi_enc_packer_start(pAviEncPara->AviPackerCur);
-    if(nRet < 0) {
-    	ret_status = CODEC_START_STATUS_ERROR_MAX;
-        goto VDO_START_END;
-    }
+	//start avi packer
+	nRet = avi_enc_packer_start(pAviEncPara->AviPackerCur);
+	if (nRet < 0) {
+		ret_status = CODEC_START_STATUS_ERROR_MAX;
+		goto VDO_START_END;
+	}
    
 	//start avi encode
-   	nRet = avi_enc_start();
-  	if(nRet < 0) {
-    	ret_status = CODEC_START_STATUS_ERROR_MAX;
-        goto VDO_START_END;
-    }
+	nRet = avi_enc_start();
+	if (nRet < 0) {
+		ret_status = CODEC_START_STATUS_ERROR_MAX;
+		goto VDO_START_END;
+	}
 
 VDO_START_END:
-
-    if (ret_status!=START_OK) {
-        DBG_PRINT ("AVI Packer Err:%d\r\n",ret_status);
-        video_encode_stop();
-    }
-    
-    return ret_status;
-
+	if (ret_status!=START_OK) {
+		DBG_PRINT("AVI Packer Err:%d\r\n",ret_status);
+		video_encode_stop();
+	}
+	return ret_status;
 }
 
 CODEC_START_STATUS video_encode_stop(void)

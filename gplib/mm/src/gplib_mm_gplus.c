@@ -393,34 +393,34 @@ void gp_fixed_size_free(void *ptr)
 {
 	INT16U i;
 
-  #if C_MM_16BYTE_NUM
-  	if (((INT32U) ptr<=mm_fix_16_addr[C_MM_16BYTE_NUM-1]) && ((INT32U) ptr>=mm_fix_16_addr[0])) {
-	  #if _OPERATING_SYSTEM != _OS_NONE
-	    OSSchedLock();
-	  #endif
-  		for (i=0; i<C_MM_16BYTE_NUM; i++) {
-  			if ((INT32U) ptr == mm_fix_16_addr[i]) {
-  				mm_fix_16_flag[i>>3] &= ~(1 << (i&0x7));
-#if C_MM_DEBUG_MODE > 1
-if (fix_16_alloc_count==0) {
-	DBG_PRINT("MM fix16 is 0\r\n");
-} else {
-	fix_16_alloc_count--;
-}
-#endif
-			  #if _OPERATING_SYSTEM != _OS_NONE
-			    OSSchedUnlock();
-			  #endif
+#if C_MM_16BYTE_NUM
+	if (((INT32U) ptr<=mm_fix_16_addr[C_MM_16BYTE_NUM-1]) && ((INT32U) ptr>=mm_fix_16_addr[0])) {
+    #if _OPERATING_SYSTEM != _OS_NONE
+		OSSchedLock();
+    #endif
+		for (i=0; i<C_MM_16BYTE_NUM; i++) {
+			if ((INT32U) ptr == mm_fix_16_addr[i]) {
+				mm_fix_16_flag[i>>3] &= ~(1 << (i&0x7));
+    #if C_MM_DEBUG_MODE > 1
+				if (fix_16_alloc_count==0) {
+					DBG_PRINT("MM fix16 is 0\r\n");
+				} else {
+					fix_16_alloc_count--;
+				}
+    #endif
+    #if _OPERATING_SYSTEM != _OS_NONE
+		OSSchedUnlock();
+    #endif
 
-  				return;
-  			}
-  		}
-	  #if _OPERATING_SYSTEM != _OS_NONE
-	    OSSchedUnlock();
-	  #endif
+				return;
+			}
+		}
 
-  		return;
-  	}
+    #if _OPERATING_SYSTEM != _OS_NONE
+		OSSchedUnlock();
+    #endif
+		return;
+	}
   #endif
 
   #if C_MM_64BYTE_NUM
@@ -542,8 +542,9 @@ if (fix_4096_alloc_count==0) {
   		return;
   	}
   #endif
+
 #if C_MM_DEBUG_MODE > 1
-DBG_PRINT("gp_fixed_size_free can not find allocate ptr=0x%x\r\n", ptr);
+	DBG_PRINT("gp_fixed_size_free can not find allocate ptr=0x%x\r\n", ptr);
 #endif
 }
 #endif
@@ -665,60 +666,63 @@ void * gp_malloc(INT32U size)
 	MM_SDRAM_STRUCT *pmm = gp_mm_sdram_head;
 
 	if (!size) {
-    	return (NULL);
-    }
+    		return (NULL);
+	}
 
-  #if C_MM_16BYTE_NUM || C_MM_64BYTE_NUM || C_MM_256BYTE_NUM || C_MM_1024BYTE_NUM || C_MM_4096BYTE_NUM
-    if (size <= 4096) {
-    	INT32U ptr;
+#if C_MM_16BYTE_NUM || C_MM_64BYTE_NUM || C_MM_256BYTE_NUM || C_MM_1024BYTE_NUM || C_MM_4096BYTE_NUM
+	if (size <= 4096) {
+    		INT32U ptr;
 
-    	ptr = (INT32U) gp_fixed_size_malloc(size);
-    	if (ptr) {
-    		return (void *) ptr;
-    	}
-#if C_MM_DEBUG_MODE > 1
-DBG_PRINT("Fix number is not enough! size=%d\r\n", size);
+		ptr = (INT32U) gp_fixed_size_malloc(size);
+		if (ptr) {
+			return (void *) ptr;
+		}
+    #if C_MM_DEBUG_MODE > 1
+		DBG_PRINT("Fix number is not enough! size=%d\r\n", size);
+    #endif
+	}
 #endif
-    }
-  #endif
 
-    size = (size+3) >> 2;
+	size = (size+3) >> 2;
 
-  #if _OPERATING_SYSTEM != _OS_NONE
-    OSSchedLock();
-  #endif
-    while (pmm->next) {
-        if (((INT32U *) pmm->next - (INT32U *) pmm->end) > size+2) {
-            ((MM_SDRAM_STRUCT *) (pmm->end+1))->next = pmm->next;
-            pmm->next = (MM_SDRAM_STRUCT *) (pmm->end+1);
-            pmm->next->end = (INT32U *) &pmm->next->end + size;
+#if _OPERATING_SYSTEM != _OS_NONE
+	OSSchedLock();
+#endif
+
+	while (pmm->next) {
+		if (((INT32U *) pmm->next - (INT32U *) pmm->end) > size+2) {
+			((MM_SDRAM_STRUCT *) (pmm->end+1))->next = pmm->next;
+			pmm->next = (MM_SDRAM_STRUCT *) (pmm->end+1);
+			pmm->next->end = (INT32U *) &pmm->next->end + size;
 #if C_MM_DEBUG_MODE > 0
-sdram_alloc_count++;
-if (sdram_alloc_count > sdram_alloc_count_max) sdram_alloc_count_max = sdram_alloc_count;
+			sdram_alloc_count++;
+			if (sdram_alloc_count > sdram_alloc_count_max)
+				sdram_alloc_count_max = sdram_alloc_count;
 #endif
-		  #if _OPERATING_SYSTEM != _OS_NONE
-            OSSchedUnlock();
-          #endif
-            return ((INT32U *) &pmm->next->end + 1);
-        }
+#if _OPERATING_SYSTEM != _OS_NONE
+			OSSchedUnlock();
+#endif
+			return ((INT32U *) &pmm->next->end + 1);
+		}
 
-        pmm=pmm->next;
+		pmm = pmm->next;
 #if C_MM_DEBUG_MODE > 0
-if ((INT32U) pmm<(INT32U) free_sdram_start || (INT32U) pmm>(INT32U) free_sdram_end) {
-	DBG_PRINT("MM Error 2\r\n");
-	return NULL;
-}
+		if ((INT32U) pmm<(INT32U) free_sdram_start || (INT32U) pmm>(INT32U) free_sdram_end) {
+			DBG_PRINT("MM Error 2\r\n");
+			return NULL;
+		}
 #endif
-    }
-#if C_MM_DEBUG_MODE > 1
-DBG_PRINT("MM fail in gp_malloc(size=%d)\r\n", size<<2);
-mm_dump();
-#endif
-  #if _OPERATING_SYSTEM != _OS_NONE
-    OSSchedUnlock();
-  #endif
+	}
 
-    return (NULL);
+#if C_MM_DEBUG_MODE > 1
+	DBG_PRINT("MM fail in gp_malloc(size=%d)\r\n", size<<2);
+	mm_dump();
+#endif
+#if _OPERATING_SYSTEM != _OS_NONE
+	OSSchedUnlock();
+#endif
+
+	return (NULL);
 }
 
 
@@ -906,59 +910,62 @@ void gp_iram_free(void *ptr)
 
 void gp_free(void *ptr)
 {
-    MM_SDRAM_STRUCT *pmm = gp_mm_sdram_head;
+	MM_SDRAM_STRUCT *pmm = gp_mm_sdram_head;
 
 	if ((INT32U) ptr>=free_iram_start && (INT32U) ptr<=free_iram_end) {
-    	gp_iram_free(ptr);
-
-    	return;
-    } else if ((INT32U) ptr < free_sdram_start) {
-      #if C_MM_16BYTE_NUM || C_MM_64BYTE_NUM || C_MM_256BYTE_NUM || C_MM_1024BYTE_NUM || C_MM_4096BYTE_NUM
-		gp_fixed_size_free(ptr);
-	  #endif
-
+		gp_iram_free(ptr);
 		return;
-    } else if ((INT32U) ptr > free_sdram_end) {
-    	return;
-    }
+	} else if ((INT32U) ptr < free_sdram_start) {
+#if C_MM_16BYTE_NUM || C_MM_64BYTE_NUM || C_MM_256BYTE_NUM || C_MM_1024BYTE_NUM || C_MM_4096BYTE_NUM
+		gp_fixed_size_free(ptr);
+#endif
+		return;
+	} else if ((INT32U) ptr > free_sdram_end) {
+		return;
+	}
 
-  #if _OPERATING_SYSTEM != _OS_NONE
-    OSSchedLock();
-  #endif
-    while (pmm->next) {
-        if ((INT32U *) pmm->next+2 == ptr) {
-            // Merge previous free memory with this one
-#if C_MM_DEBUG_MODE > 0
-if (sdram_alloc_count==0) {
-	DBG_PRINT("MM variable is 0\r\n");
-} else {
-	sdram_alloc_count--;
-}
-if ((INT32U) pmm->next->next<(INT32U) free_sdram_start || (INT32U) pmm->next->next>(INT32U) free_sdram_end) {
-	DBG_PRINT("MM Error 3\r\n");
-}
+#if _OPERATING_SYSTEM != _OS_NONE
+	OSSchedLock();
 #endif
-            pmm->next = pmm->next->next;
-          #if _OPERATING_SYSTEM != _OS_NONE
-            OSSchedUnlock();
-          #endif
-            return;
-        }
-        pmm = pmm->next;
+
+	while (pmm->next) {
+		if ((INT32U *) pmm->next+2 == ptr) {
+			// Merge previous free memory with this one
 #if C_MM_DEBUG_MODE > 0
-if ((INT32U) pmm<(INT32U) free_sdram_start || (INT32U) pmm>(INT32U) free_sdram_end) {
-	DBG_PRINT("MM Error 4\r\n");
-	return;
-}
+			if (sdram_alloc_count==0) {
+				DBG_PRINT("MM variable is 0\r\n");
+			} else {
+				sdram_alloc_count--;
+			}
+			if ((INT32U) pmm->next->next<(INT32U) free_sdram_start || (INT32U) pmm->next->next>(INT32U) free_sdram_end) {
+				DBG_PRINT("MM Error 3\r\n");
+			}
 #endif
-    }
+			pmm->next = pmm->next->next;
+#if _OPERATING_SYSTEM != _OS_NONE
+			OSSchedUnlock();
+#endif
+			return;
+		}
+
+		pmm = pmm->next;
+
+#if C_MM_DEBUG_MODE > 0
+    		if ((INT32U) pmm<(INT32U) free_sdram_start || (INT32U) pmm>(INT32U) free_sdram_end) {
+			DBG_PRINT("MM Error 4\r\n");
+			return;
+		}
+#endif
+	}
+
 #if C_MM_DEBUG_MODE > 1
-DBG_PRINT("ptr=0x%X is not found in gp_free\r\n", ptr);
+	DBG_PRINT("ptr=0x%X is not found in gp_free\r\n", ptr);
 #endif
-    // Something must be wrong...
-  #if _OPERATING_SYSTEM != _OS_NONE
-    OSSchedUnlock();
-  #endif
+
+	// Something must be wrong...
+#if _OPERATING_SYSTEM != _OS_NONE
+	OSSchedUnlock();
+#endif
 }
 
 #endif

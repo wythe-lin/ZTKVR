@@ -1,6 +1,16 @@
 #include "video_codec_callback.h"
 #include "video_codec_osd.h"
 
+/* for debug */
+#define DEBUG_VIDEO_CODEC_CALLBACK	0
+#if DEBUG_VIDEO_CODEC_CALLBACK
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* definitions */
 INT8U  Display_Device = DISPLAY_DEVICE;
 INT8U  g_display_mode = TV_TFT_MODE;
 INT32U video_codec_show_buffer;
@@ -147,6 +157,8 @@ INT32U video_encode_sensor_start(INT32U csi_frame1, INT32U csi_frame2)
 {
 	//OS_CPU_SR cpu_sr;
 
+	_dmsg(("[S]: video_encode_sensor_start()\n\r"));
+
 	gpio_init_io (SENSOR_PW, GPIO_OUTPUT);
 	gpio_set_port_attribute(SENSOR_PW, ATTRIBUTE_HIGH);
 	gpio_write_io(SENSOR_PW, DATA_LOW);
@@ -154,8 +166,13 @@ INT32U video_encode_sensor_start(INT32U csi_frame1, INT32U csi_frame2)
 	// Setup CMOS sensor
 #if VIDEO_ENCODE_USE_MODE == VIDEO_ENCODE_WITH_PPU_IRQ
 	//OS_ENTER_CRITICAL();
-	//CSI_Init(640, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);
-	CSI_Init(1280, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);
+ 	switch (zt_resolution()) {
+	default:
+	case ZT_VGA_PANORAMA:	CSI_Init( 640, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);	break;
+	case ZT_VGA:		CSI_Init(1280, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);	break;
+	case ZT_HD_SCALED:	CSI_Init(1920, 560, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);	break;
+	case ZT_HD:		CSI_Init(2560, 720, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);	break;
+	}
 	R_PPU_IRQ_EN |= 0x40;	//enable csi frame end irq
 	R_PPU_IRQ_STATUS = 0x40;
 	//OS_EXIT_CRITICAL();
@@ -170,7 +187,9 @@ INT32U video_encode_sensor_start(INT32U csi_frame1, INT32U csi_frame2)
 	R_TGR_IRQ_EN = 0x31;	//enable csi fifo irq and frame end irq
 	OS_EXIT_CRITICAL();
 #endif
-    return 0;
+
+	_dmsg(("[E]: video_encode_sensor_start()\n\r"));
+	return 0;
 }
 
 

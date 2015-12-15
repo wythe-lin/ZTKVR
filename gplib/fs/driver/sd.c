@@ -5,10 +5,10 @@
 //=== This is for code configuration DON'T REMOVE or MODIFY it ===//
 #if (defined SD_EN) && (SD_EN == 1)                               //
 //================================================================//
-#define FS_FLUSH_CAHCE_EN       1 
+#define FS_FLUSH_CAHCE_EN       1
 #define FS_TBL_MIRROR_SYNC      0
 #define FAT_WRITE_TBL_ID        0  //0: FATTbl0->FATTbl1, 1: FATTbl1->FATTbl0
-#define FS_CACHE_DBG_EN         0 
+#define FS_CACHE_DBG_EN         0
 #define FS_INFO_CACHE           0
 
 #define SDC_CACHE_SIZE          32768
@@ -67,7 +67,7 @@ static INT32U FSI_Next_Free=0;
 #define SD_RW_RETRY_COUNT       3
 #define MISS_THREAD_MIN         10
 #define MISS_THREAD_MAX         70
-#define MISS_HIT_SAMPLE_CNTS    20  // totale count to sample for calculating miss rate    
+#define MISS_HIT_SAMPLE_CNTS    20  // totale count to sample for calculating miss rate
 
 static void FsCpy4(void *_dst, const void *_src, int len);
 static INT32S SD_Initial(void);
@@ -112,24 +112,24 @@ void fat_l1_cache_reinit(void)
     fat_l1_cache_init();
 }
 
-INT32S fat_l1_cache_init(void)  
+INT32S fat_l1_cache_init(void)
 {
     INT32S ret;
     //INT8U *cache_init_buf;
     INT8U *byte_buf;
     INT16U *short_buf;
     INT32U *word_buf;
-    INT32U Next_Free=0xFFFFFFFF; 
+    INT32U Next_Free=0xFFFFFFFF;
     INT32U FS_info_tag=0x00000000;
     INT32U Free_Count=0xFFFFFFFF;
   #if FS_INFO_CACHE == 1
     INT32U *fi_word_buf=(INT32U *) &sd_fs_info_ram[0];
   #endif
 
-  #if FAT_WRITE_TBL_ID==1    
+  #if FAT_WRITE_TBL_ID==1
     INT8U  mirror_en=1;
   #endif
-    
+
     if (cache_init_flag!=0xA8)
     {
         INT32U *sd_cache_work_buf=(INT32U *) &sd_cache_ram[0];
@@ -152,9 +152,9 @@ INT32S fat_l1_cache_init(void)
         byte_buf = (INT8U *) &sd_cache_work_buf[0];
         ret = drvl2_sd_read(BPB_Start_id, (INT32U *) &sd_cache_work_buf[0], 1);
 
-        if (ret==0 && short_buf[0x1fE/2]==0xAA55 && byte_buf[0]!=0xEB) 
+        if (ret==0 && short_buf[0x1fE/2]==0xAA55 && byte_buf[0]!=0xEB)
         {
-            
+
             BPB_Start_id = ((short_buf[0x1C8/2]<<16) | short_buf[0x1C6/2]);
             DBG_PRINT ("MBR Find, first part offset :0x%x\r\n",BPB_Start_id);
             ret = drvl2_sd_read(BPB_Start_id, (INT32U *) &sd_cache_work_buf[0], 1);
@@ -164,7 +164,7 @@ INT32S fat_l1_cache_init(void)
         if(ret==0)
         {
             fat_cluster_size = byte_buf[13];  // 8 sectors
-            fat_start_id[0]=short_buf[7]+BPB_Start_id;   //0x24*0x200=0x4800 
+            fat_start_id[0]=short_buf[7]+BPB_Start_id;   //0x24*0x200=0x4800
             fat_tbl_size = short_buf[22/2];
             if (fat_tbl_size==0) {
                 // FIND FAT32
@@ -184,12 +184,12 @@ INT32S fat_l1_cache_init(void)
                 Free_Count = word_buf[488/4]+BPB_Start_id;
                 Next_Free = word_buf[492/4]+BPB_Start_id;
               #endif
-              
-                DBG_PRINT ("Fs info Tag: 0x%x (SectorId:%d)\r\n",FS_info_tag,fs_info_start);                
-            #if FAT_WRITE_TBL_ID == 1  //FAT2->FAT1   
+
+                DBG_PRINT ("Fs info Tag: 0x%x (SectorId:%d)\r\n",FS_info_tag,fs_info_start);
+            #if FAT_WRITE_TBL_ID == 1  //FAT2->FAT1
 
                 if (FS_info_tag == 0x41615252) {
-                    if ((FSI_Free_Count == Free_Count) && (FSI_Next_Free==Next_Free)) 
+                    if ((FSI_Free_Count == Free_Count) && (FSI_Next_Free==Next_Free))
                     {
                         mirror_en=0;
                     }
@@ -197,7 +197,7 @@ INT32S fat_l1_cache_init(void)
             #endif
 
             } else {
-                fat_type=16;           
+                fat_type=16;
                 DBG_PRINT ("FAT16\r\n");
             }
             fat_start_id[1]=fat_start_id[0]+fat_tbl_size; // 0x3AE400+0x4800=0x3B2C00
@@ -213,9 +213,9 @@ INT32S fat_l1_cache_init(void)
         if (mirror_en) {
             SD_tbl_mirror_init(); // Mirror initial FAT1->FAT2
         } else {
-            DBG_PRINT ("Tbl Mirror initial avoid\r\n"); 
+            DBG_PRINT ("Tbl Mirror initial avoid\r\n");
         }
-   #endif    
+   #endif
         mirror_start_id = 0x3FFFFFFF;
         mirror_end_id = 0;  // default mirror start
 
@@ -248,7 +248,7 @@ INT32S fat_l1_cache_init(void)
             #else
                 ret = drvl2_sd_read(fs_info_start, (INT32U *) &sd_fs_info_ram[0], 1);
             #endif
-            
+
             if (ret==0) {
                 FSI_Free_Count = word_buf[488/4]+BPB_Start_id;
                 FSI_Next_Free = word_buf[492/4]+BPB_Start_id;
@@ -278,10 +278,10 @@ INT32S SD_tbl_mirror_init(void)  // dominant fat2->fat1
     sync_size = fat_tbl_size;
     fat0_sector_id = fat_start_id[0];
     fat1_sector_id = fat_start_id[1];
-    
+
     move_cnt = sync_size/SDC_CACHE_SECTOR_NUMS;
     redundant_cnt = sync_size%SDC_CACHE_SECTOR_NUMS;
-    mirror_start_offset = 0; 
+    mirror_start_offset = 0;
     for (i=0;i<move_cnt;i++)
     {
         drvl2_sd_read(fat0_sector_id+SDC_CACHE_SECTOR_NUMS*i, (INT32U *) &sd_cache_ram[0] , SDC_CACHE_SECTOR_NUMS);
@@ -292,8 +292,8 @@ INT32S SD_tbl_mirror_init(void)  // dominant fat2->fat1
     {
         drvl2_sd_read(fat0_sector_id+SDC_CACHE_SECTOR_NUMS*i, (INT32U *) &sd_cache_ram[0] , redundant_cnt);
         drvl2_sd_write(fat1_sector_id+SDC_CACHE_SECTOR_NUMS*i, (INT32U *) &sd_cache_ram[0], redundant_cnt);
-    }        
-    
+    }
+
     mirror_start_id = 0x3FFFFFFF;
     mirror_end_id = 0;  // default mirror start
 
@@ -317,13 +317,13 @@ INT32S SD_tbl_mirror_sync(void)
     INT32U mirror_start_offset;
     INT32S ret=-1;
   #else
-    INT32S ret=0;    
-  #endif  
+    INT32S ret=0;
+  #endif
 
     #if FS_FLUSH_CAHCE_EN==1
         cache_sync();
     #endif
-  
+
     #if FS_INFO_CACHE==1
         fs_info_flush();
 
@@ -350,17 +350,17 @@ INT32S SD_tbl_mirror_sync(void)
         {
             drvl2_sd_read(fat_start_id[FAT_MAIN_TBL_ID]+mirror_start_offset+SDC_CACHE_SECTOR_NUMS*i, (INT32U *) &sd_cache_ram[0] , redundant_cnt);
             drvl2_sd_write(fat_start_id[FAT_SECOND_TBL_ID]+mirror_start_offset+SDC_CACHE_SECTOR_NUMS*i, (INT32U *) &sd_cache_ram[0], redundant_cnt);
-        }        
-        
+        }
+
         mirror_start_id = 0x3FFFFFFF;
         mirror_end_id = 0;  // default mirror start
     #if FS_CACHE_DBG_EN==1
         DBG_PRINT ("FS TBL SYNC %d Sectors [%d:%d]->[%d:%d]\r\n",sync_size,fat_start_id[FAT_MAIN_TBL_ID]+mirror_start_offset,fat_start_id[FAT_MAIN_TBL_ID]+mirror_start_offset+sync_size-1,fat_start_id[FAT_SECOND_TBL_ID]+mirror_start_offset,fat_start_id[FAT_SECOND_TBL_ID]+mirror_start_offset+sync_size-1);
     #endif
-        ret = 0;      
+        ret = 0;
     }
   #if FS_CACHE_DBG_EN==1
-    if (ret==-1) 
+    if (ret==-1)
     {
         DBG_PRINT ("FS TBL SYNC NONE..\r\n");
     }
@@ -374,7 +374,7 @@ INT32S SD_tbl_mirror_sync(void)
 INT32S SD_Initial(void)
 {
     INT32S ret;
-    
+
 //    gpio_write_io(C_DATA3_PIN, 1);
 //    gpio_write_io(C_DATA1_PIN, 1);
 //    gpio_write_io(C_DATA2_PIN, 1);
@@ -384,7 +384,7 @@ INT32S SD_Initial(void)
     	fat_l1_cache_init();
     }
     fs_sd_ms_plug_out_flag_reset();
-	return ret; 
+	return ret;
 }
 
 INT32S SD_Uninitial(void)
@@ -419,7 +419,7 @@ INT32S SD_ReadSector(INT32U blkno, INT32U blkcnt, INT32U buf)
 	INT32S	i;
 
     fat_l1_cache_init();
-    
+
     if (fs_sd_ms_plug_out_flag_get()==1) {return 0xFFFFFFFF;}
 
 #if (FAT_WRITE_TBL_ID==1)
@@ -442,7 +442,7 @@ INT32S SD_ReadSector(INT32U blkno, INT32U blkcnt, INT32U buf)
 #if FS_FLUSH_CAHCE_EN==1  //讀之前要確定 cache 已經 read well, 這部份容易有問題先不做
     if (blkcnt==1)
     {
-        if (fat_cache_L1_en) 
+        if (fat_cache_L1_en)
         {
             if ((blkno>=fat_start_id[FAT_MAIN_TBL_ID]) && (blkno<fat_start_id[FAT_MAIN_TBL_ID]+fat_tbl_size))
             {
@@ -453,11 +453,11 @@ INT32S SD_ReadSector(INT32U blkno, INT32U blkcnt, INT32U buf)
                   #else
                    #if FS_CACHE_DBG_EN==1
                     DBG_PRINT("Direct-R:%d\r\n",blkno);
-                   #endif               
+                   #endif
                     goto DIRECTLY_READ;
                   #endif
                 }
-                
+
                 if ((blkno>=cache_ref_id) && blkno<(cache_ref_id+SDC_CACHE_SECTOR_NUMS))
                 {
                   #if FS_CACHE_DBG_EN==1
@@ -467,15 +467,15 @@ INT32S SD_ReadSector(INT32U blkno, INT32U blkcnt, INT32U buf)
                     //DMAmmCopy2( (INT32U) &sd_cache_ram[512*(blkno-cache_ref_id)],buf,  512);
 
                     return 0;
-                }        
+                }
             }
         }
     }
-DIRECTLY_READ:    
-    
+DIRECTLY_READ:
+
 #endif
 
-    
+
 	for(i = 0; i < SD_RW_RETRY_COUNT; i++)
 	{
 		ret = drvl2_sd_read(blkno, (INT32U *) buf, blkcnt);
@@ -485,7 +485,7 @@ DIRECTLY_READ:
 		}
 	}
   #if SUPPORT_STG_SUPER_PLUGOUT == 1
-    if (ret!=0) 
+    if (ret!=0)
     {
         //if (drvl2_sd_read(0, (INT32U *) buf, 1)!=0)
         {
@@ -501,122 +501,106 @@ INT32S SD_WriteSector(INT32U blkno, INT32U blkcnt, INT32U buf)
 {
 	INT32S	ret;
 	INT32S	i;
-    INT32S  total_cnt;
-    INT8U  miss_rate;
+	INT32S  total_cnt;
+	INT8U  miss_rate;
 
-    fat_l1_cache_init();
+	fat_l1_cache_init();
 
-    if (fs_sd_ms_plug_out_flag_get()==1) {return 0xFFFFFFFF;}
+	if (fs_sd_ms_plug_out_flag_get()==1) {
+		return 0xFFFFFFFF;
+	}
 
 #if (FAT_WRITE_TBL_ID==1)
-    blkno=fat_tbl_tansfer(blkno);
+	blkno=fat_tbl_tansfer(blkno);
 #endif
 
-    if (blkcnt==1)
-    {
+	if (blkcnt==1) {
+		if ((blkno>=fat_start_id[FAT_MAIN_TBL_ID]) && (blkno<fat_start_id[FAT_MAIN_TBL_ID]+fat_tbl_size)) {
+			if (blkno<mirror_start_id) {
+				mirror_start_id = blkno;
+			}
 
-        if ((blkno>=fat_start_id[FAT_MAIN_TBL_ID]) && (blkno<fat_start_id[FAT_MAIN_TBL_ID]+fat_tbl_size))
-        {
-            if (blkno<mirror_start_id)
-            {
-                mirror_start_id = blkno;
-            }
+			if (blkno>mirror_end_id) {
+				mirror_end_id = blkno;
+			}
 
-            if (blkno>mirror_end_id)
-            {
-                mirror_end_id = blkno;
-            }
+#if FS_FLUSH_CAHCE_EN==1
+			if (fat_cache_L1_en) {
+				//fuzzy_id = blkno;
+				if (cache_ref_id==0xFFFFFFFF) {
+					cache_ref_id = blkno;
+					cache_read_from_nv();
+				}
 
-      #if FS_FLUSH_CAHCE_EN==1
-            if (fat_cache_L1_en) 
-            {
-                //fuzzy_id = blkno;
-                if (cache_ref_id==0xFFFFFFFF) {
-                    cache_ref_id = blkno;
-                    cache_read_from_nv();
-                }
-                
-                if ((blkno>=cache_ref_id) && blkno<(cache_ref_id+SDC_CACHE_SECTOR_NUMS))
-                {
-                 #if FS_CACHE_DBG_EN==1
-                    DBG_PRINT("Hit-W:%d from [%d,%d]\r\n",blkno,cache_ref_id,(cache_ref_id+SDC_CACHE_SECTOR_NUMS-1));
-                  #endif
-                    cache_sync_flag = 0;
-                    FsCpy4((void *)&sd_cache_ram[512*(blkno-cache_ref_id)],(const void *) buf, 512);
-                    //DMAmmCopy2( buf, (INT32U) &sd_cache_ram[512*(blkno-cache_ref_id)], 512);
-                    hit_cnt++;
-                    //miss_cnt = 0;
-                    return 0;
-                }   
-                else  
-                {
-                  #if FS_CACHE_DBG_EN==1
-                    DBG_PRINT("Miss-W:%d out-of [%d,%d]\r\n",blkno,cache_ref_id,(cache_ref_id+SDC_CACHE_SECTOR_NUMS-1));
-                  #endif
-                    miss_cnt++;
-                    total_cnt = hit_cnt+miss_cnt;
-                    if (total_cnt >= MISS_HIT_SAMPLE_CNTS) // miss rate 取樣數, 若取樣太少就判定不及格這樣不好
-                    {
+				if ((blkno>=cache_ref_id) && blkno<(cache_ref_id+SDC_CACHE_SECTOR_NUMS)) {
+    #if FS_CACHE_DBG_EN==1
+					DBG_PRINT("Hit-W:%d from [%d,%d]\r\n",blkno,cache_ref_id,(cache_ref_id+SDC_CACHE_SECTOR_NUMS-1));
+    #endif
+					cache_sync_flag = 0;
+					FsCpy4((void *) &sd_cache_ram[512*(blkno-cache_ref_id)],(const void *) buf, 512);
+					//DMAmmCopy2( buf, (INT32U) &sd_cache_ram[512*(blkno-cache_ref_id)], 512);
+					hit_cnt++;
+					//miss_cnt = 0;
+					return 0;
+				} else {
+    #if FS_CACHE_DBG_EN==1
+					DBG_PRINT("Miss-W:%d out-of [%d,%d]\r\n",blkno,cache_ref_id,(cache_ref_id+SDC_CACHE_SECTOR_NUMS-1));
+    #endif
+					miss_cnt++;
+					total_cnt = hit_cnt+miss_cnt;
+					if (total_cnt >= MISS_HIT_SAMPLE_CNTS) {	// miss rate 取樣數, 若取樣太少就判定不及格這樣不好
+			                        if (cache_sync_flag==1) {
+							cache_switch_cnt++;
+						}
+						if (cache_switch_cnt>2) {		// 連續3次以上做 cache sync
+							miss_thread += 5;
+							cache_switch_cnt=0;
+							DBG_PRINT("Miss thread +5\r\n");
+							if (miss_thread>MISS_THREAD_MAX) {
+								DBG_PRINT("FAT L1 cache stop\r\n");
+								fat_cache_L1_en=0;
+							}
+						}
 
-                        if (cache_sync_flag==1) {
-                            cache_switch_cnt++;
-                        }
-                        if (cache_switch_cnt>2)  // 連續3次以上做 cache sync
-                        {
-                            miss_thread += 5;
-                            cache_switch_cnt=0;
-                            DBG_PRINT ("Miss thread +5\r\n");
-                            if (miss_thread>MISS_THREAD_MAX)
-                            {
-                                DBG_PRINT ("FAT L1 cache stop\r\n");
-                                fat_cache_L1_en=0;
-                            }
-                        }                            
+						miss_rate = (miss_cnt*100/total_cnt);
+						if (miss_rate>miss_thread) {
+							DBG_PRINT("Miss rate:%d%\r\n",miss_rate);
+							hit_cnt = 0;
+							miss_cnt=0;
+							cache_sync();
+							cache_sync_flag=1;
+						}
+					}
+				}
+			}
+#endif
+		}
 
-                        miss_rate = (miss_cnt*100/total_cnt);
-                        if (miss_rate>miss_thread)
-                        {
-                            DBG_PRINT ("Miss rate:%d%\r\n",miss_rate);
-                            hit_cnt = 0;
-                            miss_cnt=0;
-                            cache_sync();
-                            cache_sync_flag=1;
-                        }
-                    }
-                }
-            }
-      #endif 
-        }  
-      #if FS_INFO_CACHE == 1
-        else if(blkno==fs_info_start)
-        {
-            DBG_PRINT ("FI_W\r\n");
-            FsCpy4((void *)&sd_fs_info_ram[0],(const void *) buf, 512);
-            return 0;
-        }
-      #endif
-        
-    }
+#if FS_INFO_CACHE == 1
+		else if (blkno==fs_info_start) {
+			DBG_PRINT ("FI_W\r\n");
+			FsCpy4((void *) &sd_fs_info_ram[0],(const void *) buf, 512);
+			return 0;
+		}
+#endif
+	}
 
 
-	for(i = 0; i < SD_RW_RETRY_COUNT; i++)
-	{
+	for (i=0; i<SD_RW_RETRY_COUNT; i++) {
 		ret = drvl2_sd_write(blkno, (INT32U *) buf, blkcnt);
-		if(ret == 0)
-		{
+		if (ret == 0) {
 			break;
 		}
 	}
-  #if SUPPORT_STG_SUPER_PLUGOUT == 1
-    if (ret!=0) 
-    {
-        if (drvl2_sd_read(0, (INT32U *) buf, 1)!=0)
-        {
-            fs_sd_ms_plug_out_flag_en();
-            DBG_PRINT ("============>SUPER PLUG OUT DETECTED<===========\r\n");
-        }
-    }
-  #endif
+
+#if SUPPORT_STG_SUPER_PLUGOUT == 1
+	if (ret!=0) {
+		if (drvl2_sd_read(0, (INT32U *) buf, 1) != 0) {
+			fs_sd_ms_plug_out_flag_en();
+			DBG_PRINT ("============>SUPER PLUG OUT DETECTED<===========\r\n");
+		}
+	}
+#endif
 	return ret;
 }
 
@@ -624,7 +608,7 @@ INT32S SD_Flush(void)
 {
 #if FS_FLUSH_CAHCE_EN==1
     if (fat_cache_L1_en) {
-        cache_sync(); 
+        cache_sync();
     }
 #endif
 	return 0;
@@ -651,9 +635,9 @@ INT32S cache_read_from_nv(void)
 INT32S cache_sync(void)
 {
 #if FS_FLUSH_CAHCE_EN==1
-    if (fat_cache_L1_en) 
+    if (fat_cache_L1_en)
     {
-        if (cache_ref_id != 0xFFFFFFFF) 
+        if (cache_ref_id != 0xFFFFFFFF)
         {
         #if FS_CACHE_DBG_EN == 1
             DBG_PRINT ("Fat-L1 write back [%d:%d]\r\n",cache_ref_id,cache_ref_id+SDC_CACHE_SECTOR_NUMS-1);
@@ -664,7 +648,7 @@ INT32S cache_sync(void)
 }
     }
     return -1;
-#endif    
+#endif
 }
 
 
@@ -704,7 +688,7 @@ INT32S SD1_ReadSector(INT32U blkno, INT32U blkcnt, INT32U buf)
 		}
 	}
   #if SUPPORT_STG_SUPER_PLUGOUT == 1
-    if (ret!=0) 
+    if (ret!=0)
     {
         //if (drvl2_sd_read(0, (INT32U *) buf, 1)!=0)
         {
@@ -731,7 +715,7 @@ INT32S SD1_WriteSector(INT32U blkno, INT32U blkcnt, INT32U buf)
 		}
 	}
   #if SUPPORT_STG_SUPER_PLUGOUT == 1
-    if (ret!=0) 
+    if (ret!=0)
     {
         if (drvl2_sd1_read(0, (INT32U *) buf, 1)!=0)
         {
@@ -772,7 +756,7 @@ INT32S fs_info_flush(void)
         DBG_PRINT ("FI_FLUSH\r\n");
         ret = drvl2_sd_write(fs_info_start, (INT32U *)&sd_fs_info_ram[0], 1);
     }
-    
+
     return ret;
 }
 #endif
@@ -791,7 +775,7 @@ static void FsCpy4(void *_dst, const void *_src, int len)
 			LDMIA src!,{r4-r10}
 			STMIA dst!,{r4-r10}
 			LDMIA src!,{r4-r11}
-			STMIA dst!,{r4-r11}			
+			STMIA dst!,{r4-r11}
 		}
 		break;
 	case 14:
@@ -799,7 +783,7 @@ static void FsCpy4(void *_dst, const void *_src, int len)
 			LDMIA src!,{r4-r9}
 			STMIA dst!,{r4-r9}
 			LDMIA src!,{r4-r11}
-			STMIA dst!,{r4-r11}			
+			STMIA dst!,{r4-r11}
 		}
 		break;
 	case 13:
@@ -807,7 +791,7 @@ static void FsCpy4(void *_dst, const void *_src, int len)
 			LDMIA src!,{r4-r8}
 			STMIA dst!,{r4-r8}
 			LDMIA src!,{r4-r11}
-			STMIA dst!,{r4-r11}			
+			STMIA dst!,{r4-r11}
 		}
 		break;
 	case 12:
@@ -815,7 +799,7 @@ static void FsCpy4(void *_dst, const void *_src, int len)
 			LDMIA src!,{r4-r7}
 			STMIA dst!,{r4-r7}
 			LDMIA src!,{r4-r11}
-			STMIA dst!,{r4-r11}			
+			STMIA dst!,{r4-r11}
 		}
 		break;
 	case 11:
@@ -823,7 +807,7 @@ static void FsCpy4(void *_dst, const void *_src, int len)
 			LDMIA src!,{r4-r6}
 			STMIA dst!,{r4-r6}
 			LDMIA src!,{r4-r11}
-			STMIA dst!,{r4-r11}			
+			STMIA dst!,{r4-r11}
 		}
 		break;
 	case 10:
@@ -831,7 +815,7 @@ static void FsCpy4(void *_dst, const void *_src, int len)
 			LDMIA src!,{r4-r5}
 			STMIA dst!,{r4-r5}
 			LDMIA src!,{r4-r11}
-			STMIA dst!,{r4-r11}			
+			STMIA dst!,{r4-r11}
 		}
 		break;
 	case 9:
@@ -892,7 +876,7 @@ static void FsCpy4(void *_dst, const void *_src, int len)
 			LDMIA src!,{r4-r11}
 			STMIA dst!,{r4-r11}
 			LDMIA src!,{r4-r11}
-			STMIA dst!,{r4-r11}			
+			STMIA dst!,{r4-r11}
 		}
 	}
 }

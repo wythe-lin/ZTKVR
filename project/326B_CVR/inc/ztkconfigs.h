@@ -34,9 +34,11 @@
 #define EVB_CFG				0
 
 /* ZT3150 resolution selection */
-#define ZT_VGA_W_PANORAMA		0	// SOU:  640 x 480
+#define ZT_VGA_PANORAMA			0	// SOU:  640 x 480
 #define ZT_VGA				1	// SOU: 1280 x 480
-#define ZT_HD				2	// SOU: 1920 x 544
+#define ZT_HD_SCALED			2	// SOU: 1920 x 560
+#define ZT_HD				3	// SOU: 2560 x 720
+
 
 /* ZT3150 operating mode */
 #define ZT_H_SIDE_BY_SIDE		0
@@ -49,7 +51,7 @@
     #define FLIP_ILI8961		1
     #define C_DISPLAY_DEVICE		ILI8961//HX8268C//ILI9341
     #define zt_opmode()			ZT_H_SIDE_BY_SIDE
-    #define zt_resolution()		ZT_VGA//ZT_HD//ZT_VGA
+    #define zt_resolution()		ZT_HD_SCALED//ZT_VGA
     #define zt_anti_flicker(x)		(!x)
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1

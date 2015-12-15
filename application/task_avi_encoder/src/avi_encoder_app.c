@@ -1,3 +1,4 @@
+#include "ztkconfigs.h"
 #include "avi_encoder_app.h"
 #include "jpeg_header.h"
 #include "video_codec_callback.h"
@@ -5,7 +6,7 @@
 /* for debug */
 #define DEBUG_AVI_ENCODER_APP	1
 #if DEBUG_AVI_ENCODER_APP
-    #define _dmsg(x)		{ DBG_PRINT("\033[1;34m[D]"); DBG_PRINT(x); DBG_PRINT("\033[0m"); }
+    #define _dmsg(x)		print_string x
 #else
     #define _dmsg(x)
 #endif
@@ -725,8 +726,6 @@ static INT32S AviPacker_mem_alloc(AviEncPacker_t *pAviEncPacker)
 {
 	INT32S nRet;
 
-	_dmsg("[S]: AviPacker_mem_alloc()\r\n");
-
 #if AVI_ENCODE_VIDEO_ENCODE_EN == 1		
 	pAviEncPacker->file_buffer_size = FileWriteBuffer_Size;
 	if (!pAviEncPacker->file_write_buffer) {
@@ -761,7 +760,6 @@ Return:
 	if (nRet != STATUS_OK) {	// Dominant add
 		AviPacker_mem_free(pAviEncPacker);
 	}
-	_dmsg("[E]: AviPacker_mem_alloc()\r\n");
 	return nRet;
 } 
 
@@ -1800,32 +1798,35 @@ INT32S avi_audio_memory_allocate(INT32U	cblen)
 	INT16U *ptr;
 	INT32S i, j, size, nRet;
 
-	for(i=0; i<AVI_ENCODE_PCM_BUFFER_NO; i++)
-	{
-	    if (pAviEncAudPara->pcm_input_addr[i]==0) {  // dominant add
-		pAviEncAudPara->pcm_input_addr[i] = (INT32U) gp_malloc(cblen);
-        }
-		if(!pAviEncAudPara->pcm_input_addr[i]) {
-            RETURN(STATUS_FAIL);
-        }
-		ptr = (INT16U*)pAviEncAudPara->pcm_input_addr[i];
-		for(j=0; j<(cblen/2); j++)
+	_dmsg((GREEN "[S]: avi_audio_memory_allocate() - cblen=%0d\r\n" NONE, cblen));
+
+	for (i=0; i<AVI_ENCODE_PCM_BUFFER_NO; i++) {
+		if (pAviEncAudPara->pcm_input_addr[i]==0) {  // dominant add
+			pAviEncAudPara->pcm_input_addr[i] = (INT32U) gp_malloc(cblen);
+			_dmsg((GREEN "[D]: avi_audio_memory_allocate() - pcm_input_addr[%0d] = 0x%08x\r\n" NONE, i, pAviEncAudPara->pcm_input_addr[i]));
+	        }
+		if (!pAviEncAudPara->pcm_input_addr[i]) {
+			_dmsg((GREEN "[E]: avi_audio_memory_allocate() - gp_malloc() array fail\r\n" NONE));
+			RETURN(STATUS_FAIL);
+		}
+		ptr = (INT16U *) pAviEncAudPara->pcm_input_addr[i];
+		for (j=0; j<(cblen/2); j++)
 			*ptr++ = 0x8000;
 	}
 
 	size = pAviEncAudPara->pack_size * C_WAVE_ENCODE_TIMES;
 	pAviEncAudPara->pack_buffer_addr = (INT32U) gp_malloc(size);
-	if(!pAviEncAudPara->pack_buffer_addr) {
-        RETURN(STATUS_FAIL);
-    }
+	if (!pAviEncAudPara->pack_buffer_addr) {
+		_dmsg((GREEN "[E]: avi_audio_memory_allocate() - gp_malloc() fail!!!\r\n" NONE));
+		RETURN(STATUS_FAIL);
+	}
 
+	_dmsg((GREEN "[E]: avi_audio_memory_allocate() - pass\r\n" NONE));
 	nRet = STATUS_OK;
 Return:
-    if (nRet!=STATUS_OK)  // Dominant add
-    {
-        avi_audio_memory_free();  // Dominant, any allocate fail, we should free all allocatted memory
-    }
-
+	if (nRet!=STATUS_OK) {	// Dominant add
+		avi_audio_memory_free();  // Dominant, any allocate fail, we should free all allocatted memory
+	}
 	return nRet;
 }
 
@@ -1835,11 +1836,11 @@ void avi_audio_memory_free(void)
 
 	for(i=0; i<AVI_ENCODE_PCM_BUFFER_NO; i++)
 	{
-		gp_free((void *)pAviEncAudPara->pcm_input_addr[i]);
+		gp_free((void *) pAviEncAudPara->pcm_input_addr[i]);
 		pAviEncAudPara->pcm_input_addr[i] = 0;
 	}
 
-	gp_free((void *)pAviEncAudPara->pack_buffer_addr);
+	gp_free((void *) pAviEncAudPara->pack_buffer_addr);
 	pAviEncAudPara->pack_buffer_addr = 0;
 }
 

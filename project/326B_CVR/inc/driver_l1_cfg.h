@@ -8,10 +8,15 @@
     #define INIT_MCLK                   108000000
     #define INIT_MHZ                    (INIT_MCLK/1000000)
 
-    #define SDRAM_SIZE 					SD_64Mb
-
+#if 0
+    #define SDRAM_SIZE 			SD_64Mb
     #define SDRAM_START_ADDR            0x00000000 
     #define SDRAM_END_ADDR              0x007FFFFF
+#else
+    #define SDRAM_SIZE 			SD_128Mb//SD_256Mb
+    #define SDRAM_START_ADDR            0x00000000 
+    #define SDRAM_END_ADDR              0x00FFFFFF//0x01FFFFFF
+#endif
 
     #define ISRAM_START_ADDR            0xF8000000
     #define ISRAM_END_ADDR              0xF80001FC  

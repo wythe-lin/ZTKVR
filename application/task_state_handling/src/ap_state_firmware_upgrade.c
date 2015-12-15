@@ -42,8 +42,8 @@ void ap_state_firmware_upgrade(void)
 		close(fd);
 		return;
 	}
-	total_size = statetest.st_size;
 
+	total_size = statetest.st_size;
 	firmware_buffer = (INT32U *) gp_malloc(C_UPGRADE_BUFFER_SIZE);
 	if (!firmware_buffer) {
 		close(fd);
@@ -67,17 +67,17 @@ void ap_state_firmware_upgrade(void)
 	OSQPost(DisplayTaskQ, (void *) MSG_DISPLAY_TASK_QUEUE_INIT);
 	
 	ascii_str.font_color = 0xFFFF;
-	ascii_str.font_type = 0;
-	ascii_str.buff_w = TFT_WIDTH;
-	ascii_str.buff_h = TFT_HEIGHT;
-	ascii_str.pos_x = UPGRADE_POS_X;
-	ascii_str.pos_y = UPGRADE_POS_Y;
-	ascii_str.str_ptr = "Upgrading firmware...";
+	ascii_str.font_type  = 0;
+	ascii_str.buff_w     = TFT_WIDTH;
+	ascii_str.buff_h     = TFT_HEIGHT;
+	ascii_str.pos_x      = UPGRADE_POS_X;
+	ascii_str.pos_y      = UPGRADE_POS_Y;
+	ascii_str.str_ptr    = "Upgrading firmware...";
 	ap_state_resource_string_ascii_draw((INT16U *)display_buffer, &ascii_str);
 	
-	ascii_str.pos_x = UPGRADE_POS_X;
-	ascii_str.pos_y = UPGRADE_POS_Y+20;
-	ascii_str.str_ptr = "Do not power off now";
+	ascii_str.pos_x      = UPGRADE_POS_X;
+	ascii_str.pos_y      = UPGRADE_POS_Y+20;
+	ascii_str.str_ptr    = "Do not power off now";
 	ap_state_resource_string_ascii_draw((INT16U *)display_buffer, &ascii_str);
 	
 	OSQPost(DisplayTaskQ, (void *) (display_buffer|MSG_DISPLAY_TASK_JPEG_DRAW));
@@ -123,8 +123,8 @@ void ap_state_firmware_upgrade(void)
 				ascii_str.pos_x = UPGRADE_POS_X;
 				ascii_str.pos_y = UPGRADE_POS_Y+40;
 				sprintf((CHAR*)prog_str,"%d%c",j,'%');
-				ascii_str.str_ptr = (CHAR *)prog_str;
-				ap_state_resource_string_ascii_draw((INT16U *)display_buffer, &ascii_str);
+				ascii_str.str_ptr = (CHAR *) prog_str;
+				ap_state_resource_string_ascii_draw((INT16U *) display_buffer, &ascii_str);
 				OSQPost(DisplayTaskQ, (void *) (display_buffer|MSG_DISPLAY_TASK_JPEG_DRAW));
 			} else {
 				retry++;
@@ -135,57 +135,57 @@ void ap_state_firmware_upgrade(void)
 		}
 	}
 	OSTimeDly(5);
-	buff_ptr = (INT32U*) display_buffer;
+	buff_ptr = (INT32U *) display_buffer;
 	for (i=0;i<buff_size;i++) {
 		*buff_ptr++ = 0;
 	}
 	OSTimeDly(150);
 	
 	if (retry != C_UPGRADE_FAIL_RETRY) {
-		ascii_str.pos_x = UPGRADE_POS_X;
-		ascii_str.pos_y = UPGRADE_POS_Y;
+		ascii_str.pos_x   = UPGRADE_POS_X;
+		ascii_str.pos_y   = UPGRADE_POS_Y;
 		ascii_str.str_ptr = "Remove SD card and";
 		ap_state_resource_string_ascii_draw((INT16U *)display_buffer, &ascii_str);
 		
-		ascii_str.pos_x = UPGRADE_POS_X;
-		ascii_str.pos_y = UPGRADE_POS_Y+20;
+		ascii_str.pos_x   = UPGRADE_POS_X;
+		ascii_str.pos_y   = UPGRADE_POS_Y+20;
 		ascii_str.str_ptr = "restart now";
 		ap_state_resource_string_ascii_draw((INT16U *)display_buffer, &ascii_str);
 		
-		ascii_str.pos_x = UPGRADE_POS_X;
-		ascii_str.pos_y = UPGRADE_POS_Y+40;
+		ascii_str.pos_x   = UPGRADE_POS_X;
+		ascii_str.pos_y   = UPGRADE_POS_Y+40;
 		ascii_str.str_ptr = "100%";
 		ap_state_resource_string_ascii_draw((INT16U *)display_buffer, &ascii_str);
 	}
 	else {
-		ascii_str.pos_x = UPGRADE_POS_X+10;
-		ascii_str.pos_y = UPGRADE_POS_Y;
+		ascii_str.pos_x   = UPGRADE_POS_X+10;
+		ascii_str.pos_y   = UPGRADE_POS_Y;
 		ascii_str.str_ptr = "Upgrade fail";
 		ap_state_resource_string_ascii_draw((INT16U *)display_buffer, &ascii_str);
 	}
-	
+
 	OSQPost(DisplayTaskQ, (void *) (display_buffer|MSG_DISPLAY_TASK_JPEG_DRAW));
 	
 	i=0;
-	while(1) {
-	  #if KEY_ACTIVE	//wwj add
+	while (1) {
+#if KEY_ACTIVE	//wwj add
 		if (gpio_read_io(PW_KEY)) {
-	  #else
+#else
 		if (!gpio_read_io(PW_KEY)) {
-	  #endif
+#endif
 			i++;
-		}
-		else {
+		} else {
 			i=0;
 		}
+
 		if (i >= 3) {
-		  #if KEY_ACTIVE	//wwj add
-			while(gpio_read_io(PW_KEY));
-		  #else
-			while(!gpio_read_io(PW_KEY));
-		  #endif
+#if KEY_ACTIVE	//wwj add
+			while (gpio_read_io(PW_KEY));
+#else
+			while (!gpio_read_io(PW_KEY));
+#endif
   
-			gpio_write_io(POWER_EN,0);
+			gpio_write_io(POWER_EN, 0);
 
 		}
 		OSTimeDly(5);

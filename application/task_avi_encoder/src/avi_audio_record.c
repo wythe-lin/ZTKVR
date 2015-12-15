@@ -1,6 +1,17 @@
+#include "ztkconfigs.h"
 #include "avi_audio_record.h"
 #include "gplib.h"
 
+/* for debug */
+#define DEBUG_AVI_AUDIO_RECORD		1
+#if DEBUG_AVI_AUDIO_RECORD
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* */
 #define PCM_ENCODE_EN                   1  //0: PCM, 1:ADPCM(default)
 #define C_AVI_AUDIO_RECORD_STACK_SIZE	512
 #define C_AVI_AUD_ACCEPT_MAX			5
@@ -56,10 +67,13 @@ INT32S avi_audio_record_start(void)
 {
 	INT8U  err;
 	INT32S nRet, msg;
-	
+
+	_dmsg((GREEN "[S]: avi_audio_record_start()\r\n" NONE));
+
 	nRet = STATUS_OK;
 	POST_MESSAGE(avi_aud_q, AVI_AUDIO_RECORD_START, avi_aud_ack_m, 5000, msg, err);
 Return:		
+	_dmsg((GREEN "[E]: avi_audio_record_start(), %0x\r\n" NONE, nRet));
 	return nRet;	
 }
 
@@ -232,55 +246,60 @@ void avi_audio_record_entry(void *parm)
 				break;
 			
 			case AVI_AUDIO_RECORD_START:
-              #if PCM_ENCODE_EN==1
+				_dmsg((GREEN "AVI_AUDIO_RECORD_START\r\n" NONE));	
+    #if PCM_ENCODE_EN==1
 				nRet = avi_wave_encode_start();  // domi mark
-				if(nRet < 0) goto AUDIO_RECORD_START_FAIL;
+				if (nRet < 0)
+					goto AUDIO_RECORD_START_FAIL;
 				pcm_cwlen = pAviEncAudPara->pcm_input_size * C_WAVE_ENCODE_TIMES;
 				encode_size = pAviEncAudPara->pack_size * C_WAVE_ENCODE_TIMES;
-              #endif
+    #endif
 				bStop = audio_flag = 0;
-                nRet = avi_audio_memory_allocate(pcm_cwlen<<1);
-				if(nRet < 0) goto AUDIO_RECORD_START_FAIL;
-			#if MIC_INPUT_SRC == C_ADC_LINE_IN || MIC_INPUT_SRC == C_BUILDIN_MIC_IN
+				nRet = avi_audio_memory_allocate(pcm_cwlen << 1);
+				if (nRet < 0)
+					goto AUDIO_RECORD_START_FAIL;
+    #if MIC_INPUT_SRC == C_ADC_LINE_IN || MIC_INPUT_SRC == C_BUILDIN_MIC_IN
 				mask = 0x8000;
 				ready_addr = avi_audio_get_next_buffer();
 				next_addr = avi_audio_get_next_buffer();
-				nRet = avi_adc_double_buffer_put((INT16U*)ready_addr, pcm_cwlen, avi_aud_q);
-				if(nRet < 0) goto AUDIO_RECORD_START_FAIL;
-				nRet = avi_adc_double_buffer_set((INT16U*)next_addr, pcm_cwlen);
-				if(nRet < 0) goto AUDIO_RECORD_START_FAIL;
+				nRet = avi_adc_double_buffer_put((INT16U *) ready_addr, pcm_cwlen, avi_aud_q);
+				if (nRet < 0)
+					goto AUDIO_RECORD_START_FAIL;
+				nRet = avi_adc_double_buffer_set((INT16U *) next_addr, pcm_cwlen);
+				if (nRet < 0)
+					goto AUDIO_RECORD_START_FAIL;
 				avi_adc_hw_start();
 /*
-#if (C_LPF_ENABLE ==1)
+	#if (C_LPF_ENABLE ==1)
 				coef_freq = Cut_Off_Freq;
 				coef_loop = Filter_Order;			
 				//LPF_init(pAudio_Encode_Para->SampleRate,3);
 				LPF_init(coef_freq,coef_loop);
-#endif		
+	#endif		
 */
-			#elif MIC_INPUT_SRC == C_GPY0050_IN
+    #elif MIC_INPUT_SRC == C_GPY0050_IN
 				g_mic_buffer = 0;
 				g_mic_cnt = 0;
 				gpy0050_enable();
-			#endif
-#if (C_LPF_ENABLE ==1)
+    #endif
+    #if (C_LPF_ENABLE ==1)
 				coef_freq = Cut_Off_Freq;
 				coef_loop = Filter_Order;			
 				//LPF_init(pAudio_Encode_Para->SampleRate,3);
 				LPF_init(coef_freq,coef_loop);
-#endif		
-				pAviEncPara->delta_ta = (INT64S)pAviEncVidPara->dwRate * pcm_cwlen;
-				OSMboxPost(avi_aud_ack_m, (void*)C_ACK_SUCCESS);
+    #endif		
+				pAviEncPara->delta_ta = (INT64S) pAviEncVidPara->dwRate * pcm_cwlen;
+				OSMboxPost(avi_aud_ack_m, (void *) C_ACK_SUCCESS);
 				break;
 AUDIO_RECORD_START_FAIL:
-			#if MIC_INPUT_SRC == C_ADC_LINE_IN || MIC_INPUT_SRC == C_BUILDIN_MIC_IN
+    #if MIC_INPUT_SRC == C_ADC_LINE_IN || MIC_INPUT_SRC == C_BUILDIN_MIC_IN
 				avi_adc_hw_stop();
 				avi_adc_double_buffer_free();
 				avi_audio_memory_free();
 				avi_wave_encode_stop();
-			#endif
+    #endif
 				DBG_PRINT("AudEncStartFail!!!\r\n");
-				OSMboxPost(avi_aud_ack_m, (void*)C_ACK_FAIL);
+				OSMboxPost(avi_aud_ack_m, (void *) C_ACK_FAIL);
 				break;	
 				
 			case AVI_AUDIO_RECORD_STOP:
@@ -318,23 +337,34 @@ static INT32S avi_wave_encode_start(void)
 {
 	INT32S nRet, size;
 
+	_dmsg((GREEN "[S]: avi_wave_encode_start()\r\n" NONE));
+
 	size = wav_enc_get_mem_block_size();
-	pAviEncAudPara->work_mem = (INT8U *)gp_malloc(size);
-	if(!pAviEncAudPara->work_mem) RETURN(STATUS_FAIL);
-	gp_memset((INT8S*)pAviEncAudPara->work_mem, 0, size);
-	nRet = wav_enc_Set_Parameter( pAviEncAudPara->work_mem, 
-								  pAviEncAudPara->channel_no, 
-								  pAviEncAudPara->audio_sample_rate, 
-								  pAviEncAudPara->audio_format);
-	if(nRet < 0) RETURN(STATUS_FAIL);
+	pAviEncAudPara->work_mem = (INT8U *) gp_malloc(size);
+	if (!pAviEncAudPara->work_mem) {
+		_dmsg((GREEN "[E]: avi_wave_encode_start() - gp_malloc() fail!!!\r\n" NONE));
+		RETURN(STATUS_FAIL);
+	}
+	gp_memset((INT8S *) pAviEncAudPara->work_mem, 0, size);
+	nRet = wav_enc_Set_Parameter(pAviEncAudPara->work_mem, 
+				     pAviEncAudPara->channel_no, 
+				     pAviEncAudPara->audio_sample_rate, 
+				     pAviEncAudPara->audio_format);
+	if (nRet < 0) {
+		_dmsg((GREEN "[E]: avi_wave_encode_start() - wav_enc_Set_Parameter() fail!!!\r\n" NONE));
+		RETURN(STATUS_FAIL);
+	}
+
 	nRet = wav_enc_init(pAviEncAudPara->work_mem);
-	if(nRet < 0) RETURN(STATUS_FAIL);
+	if (nRet < 0) {
+		_dmsg((GREEN "[E]: avi_wave_encode_start() - wav_enc_init() fail!!!\r\n" NONE));
+		RETURN(STATUS_FAIL);
+	}
+
 	pAviEncAudPara->pcm_input_size = wav_enc_get_SamplePerFrame(pAviEncAudPara->work_mem);
-	
-	switch(pAviEncAudPara->audio_format)
-	{
+	switch(pAviEncAudPara->audio_format) {
 	case WAVE_FORMAT_PCM:
-		pAviEncAudPara->pack_size = pAviEncAudPara->pcm_input_size;	
+		pAviEncAudPara->pack_size  = pAviEncAudPara->pcm_input_size;	
 		pAviEncAudPara->pack_size *= 2;
 		break;
 	
@@ -345,7 +375,8 @@ static INT32S avi_wave_encode_start(void)
 		pAviEncAudPara->pack_size = wav_enc_get_BytePerPackage(pAviEncAudPara->work_mem);	
 		break;
 	}
-	
+
+	_dmsg((GREEN "[E]: avi_wave_encode_start() - pass\r\n" NONE));
 	nRet = STATUS_OK;
 Return:	
 	return nRet;	
