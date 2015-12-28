@@ -1,4 +1,17 @@
+#include "ztkconfigs.h"
 #include "avi_encoder_app.h"
+
+/* for debug */
+#define DEBUG_AVI_ENCODER_SCALER_JPEG	1
+#if DEBUG_AVI_ENCODER_SCALER_JPEG
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* */
+
 
 #if MPEG4_ENCODE_ENABLE == 1
 #include "drv_l1_mpeg4.h"
@@ -21,7 +34,7 @@ INT32U	JpegTaskStack[C_JPEG_STACK_SIZE];
 INT32U  skip_flag;
 
 /* os task queue */
-OS_EVENT *scaler_task_q; 
+OS_EVENT *scaler_task_q;
 OS_EVENT *scaler_task_ack_m;
 OS_EVENT *cmos_frame_q;
 OS_EVENT *vid_enc_task_q;
@@ -45,22 +58,22 @@ INT32S scaler_task_create(INT8U pori)
 {
 	INT8U  err;
 	INT32S nRet;
-	
+
 	scaler_task_q = OSQCreate(scaler_task_q_stack, C_SCALER_QUEUE_MAX);
 	if(!scaler_task_q) RETURN(STATUS_FAIL);
-	
+
 	scaler_task_ack_m = OSMboxCreate(NULL);
 	if(!scaler_task_ack_m) RETURN(STATUS_FAIL);
-	
+
 	cmos_frame_q = OSQCreate(cmos_frame_q_stack, C_CMOS_FRAME_QUEUE_MAX);
-	if(!cmos_frame_q) RETURN(STATUS_FAIL);	
-	
+	if(!cmos_frame_q) RETURN(STATUS_FAIL);
+
 	scaler_hw_app_sem = OSSemCreate(1);
 	if(!scaler_hw_app_sem) RETURN(STATUS_FAIL);
-	
-	err = OSTaskCreate(scaler_task_entry, (void *)NULL, &ScalerTaskStack[C_SCALER_STACK_SIZE - 1], pori);	
+
+	err = OSTaskCreate(scaler_task_entry, (void *)NULL, &ScalerTaskStack[C_SCALER_STACK_SIZE - 1], pori);
 	if(err != OS_NO_ERR) RETURN(STATUS_FAIL);
-	
+
 	nRet = STATUS_OK;
 Return:
 	return nRet;
@@ -70,16 +83,16 @@ INT32S scaler_task_del(void)
 {
 	INT8U  err;
 	INT32S nRet, msg;
-	
+
 	nRet = STATUS_OK;
 	POST_MESSAGE(scaler_task_q, MSG_SCALER_TASK_EXIT, scaler_task_ack_m, 5000, msg, err);
-Return:	
+Return:
 	OSQFlush(scaler_task_q);
    	OSQDel(scaler_task_q, OS_DEL_ALWAYS, &err);
-   	
+
    	OSQFlush(cmos_frame_q);
    	OSQDel(cmos_frame_q, OS_DEL_ALWAYS, &err);
-   	
+
 	OSMboxDel(scaler_task_ack_m, OS_DEL_ALWAYS, &err);
 	OSSemDel(scaler_hw_app_sem, OS_DEL_ALWAYS, &err);
 	return nRet;
@@ -89,28 +102,28 @@ INT32S scaler_task_start(void)
 {
 	INT8U  err;
 	INT32S nRet, msg;
-	
+
 	if(avi_encode_memory_alloc() < 0)
 	{
 		avi_encode_memory_free();
 		DEBUG_MSG(DBG_PRINT("avi memory alloc fail!!!\r\n"));
-		RETURN(STATUS_FAIL);				
+		RETURN(STATUS_FAIL);
 	}
-	
+
 	nRet = STATUS_OK;
 	POST_MESSAGE(scaler_task_q, MSG_SCALER_TASK_INIT, scaler_task_ack_m, 5000, msg, err);
-Return:		
-	return nRet;	
+Return:
+	return nRet;
 }
 
 INT32S scaler_task_stop(void)
 {
 	INT8U  err;
 	INT32S nRet, msg;
-	
+
 	nRet = STATUS_OK;
 	POST_MESSAGE(scaler_task_q, MSG_SCALER_TASK_STOP, scaler_task_ack_m, 5000, msg, err);
-Return:		
+Return:
 	avi_encode_memory_free();
 	return nRet;
 }
@@ -164,14 +177,14 @@ void preview_zoom_set(INT32U factor)
 		clip_start_y = 160;
 		clip_width = 208;
 		clip_height = 160;
-		break;					
+		break;
 
 	case 7:				// 4X
 		clip_start_x = 240;
 		clip_start_y = 176;
 		clip_width = 160;
 		clip_height = 128;
-		break;			
+		break;
 
 	default:			// 1X
 		clip_start_x = 0;
@@ -199,12 +212,11 @@ static void black_disp_buf(unsigned int disp_address,int width,int height)
 	int i=0,j=0;
 	unsigned short *disp = (unsigned short *)disp_address;
 
-	for(i=0;i<height;i++)
-		for(j=0;j<width;j++)
-			{
-				*disp=black_color;
-				disp++;
-			}
+	for (i=0; i<height; i++)
+		for (j=0; j<width; j++) {
+			*disp = black_color;
+			disp++;
+		}
 }
 
 PPU_REGISTER_SETS p_register_set;
@@ -212,7 +224,7 @@ void scaler_task_entry(void *parm)
 {
 	INT8U err, scaler_mode, skip_cnt=0;//, lock_cnt;
 	INT16U csi_width, csi_height;
-	INT16U encode_width, encode_height; 
+	INT16U encode_width, encode_height;
 	INT16U dip_width, dip_height;
 	INT16U dip_buff_width, dip_buff_height;
 	INT32U msg_id, sensor_frame, scaler_frame;
@@ -235,66 +247,66 @@ void scaler_task_entry(void *parm)
 		msg_id = (INT32U) OSQPend(scaler_task_q, 0, &err);
 		if((err != OS_NO_ERR)||	!msg_id)
 			continue;
-			
+
 		switch(msg_id & 0xFF000000)
 		{
 		case MSG_SCALER_TASK_INIT:
-//			lock_cnt = 0;
-			skip_cnt = 0;
-			csi_width = pAviEncVidPara->sensor_capture_width;
-			csi_height = pAviEncVidPara->sensor_capture_height;
-			encode_width = pAviEncVidPara->encode_width;
-			encode_height = pAviEncVidPara->encode_height;
-			dip_width = pAviEncVidPara->display_width;
-			dip_height = pAviEncVidPara->display_height;
-			dip_buff_width = pAviEncVidPara->display_buffer_width;
+			_dmsg((GREEN "[zt]: scaler task init\r\n" NONE));
+//			lock_cnt        = 0;
+			skip_cnt        = 0;
+			csi_width       = pAviEncVidPara->sensor_capture_width;
+			csi_height      = pAviEncVidPara->sensor_capture_height;
+			encode_width    = pAviEncVidPara->encode_width;
+			encode_height   = pAviEncVidPara->encode_height;
+			dip_width       = pAviEncVidPara->display_width;
+			dip_height      = pAviEncVidPara->display_height;
+			dip_buff_width  = pAviEncVidPara->display_buffer_width;
 			dip_buff_height = pAviEncVidPara->display_buffer_height;
-			input_format = pAviEncVidPara->sensor_output_format;
-			output_format = C_SCALER_CTRL_OUT_RGB565;//C_SCALER_CTRL_OUT_YUYV; //wwj modify for remove PPU
+			input_format    = pAviEncVidPara->sensor_output_format;
+			output_format   = C_SCALER_CTRL_OUT_RGB565;//C_SCALER_CTRL_OUT_YUYV; //wwj modify for remove PPU
 			pAviEncPara->fifo_enc_err_flag = 0;
-			pAviEncPara->fifo_irq_cnt = 0; 
+			pAviEncPara->fifo_irq_cnt = 0;
 			pAviEncPara->vid_pend_cnt = 0;
 			pAviEncPara->vid_post_cnt = 0;
 			display_input_format = C_SCALER_CTRL_IN_YUYV;
 			display_output_format = pAviEncVidPara->display_output_format;
-			if(pAviEncVidPara->scaler_flag)
+			if (pAviEncVidPara->scaler_flag)
 				scaler_mode = C_SCALER_FIT_BUFFER;
 				//scaler_mode = C_NO_SCALER_FIT_BUFFER;
 			else
 				scaler_mode = C_SCALER_FULL_SCREEN;
 
 
-		#if AVI_ENCODE_VIDEO_ENCODE_EN == 1
+#if AVI_ENCODE_VIDEO_ENCODE_EN == 1
 			header_size = avi_encode_set_jpeg_quality(pAviEncVidPara->quality_value);
-		#endif
+#endif
 			OSQPost(DisplayTaskQ, (void *) MSG_DISPLAY_TASK_PPU_READY);
-			
+
 			OSMboxPost(scaler_task_ack_m, (void*)C_ACK_SUCCESS);
 			break;
-		
+
 		case MSG_SCALER_TASK_STOP:
 //			gp_free((void *)buff_base);
 //			char_array_ptr = 0;
 			OSQFlush(scaler_task_q);
 			OSMboxPost(scaler_task_ack_m, (void*)C_ACK_SUCCESS);
 			break;
-				
+
 		case MSG_SCALER_TASK_EXIT:
 			OSMboxPost(scaler_task_ack_m, (void*)C_ACK_SUCCESS);
 			OSTaskDel(OS_PRIO_SELF);
 			break;
-#if 1		
+#if 1
 		case MSG_SCALER_TASK_PREVIEW_ON:
 			{
-				INT32U i;
-				
-				for (i=0;i<AVI_ENCODE_DISPALY_BUFFER_NO;i++) {
+				INT32U	i;
+
+				for (i=0; i<AVI_ENCODE_DISPALY_BUFFER_NO; i++) {
 					if (!pAviEncVidPara->display_output_addr[i]) {
-						
 						pAviEncVidPara->display_output_addr[i] = msg_id & 0xFFFFFF;
-						//black_disp_buf(pAviEncVidPara->display_output_addr[i],dip_buff_width,dip_buff_height);
-						if (i==0) {
-							pAviEncVidPara->display_output_addr[i] |= MSG_SCALER_TASK_PREVIEW_LOCK; /* lock logo buffer */
+//						black_disp_buf(pAviEncVidPara->display_output_addr[i], dip_buff_width, dip_buff_height);
+						if (i == 0) {
+							pAviEncVidPara->display_output_addr[i] |= MSG_SCALER_TASK_PREVIEW_LOCK;	/* lock logo buffer */
 						}
 						break;
 					}
@@ -303,45 +315,42 @@ void scaler_task_entry(void *parm)
 					video_preview_flag = 1;
 				}
 
-				if(double_disp_buf==NULL)
-				{
-					double_disp_buf=gp_malloc_align(320*240*2*2,32);
-					if(double_disp_buf==NULL)
-					{
+				if (double_disp_buf == NULL) {
+					double_disp_buf = gp_malloc_align(320*240*2*2, 32);
+					if (double_disp_buf == NULL) {
 						DBG_PRINT("malloc double_disp_buf fail\n");
 					}
 				}
-			
+
 			}
 			break;
-		
+
 		case MSG_SCALER_TASK_PREVIEW_OFF:
 			video_preview_flag = 0;
-			if(double_disp_buf!=NULL)
-			{
+			if (double_disp_buf != NULL) {
 				gp_free(double_disp_buf);
-				double_disp_buf =NULL;
+				double_disp_buf = NULL;
 			}
 			break;
 		case MSG_SCALER_TASK_PREVIEW_LOCK:
-		    {
-		    	INT32U ack_ptr, tmp_ptr, i;
+			{
+				INT32U	ack_ptr, tmp_ptr, i;
 				ack_ptr = (msg_id & 0xFFFFFF);
-				for (i=0;i<AVI_ENCODE_DISPALY_BUFFER_NO;i++) {
+				for (i=0; i<AVI_ENCODE_DISPALY_BUFFER_NO; i++) {
 					tmp_ptr = (pAviEncVidPara->display_output_addr[i] & 0xFFFFFF);
 					if (ack_ptr == tmp_ptr) {
 						pAviEncVidPara->display_output_addr[i] |= MSG_SCALER_TASK_PREVIEW_LOCK;
 						break;
 					}
 				}
-		    }
+			}
 			break;
 		case MSG_SCALER_TASK_PREVIEW_UNLOCK:
 			{
-				INT32U ack_ptr, tmp_ptr, i;
+				INT32U	ack_ptr, tmp_ptr, i;
 				ack_ptr = (msg_id & 0xFFFFFF);
 				if (ack_ptr != 0xFFFFFF) {
-					for (i=0;i<AVI_ENCODE_DISPALY_BUFFER_NO;i++) {
+					for (i=0; i<AVI_ENCODE_DISPALY_BUFFER_NO; i++) {
 						tmp_ptr = (pAviEncVidPara->display_output_addr[i] & 0xFFFFFF);
 						if (ack_ptr == tmp_ptr) {
 							pAviEncVidPara->display_output_addr[i] = ack_ptr;
@@ -349,21 +358,21 @@ void scaler_task_entry(void *parm)
 						}
 					}
 				} else {
-					for (i=0;i<AVI_ENCODE_DISPALY_BUFFER_NO;i++) {
+					for (i=0; i<AVI_ENCODE_DISPALY_BUFFER_NO; i++) {
 						pAviEncVidPara->display_output_addr[i] &= 0xFFFFFF;
 					}
 				}
-			} 
+			}
 			break;
-#endif		
+#endif
 		case MSG_SCALER_TASK_ALLOCATE:
 			if(avi_encode_memory_alloc() < 0)
 			{
 				DBG_PRINT("avi memory alloc fail\r\n");
-				avi_encode_memory_free();			
+				avi_encode_memory_free();
 			}
 			break;
-			
+
 		case MSG_SCALER_TASK_FREE:
 			avi_encode_memory_free();
 			break;
@@ -371,16 +380,17 @@ void scaler_task_entry(void *parm)
 			if (avi_encode_packer_memory_alloc()<0){
 				avi_encode_packer_memory_free();
 				DBG_PRINT("packer memory alloc fail\r\n");
-			}	
+			}
 			break;
 		case MSG_SCALER_TASK_PACKER_FREE:
 			avi_encode_packer_memory_free();
 			msgQSend(ApQ, MSG_APQ_FREE_PACKER_MEM_DONE, NULL, NULL, MSG_PRI_NORMAL);
-			break;			
+			break;
 		case MSG_SCALER_TASK_UPDATE_DISP_MODE:
 			disp_mode = ap_state_config_pic_size_get();
+			_dmsg((GREEN "[zt]: update disp_mode=%0d\r\n" NONE, disp_mode));
 			break;
-			
+
 		default:
 			sensor_frame = msg_id;
 			if (!skip_flag) {
@@ -389,42 +399,26 @@ void scaler_task_entry(void *parm)
 					skip_flag = 1;
 				}
 				else {
-					OSQPost(cmos_frame_q, (void *)sensor_frame);
+					OSQPost(cmos_frame_q, (void *) sensor_frame);
 					break;
 				}
 			}
-		#if AVI_ENCODE_DIGITAL_ZOOM_EN == 1
+#if AVI_ENCODE_DIGITAL_ZOOM_EN == 1
 			scaler_frame = avi_encode_get_scaler_frame();
-			scaler_zoom_once(C_SCALER_ZOOM_FIT_BUFFER,
-							pAviEncVidPara->scaler_zoom_ratio,
-							input_format, output_format, 
-							csi_width, csi_height, 
-							encode_width, encode_height,
-							encode_width, encode_height, 
-							sensor_frame, 0, 0, 
-							scaler_frame, 0, 0);
-    	#else
-    		if(pAviEncVidPara->scaler_flag)
-    		{   
-    			scaler_frame = avi_encode_get_scaler_frame();
-    			scaler_zoom_once(C_SCALER_FULL_SCREEN,
-								pAviEncVidPara->scaler_zoom_ratio,
-								input_format, output_format, 
-								csi_width, csi_height, 
-								encode_width, encode_height,
-								encode_width, encode_height, 
-								sensor_frame, 0, 0, 
-								scaler_frame, 0, 0);
-    		}
-    		else
-    		{
-    			scaler_frame = sensor_frame;	
+			scaler_zoom_once(C_SCALER_ZOOM_FIT_BUFFER, pAviEncVidPara->scaler_zoom_ratio, input_format, output_format,
+					 csi_width, csi_height, encode_width, encode_height, encode_width, encode_height, sensor_frame, 0, 0, scaler_frame, 0, 0);
+#else
+			if (pAviEncVidPara->scaler_flag) {
+				scaler_frame = avi_encode_get_scaler_frame();
+				scaler_zoom_once(C_SCALER_FULL_SCREEN, pAviEncVidPara->scaler_zoom_ratio, input_format, output_format,
+						 csi_width, csi_height, encode_width, encode_height, encode_width, encode_height, sensor_frame, 0, 0, scaler_frame, 0, 0);
+			} else {
+				scaler_frame = sensor_frame;
 			}
-		#endif
+#endif
 
-			//zoom start
-			if(capture_mode_flag && ((clip_width != 640) || (clip_height != 480)))
-			{
+			// zoom start
+			if (capture_mode_flag && ((clip_width != 640) || (clip_height != 480))) {
 				INT32U	i, j;
 				INT32U	*src_addr, *tar_addr;
 
@@ -440,27 +434,27 @@ void scaler_task_entry(void *parm)
 					tar_addr -= clip_width*clip_height/2;
 					scaler_zoom_once(C_SCALER_FULL_SCREEN,
 									0,
-									C_SCALER_CTRL_IN_YUYV, C_SCALER_CTRL_OUT_YUYV, 
-									clip_width, clip_height, 
+									C_SCALER_CTRL_IN_YUYV, C_SCALER_CTRL_OUT_YUYV,
+									clip_width, clip_height,
 									csi_width, csi_height,
-									csi_width, csi_height, 
-									(INT32U)tar_addr, 0, 0, 
+									csi_width, csi_height,
+									(INT32U)tar_addr, 0, 0,
 									scaler_frame, 0, 0);
 				}
-			}			
-			//zoom end
+			}
+			// zoom end
 /*
-		#if	AVI_ENCODE_SHOW_TIME
+#if AVI_ENCODE_SHOW_TIME
 			{
 				if (!ap_state_config_date_stamp_get()) {
 					TIME_T	g_osd_time;
 					cal_time_get(&g_osd_time);
-					cpu_draw_time_osd(g_osd_time, scaler_frame,RGB565_DRAW,STATE_VIDEO_RECORD & 0xF);
+					cpu_draw_time_osd(g_osd_time, scaler_frame, RGB565_DRAW, STATE_VIDEO_RECORD & 0xF);
 				}
 			}
-		#endif
+#endif
 */
-#if	0//AVI_ENCODE_SHOW_TIME	//wwj add
+#if 0 //AVI_ENCODE_SHOW_TIME //wwj add
 			{
 				INT8U draw_type;
 
@@ -470,7 +464,7 @@ void scaler_task_entry(void *parm)
 					draw_type = YUV420_DRAW;
 				}
 				if (ap_state_config_date_stamp_get()) {
-					if ((avi_encode_get_status()&C_AVI_ENCODE_USB_WEBCAM) == 0) {
+					if ((avi_encode_get_status() & C_AVI_ENCODE_USB_WEBCAM) == 0) {
 						TIME_T	g_osd_time;
 						cal_time_get(&g_osd_time);
 						cpu_draw_time_osd(g_osd_time, scaler_frame, draw_type, STATE_VIDEO_RECORD & 0xF);
@@ -479,114 +473,123 @@ void scaler_task_entry(void *parm)
 			}
 #endif
 /*
-		 	if(AVI_ENCODE_DIGITAL_ZOOM_EN || pAviEncVidPara->scaler_flag)
-		 	{
-				OSQPost(cmos_frame_q, (void *)sensor_frame);
+		 	if (AVI_ENCODE_DIGITAL_ZOOM_EN || pAviEncVidPara->scaler_flag) {
+				OSQPost(cmos_frame_q, (void *) sensor_frame);
 			}
 */
-			
-			
-{	//display mode start
-	INT32U *display_ptr;
-	
-	if (video_preview_flag) {
-		display_ptr = (INT32U *) avi_encode_get_display_frame();
-		if (display_ptr) {
-			*display_ptr |= MSG_SCALER_TASK_PREVIEW_LOCK;
-			
-			if((disp_mode==0)&&(black_disp_count<MSG_SCALER_TASK_PREVIEW_ON))
-			{
-				black_disp_buf(*display_ptr&0xFFFFFF,dip_buff_width,60);
-				black_disp_count++;
-			}
-			else if(disp_mode!=0)
-			{
-				black_disp_count=0;
-			}
-			//disp_mode = 0;
-			switch(disp_mode)
-			{
-				case 0:
-						
-						scaler_zoom_once(C_SCALER_FIT_BUFFER,
-							0,
-							input_format, output_format, 
-							csi_width, csi_height, 
-							dip_buff_width, 120,
-							dip_buff_width, dip_buff_height-60, 
-							sensor_frame, 0, 0, 
-							((*display_ptr+30*csi_width) & 0xFFFFFF), 0, 0);
-						break;
-				case 1:
-					 	scaler_zoom_once(C_SCALER_FULL_SCREEN,
-								0,
-								input_format, output_format, 
-								csi_width, csi_height, 
-								320*2, 240,
-								320*2, 240, 
-								sensor_frame, 0, 0, 
-								(INT32U)double_disp_buf, 0, 0);
-						dma_sprite_buffer_copy((INT32U)double_disp_buf,(*display_ptr&0xFFFFFF),dip_buff_width*dip_buff_height*2,dip_buff_width*2,dip_buff_width*2*2);
-						/*
-						for(i=0;i<dip_buff_height;i++)
-							dma_buffer_copy(double_disp_buf+i*320*2*2,(*display_ptr&0xFFFFFF)+i*320*2,320*2,320*2,320*2);
-						*/
-						break;
-				case 2:
-						scaler_zoom_once(C_SCALER_FULL_SCREEN,
-								0,
-								input_format, output_format, 
-								csi_width, csi_height, 
-								320*2, 240,
-								320*2, 240, 
-								sensor_frame, 0, 0, 
-								(INT32U)double_disp_buf, 0, 0);
-						dma_sprite_buffer_copy((INT32U)(double_disp_buf+320*2),(*display_ptr&0xFFFFFF),dip_buff_width*dip_buff_height*2,dip_buff_width*2,dip_buff_width*2*2);
-						break;
 
-			}
-			OSQPost(DisplayTaskQ, (void *) (*display_ptr & 0xFFFFFF));
-		//	OSQPost(cmos_frame_q, (void *)sensor_frame);
-//			lock_cnt = 0;
-		}
-	}
-} //display mode end
+			{ //display mode start
+				INT32U	*display_ptr;
 
-#if	AVI_ENCODE_SHOW_TIME	//wwj add
-		{
-			INT8U draw_type;
+				if (video_preview_flag) {
+					display_ptr = (INT32U *) avi_encode_get_display_frame();
+					if (display_ptr) {
+						*display_ptr |= MSG_SCALER_TASK_PREVIEW_LOCK;
+						if ((disp_mode == 0) && (black_disp_count < MSG_SCALER_TASK_PREVIEW_ON)) {
+							switch (zt_resolution()) {
+							case ZT_VGA:		black_disp_buf(*display_ptr & 0xFFFFFF, dip_buff_width, 60);	break;
+							case ZT_HD_SCALED:	black_disp_buf(*display_ptr & 0xFFFFFF, dip_buff_width, 80);	break;
+							}
+							black_disp_count++;
+						} else if (disp_mode != 0) {
+							black_disp_count=0;
+						}
 
-			if (pAviEncVidPara->scaler_zoom_ratio == 1) {
-				draw_type = YUYV_DRAW;
-			} else {
-				draw_type = YUV420_DRAW;
-			}
-			if (ap_state_config_date_stamp_get()) {
-				if ((avi_encode_get_status()&C_AVI_ENCODE_USB_WEBCAM) == 0) {
-					TIME_T	g_osd_time;
-					cal_time_get(&g_osd_time);
-					cpu_draw_time_osd(g_osd_time, scaler_frame, draw_type, STATE_VIDEO_RECORD & 0xF);
+						//disp_mode = 0;
+						switch (disp_mode) {
+						case 0:
+							switch (zt_resolution()) {
+							case ZT_VGA:
+								scaler_zoom_once(C_SCALER_FIT_BUFFER, 0,			// INT32U scaler_mode, FP32 bScalerFactor
+									input_format, output_format,				// INT32U InputFormat, INT32U OutputFormat,
+									csi_width, csi_height,					// INT16U input_x, INT16U input_y,
+									dip_buff_width, 120,					// INT16U output_x, INT16U output_y,
+									dip_buff_width, dip_buff_height-60,			// INT16U output_buffer_x, INT16U output_buffer_y,
+									sensor_frame, 0, 0,					// INT32U scaler_input_y, INT32U scaler_input_u, INT32U scaler_input_v,
+									((*display_ptr+30*csi_width) & 0xFFFFFF), 0, 0);	// INT32U scaler_output_y, INT32U scaler_output_u, INT32U scaler_output_v
+								break;
+							case ZT_HD_SCALED:
+								scaler_zoom_once(C_SCALER_FIT_BUFFER, 0,
+									input_format, output_format,
+									csi_width, csi_height,
+									dip_buff_width, 120/*(csi_height >> 2)*/,
+									dip_buff_width, dip_buff_height-60,
+									sensor_frame, 0, 0,
+									((*display_ptr+25*csi_width) & 0xFFFFFF), 0, 0);
+								break;
+							}
+							break;
+						case 1:
+							scaler_zoom_once(C_SCALER_FULL_SCREEN, 0,
+									input_format, output_format,
+									csi_width, csi_height,
+									320*2, 240,
+									320*2, 240,
+									sensor_frame, 0, 0,
+									(INT32U)double_disp_buf, 0, 0);
+
+							dma_sprite_buffer_copy((INT32U)double_disp_buf, (*display_ptr&0xFFFFFF), dip_buff_width*dip_buff_height*2, dip_buff_width*2, dip_buff_width*2*2);
+							/*
+							for (i=0; i<dip_buff_height; i++)
+								dma_buffer_copy(double_disp_buf+i*320*2*2, (*display_ptr&0xFFFFFF)+i*320*2, 320*2, 320*2, 320*2);
+							*/
+							break;
+						case 2:
+							scaler_zoom_once(C_SCALER_FULL_SCREEN, 0,
+									input_format, output_format,
+									csi_width, csi_height,
+									320*2, 240,
+									320*2, 240,
+									sensor_frame, 0, 0,
+									(INT32U)double_disp_buf, 0, 0);
+
+							dma_sprite_buffer_copy((INT32U)(double_disp_buf+320*2), (*display_ptr&0xFFFFFF), dip_buff_width*dip_buff_height*2, dip_buff_width*2, dip_buff_width*2*2);
+							break;
+
+						}
+						OSQPost(DisplayTaskQ, (void *)(*display_ptr & 0xFFFFFF));
+//						OSQPost(cmos_frame_q, (void *)sensor_frame);
+//						lock_cnt = 0;
+					}
 				}
 			}
-		}
+			//display mode end
+
+#if AVI_ENCODE_SHOW_TIME // wwj add
+			{
+				if (ap_state_config_date_stamp_get()) {
+					if ((avi_encode_get_status() & C_AVI_ENCODE_USB_WEBCAM) == 0) {
+						INT8U	draw_type;
+						TIME_T	g_osd_time;
+
+						if (pAviEncVidPara->scaler_zoom_ratio == 1) {
+							draw_type = YUYV_DRAW;
+						} else {
+							draw_type = YUV420_DRAW;
+						}
+						cal_time_get(&g_osd_time);
+						cpu_draw_time_osd(g_osd_time, scaler_frame, draw_type, STATE_VIDEO_RECORD & 0xF);
+					}
+				}
+			}
 #endif
-		
-		if((avi_encode_get_status()&C_AVI_VID_ENC_START)||(avi_encode_get_status() & C_AVI_ENCODE_USB_WEBCAM))
+
+		if ((avi_encode_get_status() & C_AVI_VID_ENC_START)||(avi_encode_get_status() & C_AVI_ENCODE_USB_WEBCAM))
 		{
-//for zoom			
+//for zoom
 			if (pAviEncVidPara->scaler_zoom_ratio != 1) {
 				uv_length = encode_width * encode_height;
 				y_frame = avi_encode_get_scaler_frame();
-				u_frame = y_frame + uv_length;   		
-				v_frame = u_frame + (uv_length >> 1);	
-				scaler_zoom_once(C_SCALER_ZOOM_FIT_BUFFER, 
-									pAviEncVidPara->scaler_zoom_ratio, 
-									C_SCALER_CTRL_IN_YUYV, 
-									C_SCALER_CTRL_OUT_YUV420, 
-									encode_width, encode_height, 
+				u_frame = y_frame + uv_length;
+				v_frame = u_frame + (uv_length >> 1);
+				scaler_zoom_once(C_SCALER_ZOOM_FIT_BUFFER,
+									pAviEncVidPara->scaler_zoom_ratio,
+									C_SCALER_CTRL_IN_YUYV,
+									C_SCALER_CTRL_OUT_YUV420,
+									encode_width, encode_height,
 									encode_width, encode_height, //+2 is to fix block line
 									encode_width, encode_height, //+2 is to fix block line
-									scaler_frame, 0, 0, 
+									scaler_frame, 0, 0,
 									y_frame, u_frame, v_frame);
 				OSQPost(cmos_frame_q, (void *)scaler_frame);
 			} else {
@@ -607,7 +610,7 @@ void scaler_task_entry(void *parm)
 	    			{
 	    				goto VIDEO_ENCODE_FRAME_MODE_END1;
 	    			}
-					 	
+
 				}
 				else
 				{
@@ -615,8 +618,8 @@ void scaler_task_entry(void *parm)
 				}
 #else
 				video_frame = avi_encode_get_video_frame();
-#endif		
-				output_frame = video_frame + header_size;			
+#endif
+				output_frame = video_frame + header_size;
 				if(pAviEncVidPara->video_format == C_MJPG_FORMAT)
 				{
 					INT32U input_format1;
@@ -624,14 +627,14 @@ void scaler_task_entry(void *parm)
 					y_frame = scaler_frame;
 					if (pAviEncVidPara->scaler_zoom_ratio == 1) {
 						input_format1 = C_JPEG_FORMAT_YUYV;
-						u_frame = 0;   		
+						u_frame = 0;
 						v_frame = 0;
 					} else {
 						input_format1 = C_JPEG_FORMAT_YUV_SEPARATE;
-						u_frame = y_frame + uv_length;   		
+						u_frame = y_frame + uv_length;
 						v_frame = u_frame + (uv_length >> 1);
 					}
-					encode_size = jpeg_encode_once(pAviEncVidPara->quality_value, input_format1, 
+					encode_size = jpeg_encode_once(pAviEncVidPara->quality_value, input_format1,
 													encode_width, encode_height, y_frame, u_frame, v_frame, output_frame);
 					pAviEncPara->ready_frame = video_frame;
 					pAviEncPara->ready_size = encode_size + header_size;
@@ -670,23 +673,23 @@ VIDEO_ENCODE_FRAME_MODE_END1:
 		}
 		break;
 /*
-		#if AVI_ENCODE_PREVIEW_DISPLAY_EN == 1	
+#if AVI_ENCODE_PREVIEW_DISPLAY_EN == 1
 			if(pAviEncVidPara->dispaly_scaler_flag)
-			{	
+			{
 				INT32U *display_ptr;
-				
+
 				display_ptr = (INT32U *) avi_encode_get_display_frame();
 				if (display_ptr && video_preview_flag) {
 					if (skip_cnt == 0) {
 						display_frame = *display_ptr;
-						scaler_zoom_once(scaler_mode, 
+						scaler_zoom_once(scaler_mode,
 										pAviEncVidPara->scaler_zoom_ratio,
-										display_input_format, display_output_format, 
-										encode_width, encode_height, 
+										display_input_format, display_output_format,
+										encode_width, encode_height,
 										dip_width, dip_height,
-										dip_buff_width, dip_buff_height, 
-										scaler_frame, 0, 0, 
-										display_frame, 0, 0);					
+										dip_buff_width, dip_buff_height,
+										scaler_frame, 0, 0,
+										display_frame, 0, 0);
 						*display_ptr |= MSG_SCALER_TASK_PREVIEW_LOCK;
 						OSQPost(DisplayTaskQ, (void *) display_frame);
 					}
@@ -700,17 +703,17 @@ VIDEO_ENCODE_FRAME_MODE_END1:
         	{
 				display_frame =	scaler_frame;
 			}
-		#endif
-		
-			
-	
+#endif
+
+
+
 			if((AVI_ENCODE_DIGITAL_ZOOM_EN == 0) && (pAviEncVidPara->scaler_flag ==0))
 			{
 				OSQPost(cmos_frame_q, (void *)sensor_frame);
 			}
-*/				
+*/
 		}
-	}		
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -720,16 +723,16 @@ INT32S video_encode_task_create(INT8U pori)
 {
 	INT8U  err;
 	INT32S nRet;
-	
+
 	vid_enc_task_q = OSQCreate(video_encode_task_q_stack, C_JPEG_QUEUE_MAX);
 	if(!scaler_task_q) RETURN(STATUS_FAIL);
-	
+
 	vid_enc_task_ack_m = OSMboxCreate(NULL);
 	if(!scaler_task_ack_m) RETURN(STATUS_FAIL);
-	
-	err = OSTaskCreate(video_encode_task_entry, (void *)NULL, &JpegTaskStack[C_JPEG_STACK_SIZE-1], pori); 	
+
+	err = OSTaskCreate(video_encode_task_entry, (void *)NULL, &JpegTaskStack[C_JPEG_STACK_SIZE-1], pori);
 	if(err != OS_NO_ERR) RETURN(STATUS_FAIL);
-		
+
 	nRet = STATUS_OK;
 Return:
 	return nRet;
@@ -739,10 +742,10 @@ INT32S video_encode_task_del(void)
 {
 	INT8U  err;
 	INT32S nRet, msg;
-	
+
 	nRet = STATUS_OK;
 	POST_MESSAGE(vid_enc_task_q, MSG_VIDEO_ENCODE_TASK_EXIT, vid_enc_task_ack_m, 5000, msg, err);
-Return:	
+Return:
 	OSQFlush(vid_enc_task_q);
    	OSQDel(vid_enc_task_q, OS_DEL_ALWAYS, &err);
 	OSMboxDel(vid_enc_task_ack_m, OS_DEL_ALWAYS, &err);
@@ -758,22 +761,22 @@ INT32S video_encode_task_start(void)
 {
 	INT8U  err;
 	INT32S nRet, msg;
-	
+
 	nRet = STATUS_OK;
 	POST_MESSAGE(vid_enc_task_q, MSG_VIDEO_ENCODE_TASK_MJPEG_INIT, vid_enc_task_ack_m, 5000, msg, err);
 Return:
-	return nRet;	
+	return nRet;
 }
 
 INT32S video_encode_task_stop(void)
 {
 	INT8U  err;
 	INT32S nRet, msg;
-	
+
 	nRet = STATUS_OK;
 	POST_MESSAGE(vid_enc_task_q, MSG_VIDEO_ENCODE_TASK_STOP, vid_enc_task_ack_m, 5000, msg, err);
 Return:
-    return nRet;	
+    return nRet;
 }
 
 void video_encode_task_entry(void *parm)
@@ -787,14 +790,14 @@ void video_encode_task_entry(void *parm)
 #if MPEG4_ENCODE_ENABLE == 1
 	#define MAX_P_FRAME		10
 	INT8U	time_inc_bit, p_cnt;
-	INT32U  temp, write_refer_addr, reference_addr; 
+	INT32U  temp, write_refer_addr, reference_addr;
 #endif
 INT32U y_frame, u_frame, v_frame, uv_length;
 #if VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FIFO_MODE
 	INT8U  jpeg_start_flag;
-	INT16U scaler_height; 
+	INT16U scaler_height;
 	INT32U input_y_len, input_uv_len, uv_length;
-	INT32U y_frame, u_frame, v_frame; 
+	INT32U y_frame, u_frame, v_frame;
 	INT32S status;
 #endif
 #if C_UVC == CUSTOM_ON
@@ -806,7 +809,7 @@ INT32U y_frame, u_frame, v_frame, uv_length;
 		msg_id = (INT32U) OSQPend(vid_enc_task_q, 0, &err);
 		if(err != OS_NO_ERR)
 		    continue;
-		    
+
 		switch(msg_id)
 		{
 		case MSG_VIDEO_ENCODE_TASK_MJPEG_INIT:
@@ -817,7 +820,7 @@ INT32U y_frame, u_frame, v_frame, uv_length;
 		 	yuv_sampling_mode = C_JPEG_FORMAT_YUYV;
 			output_frame = 0;
 			uv_length = encode_width * encode_height;
-		#if VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FIFO_MODE
+#if VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FIFO_MODE
 			pAviEncPara->vid_post_cnt = pAviEncVidPara->sensor_capture_height / SENSOR_FIFO_LINE;
 			if(pAviEncVidPara->sensor_capture_height % SENSOR_FIFO_LINE)
 				while(1);//this must be no remainder
@@ -827,18 +830,18 @@ INT32U y_frame, u_frame, v_frame, uv_length;
 			uv_length = encode_width * (scaler_height + 2);
 			input_y_len = encode_width * scaler_height;
 			input_uv_len = input_y_len >> 1; //YUV422
-			//input_uv_len = input_y_len >> 2; //YUV420	
+			//input_uv_len = input_y_len >> 2; //YUV420
 			if(pAviEncVidPara->scaler_flag)
 				yuv_sampling_mode = C_JPEG_FORMAT_YUV_SEPARATE;
 			else
 				yuv_sampling_mode = C_JPEG_FORMAT_YUYV;
-		#endif
-		#if AVI_ENCODE_VIDEO_ENCODE_EN == 1
+#endif
+#if AVI_ENCODE_VIDEO_ENCODE_EN == 1
 			header_size = avi_encode_set_jpeg_quality(pAviEncVidPara->quality_value);
-		#endif
+#endif
 			OSMboxPost(vid_enc_task_ack_m, (void*)C_ACK_SUCCESS);
 			break;
-		
+
 		case MSG_VIDEO_ENCODE_TASK_MPEG4_INIT:
 			nRet = STATUS_FAIL;
 		#if MPEG4_ENCODE_ENABLE == 1
@@ -850,12 +853,12 @@ INT32U y_frame, u_frame, v_frame, uv_length;
 		 	nRet = avi_encode_mpeg4_malloc(encode_width, encode_height);
 		 	if(nRet < 0)
 		 	{
-		 		DEBUG_MSG(DBG_PRINT("mpeg4 memory alloc fail!!!\r\n"));	
+		 		DEBUG_MSG(DBG_PRINT("mpeg4 memory alloc fail!!!\r\n"));
 		 		avi_encode_mpeg4_free();
 		 		OSMboxPost(vid_enc_task_ack_m, (void*)C_ACK_FAIL);
 		 		continue;
 		 	}
-		 	
+
 			header_size = avi_encode_set_mp4_resolution(encode_width, encode_height);
 			if(header_size < 0)
 			{
@@ -863,8 +866,8 @@ INT32U y_frame, u_frame, v_frame, uv_length;
 		 		OSMboxPost(vid_enc_task_ack_m, (void*)C_ACK_FAIL);
 		 		continue;
 			}
-		 	
-		 	write_refer_addr = pAviVidPara->write_refer_addr; 
+
+		 	write_refer_addr = pAviVidPara->write_refer_addr;
 		 	reference_addr = pAviVidPara->reference_addr;
 		 	time_inc_bit = 0x0F;
 		 	p_cnt = 0;
@@ -872,32 +875,32 @@ INT32U y_frame, u_frame, v_frame, uv_length;
 		 	mpeg4_encode_isram_set(pAviEncPara->isram_addr);
 		 	mpeg4_encode_config(yuv_sampling_mode, encode_width, encode_height, time_inc_bit - 1);
 		 	mpeg4_encode_ip_set(FALSE, MAX_P_FRAME);
-		#endif 	
+		#endif
 			if(nRet >= 0)
 		 		OSMboxPost(vid_enc_task_ack_m, (void*)C_ACK_SUCCESS);
 			else
 				OSMboxPost(vid_enc_task_ack_m, (void*)C_ACK_FAIL);
-			break;	
-				 		
+			break;
+
 		case MSG_VIDEO_ENCODE_TASK_STOP:
-		#if MPEG4_ENCODE_ENABLE == 1	
+		#if MPEG4_ENCODE_ENABLE == 1
 			if(pAviVidPara->video_format == C_XVID_FORMAT)
 				avi_encode_mpeg4_free();
 		#endif
 			OSQFlush(vid_enc_task_q);
 			OSMboxPost(vid_enc_task_ack_m, (void*)C_ACK_SUCCESS);
 			break;
-			
+
 		case MSG_VIDEO_ENCODE_TASK_EXIT:
-			OSMboxPost(vid_enc_task_ack_m, (void*)C_ACK_SUCCESS);	
+			OSMboxPost(vid_enc_task_ack_m, (void*)C_ACK_SUCCESS);
 			OSTaskDel(OS_PRIO_SELF);
 			break;
-		
+
 		default:
 #if VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FRAME_MODE
 			pAviEncPara->vid_pend_cnt++;
-			scaler_frame = msg_id; 
-#if C_UVC == CUSTOM_ON			
+			scaler_frame = msg_id;
+#if C_UVC == CUSTOM_ON
 			if((avi_encode_get_status()&C_AVI_ENCODE_USB_WEBCAM))
 			{
 				video_frame = (INT32U) OSQAccept(usbwebcam_frame_q, &err);
@@ -905,7 +908,7 @@ INT32U y_frame, u_frame, v_frame, uv_length;
     			{
     				goto VIDEO_ENCODE_FRAME_MODE_END;
     			}
-				 	
+
 			}
 			else
 			{
@@ -913,23 +916,23 @@ INT32U y_frame, u_frame, v_frame, uv_length;
 			}
 #else
 				video_frame = avi_encode_get_video_frame();
-#endif		
-			output_frame = video_frame + header_size;			
+#endif
+			output_frame = video_frame + header_size;
 			if(pAviEncVidPara->video_format == C_MJPG_FORMAT)
 			{
 				INT32U input_format;
-//for zoom			
+//for zoom
 				y_frame = scaler_frame;
 				if (pAviEncVidPara->scaler_zoom_ratio == 1) {
 					input_format = C_JPEG_FORMAT_YUYV;
-					u_frame = 0;   		
+					u_frame = 0;
 					v_frame = 0;
 				} else {
 					input_format = C_JPEG_FORMAT_YUV_SEPARATE;
-					u_frame = y_frame + uv_length;   		
+					u_frame = y_frame + uv_length;
 					v_frame = u_frame + (uv_length >> 1);
 				}
-				encode_size = jpeg_encode_once(pAviEncVidPara->quality_value, input_format, 
+				encode_size = jpeg_encode_once(pAviEncVidPara->quality_value, input_format,
 												encode_width, encode_height, y_frame, u_frame, v_frame, output_frame);
 				pAviEncPara->ready_frame = video_frame;
 				pAviEncPara->ready_size = encode_size + header_size;
@@ -958,12 +961,12 @@ INT32U y_frame, u_frame, v_frame, uv_length;
 				temp = reference_addr;
 				reference_addr = write_refer_addr;
 				write_refer_addr = temp;
-				mpeg4_encode_start(C_MPEG_I_FRAME, pAviEncPara->quality_value, output_frame, (INT32U)scaler_frame, 
+				mpeg4_encode_start(C_MPEG_I_FRAME, pAviEncPara->quality_value, output_frame, (INT32U)scaler_frame,
 								write_refer_addr, reference_addr);
 				nRet = mpeg4_wait_idle(TRUE);
 				if(nRet != 0x04)
 					while(1);
-			
+
 				mpeg4_encode_stop();
 				encode_size = mpeg4_encode_get_vlc_size();
 				if(p_cnt == 0)
@@ -971,44 +974,44 @@ INT32U y_frame, u_frame, v_frame, uv_length;
 					pAviEncPara->ready_frame = video_frame;
 					pAviEncPara->ready_size = encode_size + header_size;
 					pAviEncPara->key_flag = AVIIF_KEYFRAME;
-				}	
+				}
 				else
 				{	//p frame
 					pAviEncPara->ready_frame = output_frame;
 					pAviEncPara->ready_size = encode_size;
 					pAviEncPara->key_flag = 0x00;
 				}
-					
+
 				p_cnt++;
-				if(p_cnt > MAX_P_FRAME)	
+				if(p_cnt > MAX_P_FRAME)
 					p_cnt = 0;
 			}
 		#endif
-VIDEO_ENCODE_FRAME_MODE_END:		
+VIDEO_ENCODE_FRAME_MODE_END:
 			break;
-			
-#elif VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FIFO_MODE	
+
+#elif VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FIFO_MODE
 			if(msg_id & C_AVI_ENCODE_FIFO_ERR)
 			{
 				//DEBUG_MSG(DBG_PRINT("F1"));
 				goto VIDEO_ENCODE_FIFO_MODE_FAIL;
 			}
-			
+
 			if(pAviEncVidPara->scaler_flag)
 			{
 				//R_IOC_O_DATA ^= 0x08;
 				scaler_frame = msg_id & (~C_AVI_ENCODE_FRAME_END);
 				y_frame = avi_encode_get_scaler_frame();
-				u_frame = y_frame + uv_length;   		
+				u_frame = y_frame + uv_length;
 				v_frame = u_frame + (uv_length >> 1);
-				scaler_zoom_once(C_SCALER_FULL_SCREEN, 
-								0, 
-								pAviEncVidPara->sensor_output_format, 
-								C_SCALER_CTRL_OUT_YUV422, 
-								csi_width, SENSOR_FIFO_LINE, 
+				scaler_zoom_once(C_SCALER_FULL_SCREEN,
+								0,
+								pAviEncVidPara->sensor_output_format,
+								C_SCALER_CTRL_OUT_YUV422,
+								csi_width, SENSOR_FIFO_LINE,
 								encode_width, scaler_height + 2, //+2 is to fix block line
 								encode_width, scaler_height + 2, //+2 is to fix block line
-								scaler_frame, 0, 0, 
+								scaler_frame, 0, 0,
 								y_frame, u_frame, v_frame);
 				//R_IOC_O_DATA ^= 0x08;
 			}
@@ -1019,19 +1022,19 @@ VIDEO_ENCODE_FRAME_MODE_END:
 			}
 
 			pAviEncPara->vid_pend_cnt++;
-			if(msg_id & C_AVI_ENCODE_FRAME_END)				
+			if(msg_id & C_AVI_ENCODE_FRAME_END)
 			{
 				if(pAviEncPara->vid_pend_cnt != pAviEncPara->vid_post_cnt)
 				{
 					DEBUG_MSG(DBG_PRINT("F2"));
 					goto VIDEO_ENCODE_FIFO_MODE_FAIL;
 				}
-				
-				if(jpeg_start_flag == 0) 
+
+				if(jpeg_start_flag == 0)
 					goto VIDEO_ENCODE_FIFO_MODE_FAIL;
-									
+
 				nRet = 3; //jpeg encode end
-				pAviEncPara->vid_pend_cnt = 0; 
+				pAviEncPara->vid_pend_cnt = 0;
 			}
 			else if(pAviEncPara->vid_pend_cnt == 1)
 			{
@@ -1046,49 +1049,49 @@ VIDEO_ENCODE_FRAME_MODE_END:
 			{
 				if(jpeg_start_flag == 0)
 					goto VIDEO_ENCODE_FIFO_MODE_FAIL;
-					
-				nRet = 2; //jpeg encode once		
+
+				nRet = 2; //jpeg encode once
 			}
-			else 
+			else
 			{
 				// error happen
 				goto VIDEO_ENCODE_FIFO_MODE_FAIL;
 			}
-			
+
 			switch(nRet)
 			{
 			case 1:
 				//DEBUG_MSG(DBG_PRINT("J"));
 				video_frame = avi_encode_get_video_frame();
-				status = jpeg_encode_fifo_start(0, 
-												pAviEncVidPara->quality_value, 
-												yuv_sampling_mode, 
-												encode_width, encode_height, 
-												y_frame, u_frame, v_frame, 
-												video_frame + header_size, input_y_len, input_uv_len);	
+				status = jpeg_encode_fifo_start(0,
+												pAviEncVidPara->quality_value,
+												yuv_sampling_mode,
+												encode_width, encode_height,
+												y_frame, u_frame, v_frame,
+												video_frame + header_size, input_y_len, input_uv_len);
 				if(status < 0) goto VIDEO_ENCODE_FIFO_MODE_FAIL;
 				jpeg_start_flag = 1;
 				break;
-				
+
 			case 2:
 				//DEBUG_MSG(DBG_PRINT("*"));
-				status = jpeg_encode_fifo_once(	0, 
-												status, 
-												y_frame, u_frame, v_frame, 
+				status = jpeg_encode_fifo_once(	0,
+												status,
+												y_frame, u_frame, v_frame,
 												input_y_len, input_uv_len);
 				if(status < 0) goto VIDEO_ENCODE_FIFO_MODE_FAIL;
 				break;
-				
+
 			case 3:
 				//DEBUG_MSG(DBG_PRINT("G\r\n"));
-				encode_size = jpeg_encode_fifo_stop(0, 
-													status, 
-													y_frame, u_frame, v_frame, 
+				encode_size = jpeg_encode_fifo_stop(0,
+													status,
+													y_frame, u_frame, v_frame,
 													input_y_len, input_uv_len);
 				jpeg_start_flag = 0;
 				if(encode_size > 0)
 				{
-					if(pAviEncPara->avi_encode_status & C_AVI_VID_ENC_START && 
+					if(pAviEncPara->avi_encode_status & C_AVI_VID_ENC_START &&
 						pAviEncPara->ready_frame == 0 &&
 						pAviEncPara->ready_size == 0)
 					{
@@ -1121,6 +1124,6 @@ VIDEO_ENCODE_FIFO_MODE_FAIL:
 #endif
 		break;
 		}
-	}	
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////

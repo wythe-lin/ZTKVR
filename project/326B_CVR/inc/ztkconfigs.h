@@ -60,7 +60,7 @@
     #define FLIP_ILI8961		0
     #define C_DISPLAY_DEVICE		ILI8961
     #define zt_opmode()			ZT_STITCHING
-    #define zt_resolution()		ZT_VAG
+    #define zt_resolution()		ZT_VGA
     #define zt_anti_flicker(x)		(!x)
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1
@@ -68,15 +68,15 @@
 #elif (K6000_CFG == 1)
     #define C_DISPLAY_DEVICE		ILI9341
     #define zt_opmode()			ZT_H_SIDE_BY_SIDE
-    #define zt_resolution()		ZT_VAG
+    #define zt_resolution()		ZT_VGA
     #define zt_anti_flicker(x)		(x)
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1
-    #define TIME_ADP_OUT_DLY		5		// unit: second
+    #define TIME_ADP_OUT_DLY		10		// unit: second
 #elif (K12_CFG == 1)
     #define C_DISPLAY_DEVICE		ILI9341
     #define zt_opmode()			ZT_H_SIDE_BY_SIDE
-    #define zt_resolution()		ZT_VAG
+    #define zt_resolution()		ZT_VGA
     #define zt_anti_flicker(x)		(!x)
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1
@@ -84,7 +84,7 @@
 #elif (EVB_CFG == 1)
     #define C_DISPLAY_DEVICE		TPO_TD025THD1
     #define zt_opmode()			ZT_H_SIDE_BY_SIDE
-    #define zt_resolution()		ZT_VAG
+    #define zt_resolution()		ZT_VGA
     #define zt_anti_flicker(x)		(!x)
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1

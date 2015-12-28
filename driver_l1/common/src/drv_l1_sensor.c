@@ -8816,6 +8816,7 @@ OV3640_MIPI_Init(
  */
 #ifdef __ZT3150_DRV_C__
 #include "gplib.h"
+#include "zt31xx.h"
 
 /* for debug */
 #define DEBUG_ZT3150_REG	0
@@ -8847,10 +8848,9 @@ extern INT8U	ap_state_config_light_freq_get(void);
 void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 {
 	INT16U	uCtrlReg1, uCtrlReg2;
-	INT8U	tmp;
-	INT32S	nack;
+	INT8U	param1, param2, param3;
 
-	_dmsg((LIGHT_CYAN "[ZT31XX]: mount\r\n" NONE));
+	_dmsg((LIGHT_CYAN "[zt31xx]: mount\r\n" NONE));
 
 	// Enable CSI clock to let sensor initialize at first
 //	uCtrlReg2      = CLKOEN | CSI_RGB565 | CSI_HIGHPRI | CSI_NOSTOP | CLK_SEL48M;
@@ -8890,66 +8890,49 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	sccb_delay(200);
 
 	// ZT3150 reset
-	_dmsg(("[ZT31XX]: hardware reset\r\n"));
-	gpio_write_io(ZT3150_RESET, 1);
-	gpio_init_io(ZT3150_RESET, GPIO_OUTPUT);
-	gpio_drving_init_io(ZT3150_RESET, (IO_DRV_LEVEL) IO_DRIVING_4mA);
-
-	gpio_write_io(ZT3150_RESET, 0);
-	drv_msec_wait(400);
-	gpio_write_io(ZT3150_RESET, 1);
+	zt31xx_reset();
 
 	// ZT3150 ready?
-	_dmsg(("[ZT31XX]: wait ready - "));
-	for (;;) {
-		nack = sccb_rd_r16d8(ZT3150_ID, 0x0080, &tmp);
-		_dmsg((" %02x", tmp));
-		//if (tmp == 0x80||tmp == 0x81) {
-		if (tmp == 0x80){
-			break;
-		}
-		drv_msec_wait(100);
-	}
-	_dmsg(("\r\n"));
+	zt31xx_ready();
 
 	// ZT3150 init (0x0080 - 0x0083 mailbox command register)
-	_dmsg(("[ZT31XX]: send command -"));
+	_dmsg(("[zt31xx]: set opmode -"));
 
 	// set operation mode
 	switch (zt_opmode()) {
-	case ZT_H_SIDE_BY_SIDE:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x03);	_dmsg((" (h) side by side,")); break;		// horizontal side by side
-	case ZT_V_SIDE_BY_SIDE:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x05);	_dmsg((" (v) side by side,")); break;		// vertical   side by side
-	case ZT_STITCHING:	sccb_wr_r16d8(ZT3150_ID, 0x0081, 0x08);	_dmsg((" stitching,")); break;			// stitching
-	default:		_dmsg((WHITE "\r\n[ZT31XX]: ERROR!!! zt_opmode() must be set\r\n" NONE)); break;
+	case ZT_H_SIDE_BY_SIDE:	param1 = 0x03;	_dmsg((" (h) side by side,")); break;		// horizontal side by side
+	case ZT_V_SIDE_BY_SIDE:	param1 = 0x05;	_dmsg((" (v) side by side,")); break;		// vertical   side by side
+	case ZT_STITCHING:	param1 = 0x08;	_dmsg((" stitching,")); break;			// stitching
+	default:		param1 = 0x03;	_dmsg((WHITE "\r\n[zt31xx]: ERROR!!! zt_opmode() must be set\r\n" NONE)); break;
 	}
 
 	// set resolution
 	if (zt_anti_flicker(ap_state_config_light_freq_get())) {
 		_dmsg((" 50Hz"));
 		switch (zt_resolution()) {
-		case ZT_VGA_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x82);	_dmsg((" VGA with panorama")); break;	// 50Hz VGA with panorama enabled
-		case ZT_VGA:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x02);	_dmsg((" VGA")); break;			// 50Hz VGA
-		case ZT_HD_SCALED:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x04);	_dmsg((" HD with scaled")); break;	// 50Hz HD with scaled
-		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x04);	_dmsg((" HD")); break;			// 50Hz HD
-		default:		_dmsg((WHITE "\r\n[ZT31XX]: ERROR!!! zt_resolution() must be set" NONE)); break;
+		case ZT_VGA_PANORAMA:	param2 = 0x82;	_dmsg((" VGA with panorama")); break;	// 50Hz VGA with panorama enabled
+		case ZT_VGA:		param2 = 0x02;	_dmsg((" VGA")); break;			// 50Hz VGA
+		case ZT_HD_SCALED:	param2 = 0x04;	_dmsg((" HD with scaled")); break;	// 50Hz HD with scaled
+		case ZT_HD:		param2 = 0x04;	_dmsg((" HD")); break;			// 50Hz HD
+		default:		param2 = 0x02;	_dmsg(("\r\n[zt31xx]: ERROR!!! zt_resolution() must be set")); break;
 		}
 	} else {
 		_dmsg((" 60Hz"));
 		switch (zt_resolution()) {
-		case ZT_VGA_PANORAMA:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x81);	_dmsg((" VGA with panorama")); break;	// 60Hz VGA with panorama enabled
-		case ZT_VGA:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x01);	_dmsg((" VGA")); break;			// 60Hz VGA
-		case ZT_HD_SCALED:	sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x03);	_dmsg((" HD with scaled")); break;	// 60Hz HD with scaled
-		case ZT_HD:		sccb_wr_r16d8(ZT3150_ID, 0x0082, 0x03);	_dmsg((" HD")); break;			// 60Hz HD
-		default:		_dmsg((WHITE "\r\n[ZT31XX]: ERROR!!! zt_resolution() must be set" NONE)); break;
+		case ZT_VGA_PANORAMA:	param2 = 0x81;	_dmsg((" VGA with panorama")); break;	// 60Hz VGA with panorama enabled
+		case ZT_VGA:		param2 = 0x01;	_dmsg((" VGA")); break;			// 60Hz VGA
+		case ZT_HD_SCALED:	param2 = 0x03;	_dmsg((" HD with scaled")); break;	// 60Hz HD with scaled
+		case ZT_HD:		param2 = 0x03;	_dmsg((" HD")); break;			// 60Hz HD
+		default:		param2 = 0x01;	_dmsg(("\r\n[zt31xx]: ERROR!!! zt_resolution() must be set")); break;
 		}
 	}
 	_dmsg((" (%0dx%0d), null\r\n", nWidthH, nWidthV));
 
 	// parameter 3 - dummy
-	sccb_wr_r16d8(ZT3150_ID, 0x0083, 0x00);
+	param3 = 0x00;
 
-	// set command ID
-	sccb_wr_r16d8(ZT3150_ID, 0x0080, 0x01);
+	// set zt31xx operating mode
+	zt31xx_set_opmode(param1, param2, param3);
 	drv_msec_wait(50);
 
 
@@ -8965,13 +8948,13 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 #elif CSI_IRQ_MODE == CSI_IRQ_TG_FIFO32_IRQ
 	R_CSI_TG_CTRL0 = uCtrlReg1 | (3 << 20) | (1 << 16);
 #endif
-	_dreg(("[ZT31XX]: nWidthH=%04d, nWidthV=%04d, uFlag=0x%04x\r\n", nWidthH, nWidthV, uFlag));
-	_dreg(("[ZT31XX]: R_CSI_TG_HRATIO  = 0x%04x, R_CSI_TG_HWIDTH  = %04d\r\n", (INT16U) R_CSI_TG_HRATIO, (INT16U) R_CSI_TG_HWIDTH));
-	_dreg(("[ZT31XX]: R_CSI_TG_VRATIO  = 0x%04x, R_CSI_TG_VHEIGHT = %04d\r\n", (INT16U) R_CSI_TG_VRATIO, (INT16U) R_CSI_TG_VHEIGHT));
-	_dreg(("[ZT31XX]: R_CSI_TG_CTRL0   = 0x%04x\r\n", (INT16U) uCtrlReg1));
-	_dreg(("[ZT31XX]: R_CSI_TG_CTRL1   = 0x%04x\r\n", (INT16U) uCtrlReg2));
+	_dreg(("[zt31xx]: nWidthH=%04d, nWidthV=%04d, uFlag=0x%04x\r\n", nWidthH, nWidthV, uFlag));
+	_dreg(("[zt31xx]: R_CSI_TG_HRATIO  = 0x%04x, R_CSI_TG_HWIDTH  = %04d\r\n", (INT16U) R_CSI_TG_HRATIO, (INT16U) R_CSI_TG_HWIDTH));
+	_dreg(("[zt31xx]: R_CSI_TG_VRATIO  = 0x%04x, R_CSI_TG_VHEIGHT = %04d\r\n", (INT16U) R_CSI_TG_VRATIO, (INT16U) R_CSI_TG_VHEIGHT));
+	_dreg(("[zt31xx]: R_CSI_TG_CTRL0   = 0x%04x\r\n", (INT16U) uCtrlReg1));
+	_dreg(("[zt31xx]: R_CSI_TG_CTRL1   = 0x%04x\r\n", (INT16U) uCtrlReg2));
 
-	_dmsg((LIGHT_CYAN "[ZT31XX]: done\r\n" NONE));
+	_dmsg((LIGHT_CYAN "[zt31xx]: done\r\n" NONE));
 }
 
 /*

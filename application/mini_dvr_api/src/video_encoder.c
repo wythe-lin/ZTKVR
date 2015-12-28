@@ -71,18 +71,24 @@ CODEC_START_STATUS video_encode_preview_start(VIDEO_ARGUMENT arg)
 
 	_dmsg((GREEN "[S]: video_encode_preview_start()\r\n" NONE));
 
+// ### for debug - xyz #########################
+#if 0
 	if (ap_state_config_voice_record_switch_get() == 0) {	//wwj add
 	    pAviEncAudPara->audio_format = AVI_ENCODE_AUDIO_FORMAT;
 	} else {
 	    pAviEncAudPara->audio_format = 0;
 	}
+#else
+	pAviEncAudPara->audio_format = 0;
+#endif
+// ### for debug - xyz #########################
 
-	pAviEncAudPara->channel_no = 1; //mono
+	pAviEncAudPara->channel_no	  = 1; //mono
 	pAviEncAudPara->audio_sample_rate = arg.AudSampleRate;
     
-	pAviEncVidPara->video_format = AVI_ENCODE_VIDEO_FORMAT;
-	pAviEncVidPara->dwScale = arg.bScaler;
-	pAviEncVidPara->dwRate = arg.VidFrameRate;
+	pAviEncVidPara->video_format	  = AVI_ENCODE_VIDEO_FORMAT;
+	pAviEncVidPara->dwScale		  = arg.bScaler;
+	pAviEncVidPara->dwRate		  = arg.VidFrameRate;
     
 	avi_encode_set_display_format(arg.OutputFormat);
 	avi_encode_set_sensor_format(BITMAP_YUYV);

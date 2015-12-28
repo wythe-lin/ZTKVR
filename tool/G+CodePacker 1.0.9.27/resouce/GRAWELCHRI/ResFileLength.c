@@ -1,1 +1,1 @@
-const unsigned int	au32ResFileLenList[] = { 8589, 4076, 616, 117803, 44362, 44362, 18336, 15112};
+const unsigned int	au32ResFileLenList[] = { 8589, 4076, 616, 117803, 35762, 35762, 18336, 15112};

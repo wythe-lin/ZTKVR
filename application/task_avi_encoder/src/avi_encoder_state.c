@@ -251,6 +251,19 @@ INT32S avi_enc_start(void)
 	}
 Return:
 	_dmsg((GREEN "[E]: avi_enc_start() - pass (%0x)\r\n" NONE, nRet));
+
+// ### for debug - xyz #########################
+#if 0
+	{
+		extern void dump_AviEncVidPara(AviEncVidPara_t *p);
+	 	dump_AviEncVidPara(pAviEncVidPara);
+	}
+	{
+		extern void dump_AviEncAudPara(AviEncAudPara_t *p);
+		dump_AviEncAudPara(pAviEncAudPara);
+	}
+#endif
+// ### for debug - xyz #########################
 	return nRet;
 }
 

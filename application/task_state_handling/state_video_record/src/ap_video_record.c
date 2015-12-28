@@ -690,7 +690,7 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
 		    close(src.type_ID.FileHandle);
 		    unlink((CHAR *) curr_file_info.file_path_addr);
 			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_DEL_TABLE_ITEM, &curr_file_info, sizeof(STOR_SERV_FILEINFO), MSG_PRI_NORMAL);
-		    DBG_PRINT("Video Record Fail2\r\n");
+		    DBG_PRINT("Video Record Fail2, line %0d\r\n", __LINE__);
 		    ap_video_record_sts_set(~VIDEO_RECORD_BUSY);
 		    video_calculate_left_recording_time_enable();
 		    msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_TIMER_START, NULL, NULL, MSG_PRI_NORMAL);
@@ -820,7 +820,7 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
             close(src.type_ID.FileHandle);
             unlink((CHAR *) curr_file_info.file_path_addr);
 			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_DEL_TABLE_ITEM, &curr_file_info, sizeof(STOR_SERV_FILEINFO), MSG_PRI_NORMAL);
-            DBG_PRINT("Video Record Fail2\r\n");
+            DBG_PRINT("Video Record Fail2, line %0d\r\n", __LINE__);
             ap_video_record_sts_set(~VIDEO_RECORD_BUSY);
             video_calculate_left_recording_time_enable();
             msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_TIMER_START, NULL, NULL, MSG_PRI_NORMAL);

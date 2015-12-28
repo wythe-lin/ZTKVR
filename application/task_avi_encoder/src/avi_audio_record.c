@@ -346,10 +346,7 @@ static INT32S avi_wave_encode_start(void)
 		RETURN(STATUS_FAIL);
 	}
 	gp_memset((INT8S *) pAviEncAudPara->work_mem, 0, size);
-	nRet = wav_enc_Set_Parameter(pAviEncAudPara->work_mem, 
-				     pAviEncAudPara->channel_no, 
-				     pAviEncAudPara->audio_sample_rate, 
-				     pAviEncAudPara->audio_format);
+	nRet = wav_enc_Set_Parameter(pAviEncAudPara->work_mem, pAviEncAudPara->channel_no, pAviEncAudPara->audio_sample_rate, pAviEncAudPara->audio_format);
 	if (nRet < 0) {
 		_dmsg((GREEN "[E]: avi_wave_encode_start() - wav_enc_Set_Parameter() fail!!!\r\n" NONE));
 		RETURN(STATUS_FAIL);

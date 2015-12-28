@@ -6,6 +6,7 @@
 /* for debug */
 #define DEBUG_AVI_ENCODER_APP	1
 #if DEBUG_AVI_ENCODER_APP
+    #include "gplib.h"
     #define _dmsg(x)		print_string x
 #else
     #define _dmsg(x)
@@ -45,6 +46,80 @@ static void AviPacker_mem_free(AviEncPacker_t *pAviEncPacker);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // avi encode api
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* for debug - xyz */
+void dump_AviEncVidPara(AviEncVidPara_t *p)
+{
+	int	i;
+
+	_dmsg((GREEN "=== AviEncVidPara ==============================\r\n" NONE));
+	_dmsg((GREEN "- [sensor input]\r\n" NONE));
+	_dmsg(("  sensor_output_format   = %08x\r\n", p->sensor_output_format));	// sensor output format
+	_dmsg(("  sensor_capture_width   = %04d\r\n", p->sensor_capture_width));	// sensor width
+	_dmsg(("  sensor_capture_height  = %04d\r\n", p->sensor_capture_height));	// sensor height
+	for (i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++) {
+		_dmsg(("  csi_frame_addr[%0d]      = %08x\r\n", i, p->csi_frame_addr[i]));// sensor input buffer addr
+	}
+
+	_dmsg((GREEN "- [scaler output]\r\n" NONE));
+	_dmsg(("  scaler_flag            = %04x\r\n", p->scaler_flag));
+	_dmsg(("  dispaly_scaler_flag    = %04x\r\n", p->dispaly_scaler_flag));		// 0: not scaler, 1: scaler again for display
+	_dmsg(("  scaler_zoom_ratio      = %08x\r\n", p->scaler_zoom_ratio));		// for zoom scaler
+	_dmsg(("  scaler_flag            = %08x\r\n", p->scaler_flag));
+	for (i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++) {
+		_dmsg(("  scaler_output_addr[%0d]  = %08x\r\n", i, p->scaler_output_addr[i]));// scaler output buffer addr
+	}
+
+	_dmsg((GREEN "- [display scaler]\r\n" NONE));
+	_dmsg(("  display_output_format  = %08x\r\n", p->display_output_format));	// for display use
+	_dmsg(("  display_width          = %04d\r\n", p->display_width));		// display width
+	_dmsg(("  display_height         = %04d\r\n", p->display_height));		// display height
+	_dmsg(("  display_buffer_width   = %04d\r\n", p->display_buffer_width));	// display width
+	_dmsg(("  display_buffer_height  = %04d\r\n", p->display_buffer_height));	// display height
+	for (i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++) {
+		_dmsg(("  display_output_addr[%0d] = %08x\r\n", i, p->display_output_addr[i]));// display scaler buffer addr
+	}
+
+	_dmsg((GREEN "- [video encode]\r\n" NONE));
+	_dmsg(("  video_format           = %08x\r\n", p->video_format));		// display width
+	_dmsg(("  dwScale                = %02x\r\n", p->dwScale));			// display height
+	_dmsg(("  dwRate                 = %02x\r\n", p->dwRate));			// display width
+	_dmsg(("  quality_value          = %04d\r\n", p->quality_value));		// display width
+	_dmsg(("  encode_width           = %04d\r\n", p->encode_width));		// display height
+	_dmsg(("  encode_height          = %04d\r\n", p->encode_height));		// display width
+	for (i=0; i<AVI_ENCODE_VIDEO_BUFFER_NO; i++) {
+		_dmsg(("  video_encode_addr[%0d]   = %08x\r\n", i, p->video_encode_addr[i]));	// display scaler buffer addr
+	}
+
+	_dmsg((GREEN "- [mpeg4 encode use]\r\n" NONE));
+	_dmsg(("  isram_addr             = %08x\r\n", p->isram_addr));
+	_dmsg(("  write_refer_addr       = %08x\r\n", p->write_refer_addr));
+	_dmsg(("  reference_addr         = %08x\r\n", p->reference_addr));
+
+	_dmsg((GREEN "================================================\r\n" NONE));
+}
+
+void dump_AviEncAudPara(AviEncAudPara_t *p)
+{
+	int	i;
+
+	_dmsg((GREEN "=== AviEncAudPara ==============================\r\n" NONE));
+	_dmsg((GREEN "- [audio encode]\r\n" NONE));
+	_dmsg(("  audio_format      = %08x\r\n", p->audio_format));		// audio encode format
+	_dmsg(("  audio_sample_rate = %04x\r\n", p->audio_sample_rate));	// sample rate
+	_dmsg(("  channel_no        = %04x\r\n", p->channel_no));		// channel no, 1:mono, 2:stereo
+	_dmsg(("  work_mem          = %08p\r\n", p->work_mem));			// wave encode work memory
+	_dmsg(("  pack_size         = %08x\r\n", p->pack_size));		// wave encode package size in byte
+	_dmsg(("  pack_buffer_addr  = %08x\r\n", p->pack_buffer_addr));
+	_dmsg(("  pcm_input_size    = %08x\r\n", p->pcm_input_size));		// wave encode pcm input size in short
+	for (i=0; i<AVI_ENCODE_PCM_BUFFER_NO; i++) {
+		_dmsg(("  pcm_input_addr[%0d] = %08x\r\n", i, p->pcm_input_addr[i]));
+	}
+	_dmsg((GREEN "================================================\r\n" NONE));
+}
+
+
+
+/* */
 static void scaler_app_lock(void)
 {
 	INT8U err;
@@ -63,6 +138,7 @@ void avi_encode_init(void)
 
 	pAviEncAudPara = &AviEncAudPara;
 	gp_memset((INT8S *)pAviEncAudPara, 0, sizeof(AviEncAudPara_t));
+
 	pAviEncVidPara = &AviEncVidPara;
 	gp_memset((INT8S *)pAviEncVidPara, 0, sizeof(AviEncVidPara_t));
 
@@ -106,7 +182,7 @@ static void avi_encode_sync_timer_isr(void)
 
 #else   // dominant modify
     pAviEncPara->tv += pAviEncPara->tick;
- 
+
 	if((pAviEncPara->tv - pAviEncPara->Tv) > 0)
 	{
 		if(pAviEncPara->post_cnt == pAviEncPara->pend_cnt)
@@ -539,7 +615,7 @@ INT32U avi_encode_get_scaler_frame(void)
 
 INT32U avi_encode_get_display_frame(void)
 {
-	INT32U addr, lock_cnt;
+	INT32U	addr, lock_cnt;
 
 	lock_cnt = AVI_ENCODE_DISPALY_BUFFER_NO;
 
@@ -552,6 +628,7 @@ INT32U avi_encode_get_display_frame(void)
 			addr = NULL;
 		} else {
 			addr = (INT32U) &pAviEncVidPara->display_output_addr[g_display_index];
+//			addr = (INT32U) pAviEncVidPara->display_output_addr[g_display_index];
 			return addr;
 		}
 		lock_cnt--;
@@ -562,11 +639,11 @@ INT32U avi_encode_get_display_frame(void)
 INT32U avi_encode_get_video_frame(void)
 {
 	INT32U addr;
-	
+
 	do{
 		addr = pAviEncVidPara->video_encode_addr[g_video_index++];
 		if(g_video_index >= AVI_ENCODE_VIDEO_BUFFER_NO)
-			g_video_index = 0;  
+			g_video_index = 0;
 	}while(addr == g_video_lock_addr);
 	return addr;
 }
@@ -585,15 +662,15 @@ static INT32S sensor_mem_alloc(void)
 		if(!pAviEncVidPara->csi_frame_addr[i]) {
 			pAviEncVidPara->csi_frame_addr[i] = (INT32U) gp_malloc_align(buffer_size, 32);
         }
-		
+
 		if(!pAviEncVidPara->csi_frame_addr[i]) {
             RETURN(STATUS_FAIL);
         }
 		DEBUG_MSG(DBG_PRINT("sensor_frame_addr[%d] = 0x%x\r\n", i, pAviEncVidPara->csi_frame_addr[i]));
-	}	
-	nRet = STATUS_OK;	
+	}
+	nRet = STATUS_OK;
 Return:
-    if (nRet!=STATUS_OK) 
+    if (nRet!=STATUS_OK)
     {
         sensor_mem_free();
     }
@@ -603,9 +680,9 @@ Return:
 static INT32S scaler_mem_alloc(void)
 {
 	INT32S i, buffer_size, nRet;
-	
+
 	#if 0
-	buffer_size = pAviEncVidPara->encode_width * pAviEncVidPara->encode_height << 1;	
+	buffer_size = pAviEncVidPara->encode_width * pAviEncVidPara->encode_height << 1;
 	for(i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++)
 	{
 		if(!pAviEncVidPara->scaler_output_addr[i]) {
@@ -617,11 +694,11 @@ static INT32S scaler_mem_alloc(void)
 		DEBUG_MSG(DBG_PRINT("scaler_frame_addr[%d] = 0x%x\r\n", i, pAviEncVidPara->scaler_output_addr[i]));
 	}
 	#endif
-	
+
 #if VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FRAME_MODE
 	if((AVI_ENCODE_DIGITAL_ZOOM_EN == 1) || pAviEncVidPara->scaler_flag)
 	{
-		buffer_size = pAviEncVidPara->encode_width * pAviEncVidPara->encode_height << 1;	
+		buffer_size = pAviEncVidPara->encode_width * pAviEncVidPara->encode_height << 1;
 		for(i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++)
 		{
 			if(!pAviEncVidPara->scaler_output_addr[i]) {
@@ -638,7 +715,7 @@ static INT32S scaler_mem_alloc(void)
 	{
 		nRet = pAviEncVidPara->encode_height /(pAviEncVidPara->sensor_capture_height / SENSOR_FIFO_LINE);
 		nRet += 2; //+2 is to fix block line
-		buffer_size = pAviEncVidPara->encode_width * nRet << 1; 
+		buffer_size = pAviEncVidPara->encode_width * nRet << 1;
 		for(i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++)
 		{
 			if(!pAviEncVidPara->scaler_output_addr[i]) {
@@ -656,16 +733,16 @@ Return:
     if(nRet!=STATUS_OK) {  // dominant add
         scaler_mem_free();
     }
-    
+
 	return nRet;
 }
 
 static INT32S display_mem_alloc(void)
-{	
+{
 #if AVI_ENCODE_PREVIEW_DISPLAY_EN == 1
 	INT32S nRet;
 	INT32U buffer_size, i;
-	
+
 	if(pAviEncVidPara->dispaly_scaler_flag)
 	{
 		buffer_size = pAviEncVidPara->display_buffer_width * pAviEncVidPara->display_buffer_height << 1;
@@ -674,20 +751,20 @@ static INT32S display_mem_alloc(void)
 			if(!pAviEncVidPara->display_output_addr[i]) {
 				pAviEncVidPara->display_output_addr[i] = (INT32U) gp_malloc_align(buffer_size, 32);
             }
-			
+
 			if(!pAviEncVidPara->display_output_addr[i]) {
                 RETURN(STATUS_FAIL);
             }
 			DEBUG_MSG(DBG_PRINT("display_frame_addr[%d]= 0x%x\r\n", i, pAviEncVidPara->display_output_addr[i]));
 		}
-	}	
+	}
 	nRet = STATUS_OK;
 Return:
     if (nRet!=STATUS_OK)
     {
         //display_mem_free();
     }
-    
+
 	return nRet;
 #else
 	return STATUS_OK;
@@ -697,7 +774,7 @@ Return:
 static INT32S video_mem_alloc(void)
 {
 	INT32S i, buffer_size, nRet;
-	
+
 #if AVI_ENCODE_VIDEO_ENCODE_EN == 1
 	//buffer_size = pAviEncVidPara->encode_width * pAviEncVidPara->encode_height >> 1;
 	buffer_size = 200*1024;
@@ -706,12 +783,12 @@ static INT32S video_mem_alloc(void)
 		if(!pAviEncVidPara->video_encode_addr[i]) {
 			pAviEncVidPara->video_encode_addr[i] = (INT32U) gp_malloc_align(buffer_size, 32);
         }
-		
+
 		if(!pAviEncVidPara->video_encode_addr[i]) {
             RETURN(STATUS_FAIL);
         }
 		DEBUG_MSG(DBG_PRINT("jpeg_frame_addr[%d]   = 0x%x\r\n", i, pAviEncVidPara->video_encode_addr[i]));
-	}	
+	}
 #endif
 	nRet = STATUS_OK;
 Return:
@@ -720,31 +797,31 @@ Return:
         video_mem_free();
     }
 	return nRet;
-} 
+}
 
 static INT32S AviPacker_mem_alloc(AviEncPacker_t *pAviEncPacker)
 {
 	INT32S nRet;
 
-#if AVI_ENCODE_VIDEO_ENCODE_EN == 1		
+#if AVI_ENCODE_VIDEO_ENCODE_EN == 1
 	pAviEncPacker->file_buffer_size = FileWriteBuffer_Size;
 	if (!pAviEncPacker->file_write_buffer) {
 		pAviEncPacker->file_write_buffer = (INT32U *) gp_malloc(FileWriteBuffer_Size);
 	}
-	
+
 	if (!pAviEncPacker->file_write_buffer) {
 		RETURN(STATUS_FAIL);
 	}
-	
+
 	pAviEncPacker->index_buffer_size = IndexBuffer_Size;
 	if (!pAviEncPacker->index_write_buffer) {
 		pAviEncPacker->index_write_buffer = (INT32U *) gp_malloc(IndexBuffer_Size);
 	}
-	
+
 	if (!pAviEncPacker->index_write_buffer) {
 		RETURN(STATUS_FAIL);
 	}
-	
+
 	if (!pAviEncPacker->avi_workmem) {
 		pAviEncPacker->avi_workmem = (void *) gp_malloc(AviPackerV3_GetWorkMemSize());
 	}
@@ -761,51 +838,51 @@ Return:
 		AviPacker_mem_free(pAviEncPacker);
 	}
 	return nRet;
-} 
+}
 
-static void sensor_mem_free(void) 
+static void sensor_mem_free(void)
 {
 	INT32S i;
 	for(i=0; i<AVI_ENCODE_CSI_BUFFER_NO; i++)
 	{
 		if(pAviEncVidPara->csi_frame_addr[i]) {
-			gp_free((void*)pAviEncVidPara->csi_frame_addr[i]);	
+			gp_free((void*)pAviEncVidPara->csi_frame_addr[i]);
 		pAviEncVidPara->csi_frame_addr[i] = 0;
 	}
 }
 }
 
-static void scaler_mem_free(void) 
+static void scaler_mem_free(void)
 {
 	INT32S i;
 	for(i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++)
 	{
 		if(pAviEncVidPara->scaler_output_addr[i])
 			gp_free((void*)pAviEncVidPara->scaler_output_addr[i]);
-		
+
 		pAviEncVidPara->scaler_output_addr[i] = 0;
 	}
 }
 /*
-static void display_mem_free(void) 
+static void display_mem_free(void)
 {
 	INT32S i;
 	for(i=0; i<AVI_ENCODE_DISPALY_BUFFER_NO; i++)
 	{
 		if(pAviEncVidPara->display_output_addr[i])
-			gp_free((void*)(pAviEncVidPara->display_output_addr[i] & 0xFFFFFF));	
-		
+			gp_free((void*)(pAviEncVidPara->display_output_addr[i] & 0xFFFFFF));
+
 		pAviEncVidPara->display_output_addr[i] = 0;
 	}
 }
 */
-static void video_mem_free(void) 
+static void video_mem_free(void)
 {
     INT32S i;
     for(i=0; i<AVI_ENCODE_VIDEO_BUFFER_NO; i++)
     {
         if(pAviEncVidPara->video_encode_addr[i]) {
-            gp_free((void*)pAviEncVidPara->video_encode_addr[i]);		
+            gp_free((void*)pAviEncVidPara->video_encode_addr[i]);
             pAviEncVidPara->video_encode_addr[i] = 0;
         }
     }
@@ -815,12 +892,12 @@ static void AviPacker_mem_free(AviEncPacker_t *pAviEncPacker)
 {
 	if(pAviEncPacker->file_write_buffer)
 		gp_free((void*)pAviEncPacker->file_write_buffer);
-		
+
 	if(pAviEncPacker->index_write_buffer)
 		gp_free((void*)pAviEncPacker->index_write_buffer);
 	if(pAviEncPacker->avi_workmem)
 		gp_free((void*)pAviEncPacker->avi_workmem);
-		
+
 	pAviEncPacker->file_write_buffer = 0;
 	pAviEncPacker->index_write_buffer = 0;
 	pAviEncPacker->avi_workmem = 0;
@@ -831,7 +908,7 @@ INT32S avi_encode_memory_alloc(void)
 	INT32S nRet;
 
 DBG_PRINT ("\r\n==========AVI MEM ALLOCATE\r\n");
-    
+
 	//inti index
 	g_csi_index = 0;
 	g_scaler_index = 0;
@@ -840,15 +917,15 @@ DBG_PRINT ("\r\n==========AVI MEM ALLOCATE\r\n");
 	g_video_index = 0;
 	g_video_lock_addr = 0xFFFFFFFF;
 	if(sensor_mem_alloc() < 0) RETURN(STATUS_FAIL);
-	if(scaler_mem_alloc() < 0) RETURN(STATUS_FAIL); 
-	if(display_mem_alloc() < 0) RETURN(STATUS_FAIL);     
+	if(scaler_mem_alloc() < 0) RETURN(STATUS_FAIL);
+	if(display_mem_alloc() < 0) RETURN(STATUS_FAIL);
 	if(video_mem_alloc() < 0) RETURN(STATUS_FAIL);
 	if(AviPacker_mem_alloc(pAviEncPacker0) < 0) RETURN(STATUS_FAIL);
-#if AVI_ENCODE_FAST_SWITCH_EN == 1	
+#if AVI_ENCODE_FAST_SWITCH_EN == 1
 	if(AviPacker_mem_alloc(pAviEncPacker1) < 0) RETURN(STATUS_FAIL);
 #endif
 	nRet = STATUS_OK;
-Return:	
+Return:
 	return nRet;
 }
 
@@ -862,7 +939,7 @@ DBG_PRINT ("\r\n==========AVI MEM FREE\r\n");
 	//display_mem_free();
 	video_mem_free();
 	AviPacker_mem_free(pAviEncPacker0);
-#if AVI_ENCODE_FAST_SWITCH_EN == 1		
+#if AVI_ENCODE_FAST_SWITCH_EN == 1
 	AviPacker_mem_free(pAviEncPacker1);
 #endif
 }
@@ -870,20 +947,20 @@ DBG_PRINT ("\r\n==========AVI MEM FREE\r\n");
 INT32S avi_encode_packer_memory_alloc(void)
 {
 	INT32S nRet;
-	
+
 	if(AviPacker_mem_alloc(pAviEncPacker0) < 0) RETURN(STATUS_FAIL);
-#if AVI_ENCODE_FAST_SWITCH_EN == 1	
+#if AVI_ENCODE_FAST_SWITCH_EN == 1
 	if(AviPacker_mem_alloc(pAviEncPacker1) < 0) RETURN(STATUS_FAIL);
 #endif
 	nRet = STATUS_OK;
-Return:	
+Return:
 	return nRet;
 }
 
 void avi_encode_packer_memory_free(void)
 {
 	AviPacker_mem_free(pAviEncPacker0);
-#if AVI_ENCODE_FAST_SWITCH_EN == 1		
+#if AVI_ENCODE_FAST_SWITCH_EN == 1
 	AviPacker_mem_free(pAviEncPacker1);
 #endif
 }
@@ -892,21 +969,21 @@ void avi_encode_packer_memory_free(void)
 INT32S avi_encode_mpeg4_malloc(INT16U width, INT16U height)
 {
 	INT32S size, nRet;
-	
+
 	size = 16*width*2*3/4;
 	pAviEncPara->isram_addr = (INT32U)gp_iram_malloc_align(size, 32);
 	if(!pAviEncPara->isram_addr) RETURN(STATUS_FAIL);
-	
+
 	size = width*height*2;
 	pAviEncPara->write_refer_addr = (INT32U)gp_malloc_align(size, 32);
 	if(!pAviEncPara->write_refer_addr) RETURN(STATUS_FAIL);
-	
-	size = width*height*2;	
+
+	size = width*height*2;
 	pAviEncPara->reference_addr = (INT32U)gp_malloc_align(size, 32);
-	if(!pAviEncPara->reference_addr) RETURN(STATUS_FAIL);		
-	
+	if(!pAviEncPara->reference_addr) RETURN(STATUS_FAIL);
+
 	nRet = STATUS_OK;
-Return:		
+Return:
 	return nRet;
 }
 
@@ -914,10 +991,10 @@ void avi_encode_mpeg4_free(void)
 {
 	gp_free((void*)pAviEncPara->isram_addr);
 	pAviEncPara->isram_addr = 0;
-	
+
 	gp_free((void*)pAviEncPara->write_refer_addr);
 	pAviEncPara->write_refer_addr = 0;
-	
+
 	gp_free((void*)pAviEncPara->reference_addr);
 	pAviEncPara->reference_addr = 0;
 }
@@ -928,11 +1005,11 @@ void avi_encode_set_sensor_format(INT32U format)
 {
 	if(format == BITMAP_YUYV)
     	pAviEncVidPara->sensor_output_format = C_SCALER_CTRL_IN_YUYV;
-    else if(format ==  BITMAP_RGRB)	
+    else if(format ==  BITMAP_RGRB)
     	pAviEncVidPara->display_output_format = C_SCALER_CTRL_IN_RGBG;
     else
     	pAviEncVidPara->sensor_output_format = C_SCALER_CTRL_IN_YUYV;
-} 
+}
 
 void avi_encode_set_display_format(INT32U format)
 {
@@ -947,19 +1024,19 @@ void avi_encode_set_display_format(INT32U format)
     else if(format == IMAGE_OUTPUT_FORMAT_UYVY)
     	pAviEncVidPara->display_output_format = C_SCALER_CTRL_OUT_UYVY;
     else
-    	pAviEncVidPara->display_output_format = C_SCALER_CTRL_OUT_YUYV;	
+    	pAviEncVidPara->display_output_format = C_SCALER_CTRL_OUT_YUYV;
 }
 
 void avi_encode_set_display_scaler(void)
 {
 	if((pAviEncVidPara->encode_width != pAviEncVidPara->display_buffer_width)||
-		(pAviEncVidPara->encode_height != pAviEncVidPara->display_buffer_height) || 
+		(pAviEncVidPara->encode_height != pAviEncVidPara->display_buffer_height) ||
 		(pAviEncVidPara->display_output_format != C_SCALER_CTRL_OUT_YUYV))
 		pAviEncVidPara->dispaly_scaler_flag = 1;
 	else
 		pAviEncVidPara->dispaly_scaler_flag = 0;
 
-	if((pAviEncVidPara->sensor_capture_width != pAviEncVidPara->encode_width) || 
+	if((pAviEncVidPara->sensor_capture_width != pAviEncVidPara->encode_width) ||
 		(pAviEncVidPara->sensor_capture_height != pAviEncVidPara->encode_height))
 		pAviEncVidPara->scaler_flag = 1;
 	else
@@ -970,7 +1047,7 @@ INT32S avi_encode_set_jpeg_quality(INT8U quality_value)
 {
 	INT8U *src;
 	INT32U i, header_size, video_frame;
-	
+
 	switch(quality_value)
 	{
 	case 35: src = jpeg_422_q35_header; break;
@@ -978,17 +1055,17 @@ INT32S avi_encode_set_jpeg_quality(INT8U quality_value)
 	case 70: src = jpeg_422_q70_header; break;
 	case 80: src = jpeg_422_q80_header; break;
 	case 90: src = jpeg_422_q90_header; break;
-	default: 
+	default:
 		quality_value = 50;
-		src = jpeg_422_q50_header; 
+		src = jpeg_422_q50_header;
 		break;
 	}
-    
-    pAviEncVidPara->quality_value = quality_value; 
+
+    pAviEncVidPara->quality_value = quality_value;
     header_size = sizeof(jpeg_422_q50_header);
 	//set jpeg width and height to buffer
     for(i = 0; i<AVI_ENCODE_VIDEO_BUFFER_NO; i++)
-    {	
+    {
     	video_frame = avi_encode_get_video_frame();
     	gp_memcpy((INT8S*)video_frame, (INT8S*)src, header_size);
     	src = (INT8U *)video_frame;
@@ -1007,7 +1084,7 @@ INT32S avi_encode_set_mp4_resolution(INT16U encode_width, INT16U encode_height)
 {
 	INT8U *src;
 	INT32U i, header_size, video_frame;
-	
+
 	if(encode_width == 640 && encode_height == 480)
 		src = mpeg4_header_vga;
  	else if(encode_width == 320 && encode_height == 240)
@@ -1023,12 +1100,12 @@ INT32S avi_encode_set_mp4_resolution(INT16U encode_width, INT16U encode_height)
  	else
  	{
  		DEBUG_MSG(DBG_PRINT("mpeg4 header fail!!!\r\n"));
- 		return STATUS_FAIL;	
+ 		return STATUS_FAIL;
  	}
- 	
+
 	header_size = sizeof(mpeg4_header_vga);
 	for(i = 0; i<AVI_ENCODE_VIDEO_BUFFER_NO; i++)
-	{	
+	{
 	   	video_frame = avi_encode_get_video_frame();
 	  	gp_memcpy((INT8S*)video_frame, (INT8S*)src, header_size);
 	}
@@ -1041,18 +1118,18 @@ BOOLEAN avi_encode_is_pause(void)
 	status = pAviEncPara->avi_encode_status & C_AVI_ENCODE_PAUSE;
 	if(!status)
 		return FALSE;
-	
+
 	return TRUE;
 }
 
 // check disk free size
 BOOLEAN avi_encode_disk_size_is_enough(INT32S cb_write_size)
 {
-#if AVI_ENCODE_CAL_DISK_SIZE_EN	
+#if AVI_ENCODE_CAL_DISK_SIZE_EN
 	INT32U temp;
 	INT32S nRet;
 	INT64U disk_free_size;
-	
+
 	temp = pAviEncPara->record_total_size;
 	disk_free_size = pAviEncPara->disk_free_size;
 	temp += cb_write_size;
@@ -1190,14 +1267,14 @@ INT32S scaler_zoom_once(INT32U scaler_mode, FP32 bScalerFactor,
 		{
 			if (output_y*input_x > output_x*input_y)
 			{
-	      		temp_x = temp_y = (input_x<<16) / output_x;
-	      		output_y = (output_y<<16) / temp_x;
-	      	}
-	      	else
-	      	{
-	      		temp_x = temp_y = (input_y<<16) / output_y;
-	      		output_x = (input_x<<16) / temp_x;
-	      	}
+	      			temp_x = temp_y = (input_x<<16) / output_x;
+	      			output_y = (output_y<<16) / temp_x;
+	     	 	}
+	   	   	else
+	 	     	{
+	  	    		temp_x = temp_y = (input_y<<16) / output_y;
+	  	    		output_x = (input_x<<16) / temp_x;
+		      	}
 		}
 		scaler_input_pixels_set(input_x, input_y);
 		scaler_input_visible_pixels_set(input_x, input_y);
@@ -1208,18 +1285,18 @@ INT32S scaler_zoom_once(INT32U scaler_mode, FP32 bScalerFactor,
 	case C_SCALER_FIT_BUFFER:
 		if (output_y*input_x > output_x*input_y)
 		{
-      		temp_x = (input_x<<16) / output_x;
-      		output_y = (output_y<<16) / temp_x;
-      	}
-      	else
-      	{
-      		temp_x = (input_y<<16) / output_y;
-      		output_x = (input_x<<16) / temp_x;
-      	}
-      	scaler_input_pixels_set(input_x, input_y);
+			temp_x = (input_x<<16) / output_x;
+			output_y = (output_y<<16) / temp_x;
+		}
+		else
+		{
+			temp_x = (input_y<<16) / output_y;
+			output_x = (input_x<<16) / temp_x;
+		}
+		scaler_input_pixels_set(input_x, input_y);
 		scaler_input_visible_pixels_set(input_x, input_y);
-      	scaler_output_pixels_set(temp_x, temp_x, output_buffer_x, output_buffer_y);
-      	scaler_input_offset_set(0, 0);
+		scaler_output_pixels_set(temp_x, temp_x, output_buffer_x, output_buffer_y);
+		scaler_input_offset_set(0, 0);
 		break;
 
 	case C_SCALER_ZOOM_FIT_BUFFER:
@@ -1283,7 +1360,7 @@ INT32U jpeg_encode_once(INT32U quality_value, INT32U input_format, INT32U width,
 	INT32S	jpeg_status;
 	INT32U 	encode_size;
 
-	scaler_app_lock(); 
+	scaler_app_lock();
 
 	jpeg_encode_init();
 	gplib_jpeg_default_quantization_table_load(quality_value);	// Load default qunatization table(quality)
@@ -1489,7 +1566,7 @@ INT32S avi_mjpeg_decode_without_scaler(INT32U raw_data_addr, INT32U size, INT32U
 		scaler_app_unlock();
 		return STATUS_FAIL;
 	}
-	
+
     retry = 0;
 	do {
 		status = mjpeg_decode_status_query(1);
@@ -1498,7 +1575,7 @@ INT32S avi_mjpeg_decode_without_scaler(INT32U raw_data_addr, INT32U size, INT32U
 			break;
 		}
 	} while (!(status & C_JPG_STATUS_SCALER_DONE)) ;
-	
+
 	mjpeg_decode_stop();
 
 	scaler_app_unlock();
@@ -1521,14 +1598,14 @@ INT32S scale_up_and_encode(INT32U sensor_input_addr, INT32U scaler_output_fifo, 
 	INT32U restart_index;
 	INT32U jpeg_input_fifo_cnt;
 	INT32U fifo_y_addr, fifo_cb_addr, fifo_cr_addr;
-	
+
 	padding_width = (jpeg_encode_width + 15) & 0xFFF0;
 	padding_height = (jpeg_encode_height + 15) & 0xFFF0;
 
 	y_single_fifo_size = padding_width*FIFO_LINE;
 	cb_single_fifo_size = padding_width*FIFO_LINE/2;
 	total_fifo_size = y_single_fifo_size + cb_single_fifo_size + cb_single_fifo_size;
-			
+
 	fifo_y_addr = (scaler_output_fifo+0xF) & (~0xF);
 	fifo_cb_addr = fifo_y_addr + (y_single_fifo_size<<1);
 	fifo_cr_addr = fifo_cb_addr + (cb_single_fifo_size<<1);
@@ -1550,7 +1627,7 @@ INT32S scale_up_and_encode(INT32U sensor_input_addr, INT32U scaler_output_fifo, 
   #else
     scaler_output_fifo_line_set(C_SCALER_CTRL_OUT_FIFO_32LINE);
   #endif
-  
+
 	scaler_out_of_boundary_mode_set(0);							// mode: 0=Use the boundary data of the input picture, 1=Use Use color defined in scaler_out_of_boundary_color_set()
 
 	// Scaler start, restart and stop function APIs
@@ -1573,10 +1650,10 @@ INT32S scale_up_and_encode(INT32U sensor_input_addr, INT32U scaler_output_fifo, 
 	total_encode_size = 0;
 	restart_index = 0;
 	jpeg_input_fifo_cnt = 0;
-    
+
 	while (1) {
 		scaler_status = scaler_wait_idle();
-		
+
 		if (scaler_status & 0x10) {
 		    DBG_PRINT("scaler timeout\r\n");
 		}
@@ -1706,7 +1783,7 @@ INT32S scale_up_and_encode(INT32U sensor_input_addr, INT32U scaler_output_fifo, 
 					}
 					// TBD: Save VLC of this FIFO to SD card
 					total_encode_size += fifo_encode_size;
-					
+
 					if (total_encode_size >= ENCODE_WRITE_SIZE) {
 					    write(pAviEncPara->AviPackerCur->file_handle, jpeg_output_addr, total_encode_size);
 					    total_encode_size = 0;
@@ -1800,8 +1877,8 @@ INT32S avi_audio_memory_allocate(INT32U	cblen)
 
 	_dmsg((GREEN "[S]: avi_audio_memory_allocate() - cblen=%0d\r\n" NONE, cblen));
 
-	for (i=0; i<AVI_ENCODE_PCM_BUFFER_NO; i++) {
-		if (pAviEncAudPara->pcm_input_addr[i]==0) {  // dominant add
+	for (i=0; i<AVI_ENCODE_PCM_BUFFER_NO; i++) {		// AVI_ENCODE_PCM_BUFFER_NO = 3
+		if (pAviEncAudPara->pcm_input_addr[i]==0) {	// dominant add
 			pAviEncAudPara->pcm_input_addr[i] = (INT32U) gp_malloc(cblen);
 			_dmsg((GREEN "[D]: avi_audio_memory_allocate() - pcm_input_addr[%0d] = 0x%08x\r\n" NONE, i, pAviEncAudPara->pcm_input_addr[i]));
 	        }
