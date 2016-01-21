@@ -1911,12 +1911,10 @@ void avi_audio_memory_free(void)
 {
 	INT32U i;
 
-	for(i=0; i<AVI_ENCODE_PCM_BUFFER_NO; i++)
-	{
+	for (i=0; i<AVI_ENCODE_PCM_BUFFER_NO; i++) {
 		gp_free((void *) pAviEncAudPara->pcm_input_addr[i]);
 		pAviEncAudPara->pcm_input_addr[i] = 0;
 	}
-
 	gp_free((void *) pAviEncAudPara->pack_buffer_addr);
 	pAviEncAudPara->pack_buffer_addr = 0;
 }

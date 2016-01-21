@@ -1,5 +1,16 @@
+#include "ztkconfigs.h"
 #include "ap_audio_record.h"
 
+/* for debug */
+#define DEBUG_AP_AUDIO_RECORD	1
+#if DEBUG_AP_AUDIO_RECORD
+    #include "gplib.h"
+    #define _dmsg(x)		print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/*  */
 #if (defined AUD_RECORD_EN) && (AUD_RECORD_EN==1)
 
 static INT8U audio_record_sts;

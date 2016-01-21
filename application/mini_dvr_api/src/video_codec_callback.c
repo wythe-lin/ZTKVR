@@ -29,6 +29,7 @@ extern TIME_T	g_current_time;
 //=======================================================================
 //  Draw OSD function
 //=======================================================================
+#include "avi_encoder_app.h"
 void cpu_draw_time_osd(TIME_T current_time, INT32U target_buffer, INT8U draw_type, INT8U state)
 {
 	INT32S tm1;
@@ -43,16 +44,33 @@ void cpu_draw_time_osd(TIME_T current_time, INT32U target_buffer, INT8U draw_typ
 		str_info.font_color = 0xFF80;	//white		//0x5050;	//green
 		str_info.pos_x = ap_state_resource_time_stamp_position_x_get();
 		str_info.pos_y = ap_state_resource_time_stamp_position_y_get();
+/// modify by XYZ, 2015.12.29 - for ZT31XX HD resolution
+#if 0
 		str_info.buff_w = AVI_WIDTH<<1; //double width. AVI_WIDTH;
 		str_info.buff_h = AVI_HEIGHT;
+#else
+		str_info.buff_w = pAviEncVidPara->encode_width;
+		str_info.buff_h = pAviEncVidPara->encode_height;
+#endif
+/// modify by XYZ, 2015.12.29 - for ZT31XX HD resolution
 	} else {
 		gap_1 = 2;
 		gap_2 = 10;
 		str_info.font_color = 0xFFFF;	//white
+/// modify by XYZ, 2015.12.29 - for ZT31XX HD resolution
+#if 0
 		str_info.pos_x = ap_state_resource_time_stamp_position_x_get()/2;
 		str_info.pos_y = ap_state_resource_time_stamp_position_y_get()/2;
 		str_info.buff_w = TFT_WIDTH;
 		str_info.buff_h = TFT_HEIGHT;
+#else
+		str_info.pos_x = ap_state_resource_time_stamp_position_x_get()/2;
+		str_info.pos_y = ap_state_resource_time_stamp_position_y_get()/2;
+		str_info.buff_w = pAviEncVidPara->display_width;
+		str_info.buff_h = pAviEncVidPara->display_height;
+#endif
+/// modify by XYZ, 2015.12.29 - for ZT31XX HD resolution
+		_dmsg(("$\r\n"));
 	}
 
 	tm1 = current_time.tm_year/1000;
@@ -137,9 +155,9 @@ void video_decode_end(void)
 //=======================================================================================
 void video_decode_FrameReady(INT8U *FrameBufPtr)
 {
-#if	VIDEO_DISPALY_WITH_PPU == 0
-    video_codec_show_buffer = (INT32U)FrameBufPtr;
- 	video_codec_display_flag = 1;
+#if VIDEO_DISPALY_WITH_PPU == 0
+	video_codec_show_buffer = (INT32U)FrameBufPtr;
+	video_codec_display_flag = 1;
 #else	//display with PPU
 	gplib_ppu_text_calculate_number_array(video_ppu_register_set, C_PPU_TEXT1, 640, 480, (INT232U)FrameBufPtr);
 	result = gplib_ppu_go_and_wait_done(video_ppu_register_set);
@@ -168,10 +186,10 @@ INT32U video_encode_sensor_start(INT32U csi_frame1, INT32U csi_frame2)
 	//OS_ENTER_CRITICAL();
  	switch (zt_resolution()) {
 	default:
-	case ZT_VGA_PANORAMA:	CSI_Init( 640, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);	break;
-	case ZT_VGA:		CSI_Init(1280, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);	break;
-	case ZT_HD_SCALED:	CSI_Init(1920, 560, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);	break;
-	case ZT_HD:		CSI_Init(2560, 720, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);	break;
+	case ZT_VGA_PANORAMA:	CSI_Init( 640, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL); break;
+	case ZT_VGA:		CSI_Init(1280, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL); break;
+	case ZT_HD_SCALED:	CSI_Init(1920, 560, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL); break;
+	case ZT_HD:		CSI_Init(2560, 720, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL); break;
 	}
 	R_PPU_IRQ_EN |= 0x40;	//enable csi frame end irq
 	R_PPU_IRQ_STATUS = 0x40;

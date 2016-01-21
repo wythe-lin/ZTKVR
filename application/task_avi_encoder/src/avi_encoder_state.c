@@ -126,7 +126,7 @@ INT32U avi_enc_packer_stop(AviEncPacker_t *pAviEncPacker)
         
         if(nRet < 0) RETURN(STATUS_FAIL);
 		avi_encode_clear_status(bflag);
-		DEBUG_MSG(DBG_PRINT("c.AviPackerClose[0x%x] = 0x%x\r\n", bflag, nRet)); 
+		_dmsg((PURPLE "c.AviPackerClose[0x%x] = 0x%x\r\n" NONE, bflag, nRet));
 	}
 	nRet = STATUS_OK;
 Return:	
@@ -230,7 +230,7 @@ INT32S avi_enc_start(void)
 			return (STATUS_FAIL);
 		}
 		avi_encode_set_status(C_AVI_ENCODE_AUDIO);
-		DEBUG_MSG(DBG_PRINT("b.audio start\r\n"));
+		DEBUG_MSG(DBG_PRINT(BLUE "b.audio start\r\n" NONE));
 	}
 	// restart audio 
 #if AVI_ENCODE_PRE_ENCODE_EN == 1
@@ -247,7 +247,7 @@ INT32S avi_enc_start(void)
 		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_ENCODE, avi_encode_ack_m, 5000, msg, err);	
 		avi_encode_set_status(C_AVI_ENCODE_START);
 		avi_encode_set_status(C_AVI_VID_ENC_START);
-		DEBUG_MSG(DBG_PRINT("c.encode start\r\n")); 
+		DEBUG_MSG(DBG_PRINT(BLUE "c.encode start\r\n" NONE)); 
 	}
 Return:
 	_dmsg((GREEN "[E]: avi_enc_start() - pass (%0x)\r\n" NONE, nRet));
@@ -279,7 +279,7 @@ INT32S avi_enc_stop(void)
 	{
 		if(avi_audio_record_stop() < 0) RETURN(STATUS_FAIL);
 		avi_encode_clear_status(C_AVI_ENCODE_AUDIO);
-		DEBUG_MSG(DBG_PRINT("a.audio stop\r\n"));
+		DEBUG_MSG(DBG_PRINT(BLUE "a.audio stop\r\n" NONE));
 	}
 #endif
 	// stop avi encode
@@ -290,7 +290,7 @@ INT32S avi_enc_stop(void)
 #if AVI_ENCODE_PRE_ENCODE_EN == 0			
 		avi_encode_clear_status(C_AVI_VID_ENC_START); 
 #endif		
-		DEBUG_MSG(DBG_PRINT("b.encode stop\r\n")); 
+		DEBUG_MSG(DBG_PRINT(BLUE "b.encode stop\r\n" NONE)); 
 	}
 Return:	
 	return nRet;

@@ -72,7 +72,7 @@ CODEC_START_STATUS video_encode_preview_start(VIDEO_ARGUMENT arg)
 	_dmsg((GREEN "[S]: video_encode_preview_start()\r\n" NONE));
 
 // ### for debug - xyz #########################
-#if 0
+#if 1 //(zt_resolution() < ZT_HD_SCALED)
 	if (ap_state_config_voice_record_switch_get() == 0) {	//wwj add
 	    pAviEncAudPara->audio_format = AVI_ENCODE_AUDIO_FORMAT;
 	} else {
@@ -100,27 +100,29 @@ CODEC_START_STATUS video_encode_preview_start(VIDEO_ARGUMENT arg)
 	pAviEncVidPara->display_width	      = arg.DisplayWidth;
 	pAviEncVidPara->display_height	      = arg.DisplayHeight;
     
+	_dmsg((GREEN "[D]: width & height - ")); 
 	if (arg.DisplayBufferWidth == 0) {
 		arg.DisplayBufferWidth = arg.DisplayWidth;
-		_dmsg((GREEN "[D]: (arg.DisplayBufferWidth == 0)\r\n" NONE));
+		_dmsg(("1 "));
 	} else if (arg.DisplayWidth > arg.DisplayBufferWidth) {
 		arg.DisplayWidth = arg.DisplayBufferWidth;
-		_dmsg((GREEN "[D]: (arg.DisplayWidth > arg.DisplayBufferWidth)\r\n" NONE));
-	}    
+		_dmsg(("2 "));
+	}
+	_dmsg(("3 "));
 
 	if (arg.DisplayBufferHeight == 0) {
     		arg.DisplayBufferHeight = arg.DisplayHeight;
-		_dmsg((GREEN "[D]: (arg.DisplayBufferHeight == 0)\r\n" NONE));
+		_dmsg(("4 "));
 	} else if (arg.DisplayHeight > arg.DisplayBufferHeight) {
     		arg.DisplayHeight = arg.DisplayBufferHeight;
-		_dmsg((GREEN "[D]: (arg.DisplayHeight > arg.DisplayBufferHeight)\r\n" NONE));
-	}   
-
+		_dmsg(("5 "));
+	}
+	_dmsg(("6\r\n" NONE)); 
 	_dmsg((GREEN "[D]: display buffer = %0d x %0d\r\n" NONE, arg.DisplayBufferWidth, arg.DisplayBufferHeight));
+
 	pAviEncVidPara->display_buffer_width  = arg.DisplayBufferWidth;
 	pAviEncVidPara->display_buffer_height = arg.DisplayBufferHeight;
 	avi_encode_set_display_scaler(); 
-
 	nRet = vid_enc_preview_start();
    	if (nRet < 0) {
 		_dmsg((GREEN "[E]: video_encode_preview_start(), fail\r\n" NONE));
@@ -144,60 +146,62 @@ CODEC_START_STATUS video_encode_preview_stop(void)
 
 CODEC_START_STATUS video_encode_start(MEDIA_SOURCE src)
 {
-	INT32S nRet;
-    CODEC_START_STATUS ret_status;
+	INT32S			nRet;
+	CODEC_START_STATUS	ret_status;
 	
-    ret_status = START_OK;
+	ret_status = START_OK;
     
-    if(src.type == SOURCE_TYPE_FS) {
-    	pAviEncPara->source_type = SOURCE_TYPE_FS;
-    } else if(src.type == SOURCE_TYPE_USER_DEFINE) {
-    	pAviEncPara->source_type = SOURCE_TYPE_USER_DEFINE;
-    } else { 
-        ret_status =  RESOURCE_WRITE_ERROR;
-        goto VDO_START_END; 
-    }
+	if (src.type == SOURCE_TYPE_FS) {
+		pAviEncPara->source_type = SOURCE_TYPE_FS;
+	} else if (src.type == SOURCE_TYPE_USER_DEFINE) {
+		pAviEncPara->source_type = SOURCE_TYPE_USER_DEFINE;
+	} else { 
+		ret_status =  RESOURCE_WRITE_ERROR;
+		goto VDO_START_END; 
+	}
   	
-    if(src.type_ID.FileHandle < 0) {       
-        ret_status =  RESOURCE_NO_FOUND_ERROR;
-        goto VDO_START_END;
-    }
+	if (src.type_ID.FileHandle < 0) {       
+		ret_status =  RESOURCE_NO_FOUND_ERROR;
+		goto VDO_START_END;
+	}
     
-    if(src.Format.VideoFormat == MJPEG)
-    	pAviEncVidPara->video_format = C_MJPG_FORMAT;
-#if	MPEG4_ENCODE_ENABLE == 1 
-    else if(src.Format.VideoFormat == MPEG4) {
-		pAviEncVidPara->video_format = C_XVID_FORMAT;}
+	if (src.Format.VideoFormat == MJPEG) {
+		pAviEncVidPara->video_format = C_MJPG_FORMAT;
+#if MPEG4_ENCODE_ENABLE == 1 
+	} else if (src.Format.VideoFormat == MPEG4) {
+		pAviEncVidPara->video_format = C_XVID_FORMAT;
 #endif
-	else {
-        ret_status =  RESOURCE_WRITE_ERROR;
-        goto VDO_START_END;
+	} else {
+		ret_status =  RESOURCE_WRITE_ERROR;
+		goto VDO_START_END;
 
-    }
+	}
     
-	avi_encode_set_curworkmem((void *)pAviEncPacker0); 
+	avi_encode_set_curworkmem((void *) pAviEncPacker0); 
 	nRet = avi_encode_set_file_handle_and_caculate_free_size(pAviEncPara->AviPackerCur, src.type_ID.FileHandle);
 	if (nRet < 0) {
 		ret_status = RESOURCE_WRITE_ERROR;
 		goto VDO_START_END;
 	}
     	
-	//start avi packer
+	// start avi packer
 	nRet = avi_enc_packer_start(pAviEncPara->AviPackerCur);
 	if (nRet < 0) {
+		_dmsg((GREEN "[D]: video_encode_start() - start avi packer fail\r\n" NONE));
 		ret_status = CODEC_START_STATUS_ERROR_MAX;
 		goto VDO_START_END;
 	}
    
-	//start avi encode
+	// start avi encode
 	nRet = avi_enc_start();
 	if (nRet < 0) {
+		_dmsg((GREEN "[D]: video_encode_start() - start avi encode fail\r\n" NONE));
 		ret_status = CODEC_START_STATUS_ERROR_MAX;
 		goto VDO_START_END;
 	}
 
 VDO_START_END:
-	if (ret_status!=START_OK) {
+	if (ret_status != START_OK) {
 		DBG_PRINT("AVI Packer Err:%d\r\n",ret_status);
 		video_encode_stop();
 	}

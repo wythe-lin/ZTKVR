@@ -1378,7 +1378,7 @@ void ap_setting_show_software_version(void)
 	ascii_str.font_type = 0;
 	ascii_str.pos_x = ICON_SELECTBOX_SUB_START_X+50;
 	ascii_str.pos_y = 110;
-	ascii_str.str_ptr = "20140819 V0.1";
+	ascii_str.str_ptr = "20160107 V0.2";
 	
 	ascii_str.buff_w = TFT_WIDTH;
 	ascii_str.buff_h = TFT_HEIGHT;
