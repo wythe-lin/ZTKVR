@@ -55,6 +55,9 @@ White Balance
 3M
 2M
 1.3M
+Double VGA
+Left VGA
+Right VGA
 VGA
 Fine
 Standard

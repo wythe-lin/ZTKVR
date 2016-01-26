@@ -681,7 +681,7 @@ static INT32S scaler_mem_alloc(void)
 {
 	INT32S i, buffer_size, nRet;
 
-	#if 0
+#if 0
 	buffer_size = pAviEncVidPara->encode_width * pAviEncVidPara->encode_height << 1;
 	for(i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++)
 	{
@@ -693,7 +693,7 @@ static INT32S scaler_mem_alloc(void)
         }
 		DEBUG_MSG(DBG_PRINT("scaler_frame_addr[%d] = 0x%x\r\n", i, pAviEncVidPara->scaler_output_addr[i]));
 	}
-	#endif
+#endif
 
 #if VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FRAME_MODE
 	if((AVI_ENCODE_DIGITAL_ZOOM_EN == 1) || pAviEncVidPara->scaler_flag)

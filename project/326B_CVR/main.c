@@ -98,7 +98,7 @@ void Main(void *free_memory)
 	// Initiate gplib layer modules
 	gplib_init(free_memory_start, free_memory_end);
 
-		// Enable UART port for debug
+	// Enable UART port for debug
 	Debug_UART_Port_Enable();
 	
 	//Configure the output type of debug message, NONE, UART, USB or both
