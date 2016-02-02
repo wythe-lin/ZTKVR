@@ -1,5 +1,16 @@
+#include "ztkconfigs.h"
 #include "task_peripheral_handling.h"
 
+/* for debug */
+#define DEBUG_TASK_PERIPHERAL_HANDLING	1
+#if DEBUG_TASK_PERIPHERAL_HANDLING
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* variables */
 MSG_Q_ID PeripheralTaskQ;
 void *peripheral_task_q_stack[PERIPHERAL_TASK_QUEUE_MAX];
 static __align(4) INT8U peripheral_para[PERIPHERAL_TASK_QUEUE_MAX_MSG_LEN];
@@ -21,8 +32,7 @@ void task_peripheral_handling_entry(void *para)
 	st_key_para *sys_key_para;
 
 	task_peripheral_handling_init();
-	
-	while(1) {
+	while (1) {
 		
 		if(msgQReceive(PeripheralTaskQ, &msg_id, peripheral_para, PERIPHERAL_TASK_QUEUE_MAX_MSG_LEN) == STATUS_FAIL) {
 			continue;

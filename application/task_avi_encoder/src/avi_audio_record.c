@@ -68,12 +68,9 @@ INT32S avi_audio_record_start(void)
 	INT8U  err;
 	INT32S nRet, msg;
 
-	_dmsg((GREEN "[S]: avi_audio_record_start()\r\n" NONE));
-
 	nRet = STATUS_OK;
 	POST_MESSAGE(avi_aud_q, AVI_AUDIO_RECORD_START, avi_aud_ack_m, 5000, msg, err);
 Return:
-	_dmsg((GREEN "[E]: avi_audio_record_start(), %0x\r\n" NONE, nRet));
 	return nRet;
 }
 
@@ -96,15 +93,14 @@ INT32S avi_audio_record_stop(void)
 	nRet = STATUS_OK;
 	POST_MESSAGE(avi_aud_q, AVI_AUDIO_RECORD_STOPING, avi_aud_ack_m, 5000, msg, err);
 Return:
-	if(nRet < 0)
-	{
-	#if MIC_INPUT_SRC == C_ADC_LINE_IN
+	if (nRet < 0) {
+#if MIC_INPUT_SRC == C_ADC_LINE_IN
 		adc_timer_stop(AVI_AUDIO_RECORD_TIMER);
 		avi_adc_double_buffer_free();
-	#elif MIC_INPUT_SRC == C_GPY0050_IN
+#elif MIC_INPUT_SRC == C_GPY0050_IN
 		timer_stop(AVI_AUDIO_RECORD_TIMER);
 		gpy0050_disable();
-	#endif
+#endif
 		avi_audio_memory_free();
 	}
 	return nRet;
@@ -142,18 +138,18 @@ void avi_audio_record_entry(void *parm)
 			next_addr = avi_audio_get_next_buffer();
 			if (bStop) {
 //				if (avi_adc_dma_status_get() != 1)
-					OSQPost(avi_aud_q, (void *)AVI_AUDIO_RECORD_STOP);  // check dma is done and stop
+					OSQPost(avi_aud_q, (void *)AVI_AUDIO_RECORD_STOP);	// check dma is done and stop
 			} else {
-				avi_adc_double_buffer_set((INT16U*)next_addr, pcm_cwlen);// set dma buffer
+				avi_adc_double_buffer_set((INT16U*)next_addr, pcm_cwlen);	// set dma buffer
 			}
 			// unsigned to signed
 			cache_invalid_range((INT32U) pcm_addr, pcm_cwlen << 1);
 			ptr = (INT16U *) pcm_addr;
 			for (i=0; i<pcm_cwlen; i++) {
 				t  = *ptr;
-				t ^=mask;
+				t ^= mask;
     #if (C_LPF_ENABLE ==1)
-				t = LPF_process(t);
+				t  = LPF_process(t);
     #endif
 				*ptr++=t;
 			}
@@ -232,7 +228,6 @@ void avi_audio_record_entry(void *parm)
 			break;
 
 		case AVI_AUDIO_RECORD_START:
-			mm_free_get();
 #if PCM_ENCODE_EN==1
 			_dmsg((GREEN "AVI_AUDIO_RECORD_START - 1\r\n" NONE));
 			nRet = avi_wave_encode_start();  // domi mark

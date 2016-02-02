@@ -1,6 +1,6 @@
 #include "application.h"
 
-#define TASK_DISPALY_BUFFER_NO		2
+#define TASK_DISPALY_BUFFER_NO		2	// for memory issue - 2016.01.27 by xyz #3
 
 //	Display task frame buffer source
 #define DISPALY_BUFF_SRC_SENSOR		0

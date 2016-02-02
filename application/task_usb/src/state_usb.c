@@ -1,7 +1,17 @@
-
+#include "ztkconfigs.h"
 /* pseudo header include */
 #include "state_usb.h"
 
+/* for debug */
+#define DEBUG_STATE_USB			1
+#if DEBUG_STATE_USB
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* definitions */
 #define USB_TASK_QUEUE_MAX	32
 
 OS_EVENT *USBAPPTaskQ;
@@ -46,12 +56,11 @@ void ap_usb_init_isr(void)
 
 void state_usb_entry(void* para1)
 {
-    INT32U msg_id;
-    INT8U err,init_detect;
-    INT32U i;
-    
+	INT32U msg_id;
+	INT8U err,init_detect;
+	INT32U i;
+
     usbd_pin_detection_init();
-    
     init_detect = 0;
     for (i=0;i<5;i++) {
         if (gpio_read_io(C_USBDEVICE_PIN)) {

@@ -26,6 +26,9 @@ extern PPU_REGISTER_SETS *video_ppu_register_set;
 #endif
 extern TIME_T	g_current_time;
 
+/* global video argument */
+extern VIDEO_ARGUMENT	gvarg;
+
 //=======================================================================
 //  Draw OSD function
 //=======================================================================
@@ -49,8 +52,8 @@ void cpu_draw_time_osd(TIME_T current_time, INT32U target_buffer, INT8U draw_typ
 		str_info.buff_w = AVI_WIDTH<<1; //double width. AVI_WIDTH;
 		str_info.buff_h = AVI_HEIGHT;
 #else
-		str_info.buff_w = pAviEncVidPara->encode_width;
-		str_info.buff_h = pAviEncVidPara->encode_height;
+		str_info.buff_w = gvarg.TargetWidth;
+		str_info.buff_h = gvarg.TargetHeight;
 #endif
 /// modify by XYZ, 2015.12.29 - for ZT31XX HD resolution
 	} else {
@@ -64,10 +67,10 @@ void cpu_draw_time_osd(TIME_T current_time, INT32U target_buffer, INT8U draw_typ
 		str_info.buff_w = TFT_WIDTH;
 		str_info.buff_h = TFT_HEIGHT;
 #else
-		str_info.pos_x = ap_state_resource_time_stamp_position_x_get()/2;
-		str_info.pos_y = ap_state_resource_time_stamp_position_y_get()/2;
-		str_info.buff_w = pAviEncVidPara->display_width;
-		str_info.buff_h = pAviEncVidPara->display_height;
+		str_info.pos_x  = ap_state_resource_time_stamp_position_x_get()/2;
+		str_info.pos_y  = ap_state_resource_time_stamp_position_y_get()/2;
+		str_info.buff_w = gvarg.DisplayWidth;
+		str_info.buff_h = gvarg.DisplayHeight;
 #endif
 /// modify by XYZ, 2015.12.29 - for ZT31XX HD resolution
 		_dmsg(("$\r\n"));
@@ -184,13 +187,7 @@ INT32U video_encode_sensor_start(INT32U csi_frame1, INT32U csi_frame2)
 	// Setup CMOS sensor
 #if VIDEO_ENCODE_USE_MODE == VIDEO_ENCODE_WITH_PPU_IRQ
 	//OS_ENTER_CRITICAL();
- 	switch (zt_resolution()) {
-	default:
-	case ZT_VGA_PANORAMA:	CSI_Init( 640, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL); break;
-	case ZT_VGA:		CSI_Init(1280, 480, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL); break;
-	case ZT_HD_SCALED:	CSI_Init(1920, 560, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL); break;
-	case ZT_HD:		CSI_Init(2560, 720, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL); break;
-	}
+	CSI_Init(gvarg.SensorWidth, gvarg.SensorHeight, FT_CSI_YUVIN|FT_CSI_YUVOUT|FT_CSI_RGB1555, csi_frame1, NULL);
 	R_PPU_IRQ_EN |= 0x40;	//enable csi frame end irq
 	R_PPU_IRQ_STATUS = 0x40;
 	//OS_EXIT_CRITICAL();

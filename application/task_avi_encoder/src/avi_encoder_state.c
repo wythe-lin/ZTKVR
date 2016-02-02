@@ -144,7 +144,7 @@ INT32S vid_enc_preview_start(void)
 		if (scaler_task_start() < 0)
 			return(STATUS_FAIL);
 		avi_encode_set_status(C_AVI_ENCODE_SCALER);
-		_dmsg((BLUE "a.scaler start\r\n" NONE)); 
+		_dmsg((WHITE "a.scaler start\r\n" NONE)); 
 	}
 	// start video
 #if AVI_ENCODE_VIDEO_ENCODE_EN == 1 
@@ -152,14 +152,17 @@ INT32S vid_enc_preview_start(void)
 		if (video_encode_task_start() < 0)
 			RETURN(STATUS_FAIL);
 		avi_encode_set_status(C_AVI_ENCODE_VIDEO);
-		_dmsg((BLUE "b.video start\r\n" NONE));
+		_dmsg((WHITE "b.video start\r\n" NONE));
 	}
 #endif
 	// start sensor
 	if ((avi_encode_get_status() & C_AVI_ENCODE_SENSOR) == 0) {
-		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_SENSOR, avi_encode_ack_m, 5000, msg, err);	
+// ### BEGIN - by xyz for zt31xx firmware update
+//		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_SENSOR, avi_encode_ack_m, 5000, msg, err);	
+		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_SENSOR, avi_encode_ack_m, 5000*100, msg, err);	
+// ### END   - by xyz
 		avi_encode_set_status(C_AVI_ENCODE_SENSOR);
-		_dmsg((BLUE "c.sensor start\r\n" NONE)); 
+		_dmsg((WHITE "c.sensor start\r\n" NONE));
 	}
 	// start audio 
 #if AVI_ENCODE_PRE_ENCODE_EN == 1
@@ -169,7 +172,7 @@ INT32S vid_enc_preview_start(void)
 		avi_encode_set_status(C_AVI_VID_ENC_START); 
 		avi_encode_set_status(C_AVI_ENCODE_AUDIO);
 		avi_encode_audio_timer_start();
-		_dmsg((BLUE "d.audio start\r\n" NONE));
+		_dmsg((WHITE "d.audio start\r\n" NONE));
 	}
 #endif	
 Return:	
@@ -220,7 +223,7 @@ INT32S avi_enc_start(void)
 	INT8U  err;
 	INT32S nRet, msg;
 
-	_dmsg((GREEN "[S]: avi_enc_start()\r\n" NONE));
+	_dmsg((GREEN "[S]: avi_enc_start()\r\n" NONE, mm_dump()));
 
 	nRet = STATUS_OK;
 	// start audio 
@@ -251,19 +254,6 @@ INT32S avi_enc_start(void)
 	}
 Return:
 	_dmsg((GREEN "[E]: avi_enc_start() - pass (%0x)\r\n" NONE, nRet));
-
-// ### for debug - xyz #########################
-#if 0
-	{
-		extern void dump_AviEncVidPara(AviEncVidPara_t *p);
-	 	dump_AviEncVidPara(pAviEncVidPara);
-	}
-	{
-		extern void dump_AviEncAudPara(AviEncAudPara_t *p);
-		dump_AviEncAudPara(pAviEncAudPara);
-	}
-#endif
-// ### for debug - xyz #########################
 	return nRet;
 }
 
@@ -469,24 +459,23 @@ void avi_encode_state_task_entry(void *para)
         {
         case MSG_AVI_START_SENSOR:	//sensor
           	OSQFlush(cmos_frame_q);
-        #if VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FRAME_MODE
+#if VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FRAME_MODE
         	video_frame = avi_encode_get_csi_frame();
-			video_stream = 0;
-       		for(nRet = 1; nRet<AVI_ENCODE_CSI_BUFFER_NO; nRet++)
-	            OSQPost(cmos_frame_q, (void *) avi_encode_get_csi_frame());
-		#elif VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FIFO_MODE
-			video_frame = avi_encode_get_csi_frame();
-			video_stream = avi_encode_get_csi_frame();	
-			for(nRet = 0; nRet<pAviEncPara->vid_post_cnt; nRet++)
-				OSQPost(cmos_frame_q, (void *) avi_encode_get_csi_frame());		
-		#endif
-	        nRet = video_encode_sensor_start(video_frame, video_stream);
-
-	        if(nRet >= 0)
-            	OSMboxPost(avi_encode_ack_m, (void*)C_ACK_SUCCESS);
+		video_stream = 0;
+       		for (nRet = 1; nRet<AVI_ENCODE_CSI_BUFFER_NO; nRet++)
+			OSQPost(cmos_frame_q, (void *) avi_encode_get_csi_frame());
+#elif VIDEO_ENCODE_MODE == C_VIDEO_ENCODE_FIFO_MODE
+		video_frame = avi_encode_get_csi_frame();
+		video_stream = avi_encode_get_csi_frame();	
+		for (nRet = 0; nRet<pAviEncPara->vid_post_cnt; nRet++)
+			OSQPost(cmos_frame_q, (void *) avi_encode_get_csi_frame());		
+#endif
+		nRet = video_encode_sensor_start(video_frame, video_stream);
+		if (nRet >= 0)
+			OSMboxPost(avi_encode_ack_m, (void*)C_ACK_SUCCESS);
         	else
-            	OSMboxPost(avi_encode_ack_m, (void*)C_ACK_FAIL);
-            break;
+			OSMboxPost(avi_encode_ack_m, (void*)C_ACK_FAIL);
+		break;
         
         case MSG_AVI_STOP_SENSOR: 
             nRet = video_encode_sensor_stop();

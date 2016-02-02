@@ -1,4 +1,16 @@
+#include "ztkconfigs.h"
+#include "gplib.h"
 #include "state_video_record.h"
+
+/* for debug */
+#define DEBUG_STATE_VIDEO_RECORD	1
+#if DEBUG_STATE_VIDEO_RECORD
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+#define msg(x)				print_string x
 
 //	prototypes
 void state_video_record_init(INT32U prev_state);
@@ -12,15 +24,15 @@ extern void capture_mode_enter(void);
 
 void state_video_record_init(INT32U prev_state)
 {
-	DBG_PRINT("video_record state init enter\r\n");
-	if(prev_state != STATE_STARTUP){	
+	msg(("video_record state init enter\r\n"));
+	if (prev_state != STATE_STARTUP){	
 		OSQPost(scaler_task_q, (void *) MSG_SCALER_TASK_PREVIEW_OFF);
 	}
 	ap_setting_value_set_from_user_config();
 	ap_setting_sensor_command_switch(0x0E, 0x80, 0);	//night mode off
 	ap_setting_sensor_command_switch(0x13, 0x04, 1);	//ISO
 	ap_setting_sensor_command_switch(0xA6, 0x01, 0);	//Color
-	if(prev_state != STATE_STARTUP){
+	if (prev_state != STATE_STARTUP){
 		OSQPost(scaler_task_q, (void *) MSG_SCALER_TASK_PREVIEW_ON);
 	}
 	ap_video_record_init();
@@ -28,7 +40,7 @@ void state_video_record_init(INT32U prev_state)
 	ap_music_update_icon_status();
 
 	ap_video_clear_lock_flag();
-	if( (ap_state_handling_storage_id_get() != NO_STORAGE) && (prev_state == STATE_STARTUP) && (s_usbd_pin == 0) ) {
+	if ((ap_state_handling_storage_id_get() != NO_STORAGE) && (prev_state == STATE_STARTUP) && (s_usbd_pin == 0)) {
 /* #BEGIN# modify by ShengHua - 2014.10.20 */
 		OSTimeDly(70);
 /* #END# modify by ShengHua - 2014.10.20 */

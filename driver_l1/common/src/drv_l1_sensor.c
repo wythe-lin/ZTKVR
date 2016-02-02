@@ -8889,16 +8889,16 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	sccb_init();
 	sccb_delay(200);
 
-	// ZT3150 reset
+	// ZT31XX reset
 	zt31xx_reset();
+	zt31xx_fw_update();		// ZT31XX check firmware update procedure
 
-	// ZT3150 ready?
-	zt31xx_ready();
+	// ZT31XX reset
+	zt31xx_reset();
+	zt31xx_ready();			// ZT31XX read ?
 
-	// ZT3150 init (0x0080 - 0x0083 mailbox command register)
+	// ZT31XX set operation mode
 	_dmsg(("[zt31xx]: set opmode -"));
-
-	// set operation mode
 	switch (zt_opmode()) {
 	case ZT_H_SIDE_BY_SIDE:	param1 = 0x03;	_dmsg((" (h) side by side,")); break;		// horizontal side by side
 	case ZT_V_SIDE_BY_SIDE:	param1 = 0x05;	_dmsg((" (v) side by side,")); break;		// vertical   side by side
@@ -8935,7 +8935,7 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 	zt31xx_set_opmode(param1, param2, param3);
 	drv_msec_wait(50);
 
-
+	// 
 	R_CSI_TG_CTRL1 = uCtrlReg2;			//*P_Sensor_TG_Ctrl2 = uCtrlReg2;
 #if CSI_IRQ_MODE == CSI_IRQ_PPU_IRQ
 	R_CSI_TG_CTRL0 = uCtrlReg1;			//*P_Sensor_TG_Ctrl1 = uCtrlReg1;

@@ -1,23 +1,34 @@
+#include "ztkconfigs.h"
 #include "main.h"
 
+/* for debug */
+#define DEBUG_MAIN			1
+#if DEBUG_MAIN
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* variables */
 extern volatile void *NorWakeupVector;
 extern volatile void *Wakeup;
 
 #define PERIPHERAL_HANDLING_STACK_SIZE		1024
-#define STATE_HANDLING_STACK_SIZE			1024
-#define DISPLAY_TASK_STACK_SIZE				1024
+#define STATE_HANDLING_STACK_SIZE		1024
+#define DISPLAY_TASK_STACK_SIZE			1024
 #define STORAGE_SERVICE_TASK_STACK_SIZE		1024
-#define USB_TASK_STACK_SIZE					512
-#define IDLE_TASK_STACK_SIZE				32
-#define C_AUDIO_TASK_STACK_SIZE				1024
-#define C_AUDIO_DAC_TASK_STACK_SIZE			200
+#define USB_TASK_STACK_SIZE			512
+#define IDLE_TASK_STACK_SIZE			32
+#define C_AUDIO_TASK_STACK_SIZE			1024
+#define C_AUDIO_DAC_TASK_STACK_SIZE		200
 #define C_FILESRV_TASK_STACK_SIZE	        500
 #define C_FILESCAN_TASK_STACK_SIZE	        500
 
 
-#define PRINT_OUTPUT_NONE	0x00 
-#define PRINT_OUTPUT_UART	0x01
-#define PRINT_OUTPUT_USB	0x02
+#define PRINT_OUTPUT_NONE			0x00 
+#define PRINT_OUTPUT_UART			0x01
+#define PRINT_OUTPUT_USB			0x02
 
 
 
@@ -34,11 +45,15 @@ INT32U AudioDacTaskStack[C_AUDIO_DAC_TASK_STACK_SIZE];
 INT32U Filesrv[C_FILESRV_TASK_STACK_SIZE];
 INT32U FileScanTaskStack[C_FILESCAN_TASK_STACK_SIZE];
 extern void set_print_output_type(INT32U type);
-void idle_task_entry(void *para)
+
+/*
+ * idle task
+ */
+ void idle_task_entry(void *para)
 {
 	INT32U i;
 	OS_CPU_SR cpu_sr;
-	
+
 	while (1) {
 		OS_ENTER_CRITICAL();
 		R_SYSTEM_WAIT = 0x5005;
@@ -62,16 +77,74 @@ void idle_task_entry(void *para)
 		ASM(NOP);
 	    OS_EXIT_CRITICAL();
 	}
-	
 }
 
-void Debug_UART_Port_Enable(void)
+static void debug_uart_port_enable(void)
 {
 	uart0_buad_rate_set(UART0_BAUD_RATE);
 	uart0_tx_enable();
 	uart0_rx_enable();	
 }
 
+
+/*
+ *
+ */
+VIDEO_ARGUMENT	gvarg;		// global video argument
+
+void gvarg_init(VIDEO_ARGUMENT *arg)
+{
+	gvarg.bScaler = 1;
+
+	switch (zt_resolution()) {
+	case ZT_VGA_PANORAMA:
+		arg->TargetWidth	= 640;
+		arg->TargetHeight	= 480;
+		arg->SensorWidth	= 640;
+		arg->SensorHeight	= 480;
+		arg->DisplayWidth	= 320;
+		arg->DisplayHeight	= 240;
+		break;
+
+	case ZT_VGA:
+		arg->TargetWidth	= AVI_WIDTH*2;		// AVI_WIDTH  = 640
+		arg->TargetHeight	= AVI_HEIGHT;		// AVI_HEIGHT = 480
+		arg->SensorWidth	= 1280;
+		arg->SensorHeight	= 480;
+		arg->DisplayWidth	= AVI_WIDTH;
+		arg->DisplayHeight	= AVI_HEIGHT;
+		break;
+
+	case ZT_HD_SCALED:
+		arg->TargetWidth	= 1920;
+		arg->TargetHeight	= 560;
+		arg->SensorWidth	= 1920;
+		arg->SensorHeight	= 560;
+		arg->DisplayWidth	= 320;
+		arg->DisplayHeight	= 240;
+		break;
+
+	case ZT_HD:
+		arg->TargetWidth	= 2560;
+		arg->TargetHeight	= 720;
+		arg->SensorWidth	= 2560;
+		arg->SensorHeight	= 720;
+		arg->DisplayWidth	= 320;
+		arg->DisplayHeight	= 240;
+		break;
+	}
+
+	arg->DisplayBufferWidth  = TFT_WIDTH;		// TFT_WIDTH  = 320
+	arg->DisplayBufferHeight = TFT_HEIGHT;		// TFT_HEIGHT = 240
+	arg->VidFrameRate	 = AVI_FRAME_RATE;
+	arg->AudSampleRate	 = 8000;
+	arg->OutputFormat	 = IMAGE_OUTPUT_FORMAT_RGB565; 
+}
+
+
+/*
+ * main loop
+ */
 void Main(void *free_memory)
 {
 	INT32U free_memory_start, free_memory_end;
@@ -99,7 +172,7 @@ void Main(void *free_memory)
 	gplib_init(free_memory_start, free_memory_end);
 
 	// Enable UART port for debug
-	Debug_UART_Port_Enable();
+	debug_uart_port_enable();
 	
 	//Configure the output type of debug message, NONE, UART, USB or both
 	set_print_output_type(PRINT_OUTPUT_UART | PRINT_OUTPUT_USB);
@@ -121,10 +194,12 @@ void Main(void *free_memory)
 	OSTaskCreate(filesrv_task_entry,(void *) 0, &Filesrv[C_FILESRV_TASK_STACK_SIZE - 1], TSK_PRI_FILE_SRV);
 	OSTaskCreate(file_scan_task_entry, (void *) 0, &FileScanTaskStack[C_FILESCAN_TASK_STACK_SIZE - 1], TSK_PRI_FILE_SCAN);
 
+	gvarg_init(&gvarg);
+
 	tft_init();
 	tft_start(C_DISPLAY_DEVICE);
 
-	DBG_PRINT("GPL326XXB CBR V0.0\r\n");
-	DBG_PRINT("free_memory =0x%x\r\n",free_memory);
+	_dmsg((WHITE "GPL326XXB CBR V0.0\r\n" NONE));
+	_dmsg((WHITE "free_memory = 0x%x\r\n" NONE, free_memory));
 	OSStart();
 }

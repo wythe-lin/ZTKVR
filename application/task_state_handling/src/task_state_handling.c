@@ -1,7 +1,18 @@
+#include "ztkconfigs.h"
 #include "task_state_handling.h"
 
-#define STATE_HANDLING_QUEUE_MAX			5
-#define AP_QUEUE_MAX    					1024
+/* for debug */
+#define DEBUG_TASK_STATE_HANDLING	1
+#if DEBUG_TASK_STATE_HANDLING
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* definitions */
+#define STATE_HANDLING_QUEUE_MAX	5
+#define AP_QUEUE_MAX			1024
 
 MSG_Q_ID ApQ;
 OS_EVENT *StateHandlingQ;
@@ -33,12 +44,11 @@ void state_handling_entry(void *para)
 {
 	INT32U msg_id, prev_state;
 	INT8U err;
-	
+
 	msg_id = 0;
 	state_handling_init();
 	OSQPost(StateHandlingQ, (void *) STATE_STARTUP);
-	
-	while(1) {
+	while (1) {
 		state_handling_apq_flush();
 		prev_state = msg_id & 0xFFFF;
 		msg_id = (INT32U) OSQPend(StateHandlingQ, 0, &err);

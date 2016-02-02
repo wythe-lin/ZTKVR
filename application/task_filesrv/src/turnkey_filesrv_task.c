@@ -11,7 +11,7 @@
 #include "turnkey_filesrv_task.h"
 
 /* for debug */
-#define DEBUG_TURNKEY_FILESRV_TASK	0
+#define DEBUG_TURNKEY_FILESRV_TASK	1
 #if DEBUG_TURNKEY_FILESRV_TASK
     #include "gplib.h"
     #define _dmsg(x)			print_string x
@@ -70,8 +70,6 @@ static void FileSrvScanFileStart(STScanFilePara *para);
 
 void filesrv_task_init(void)
 {
-	_dmsg(("[S]: filesrv_task_init()\r\n"));
-
 	fs_msg_q_id = msgQCreate(C_FS_Q_MAX, C_FS_MAX_MSG, C_FS_MSG_LENGTH);
 	if(fs_msg_q_id == NULL) {
 		DBG_PRINT("Create file service message queue faile\r\n");
@@ -84,8 +82,6 @@ void filesrv_task_init(void)
 	}
 
 	FileSrvScanFileInit();
-
-	_dmsg(("[E]: filesrv_task_init()\r\n"));   
 	msgQSend(StorageServiceQ, MSG_FILESRV_TASK_READY, NULL, NULL, MSG_PRI_NORMAL);
 }
 
@@ -96,8 +92,7 @@ void filesrv_task_entry(void *parm)
 	INT32U  para[C_FS_MSG_LENGTH/4];
 
 	filesrv_task_init();
-	while(1)
-	{
+	while (1) {
 		status = msgQReceive(fs_msg_q_id, &msg_id, (void *)para, C_FS_MSG_LENGTH);
 		if(status != 0)
 		{
@@ -175,8 +170,7 @@ void file_scan_task_entry(void *parm)
 	INT32U  para[C_FS_SCAN_MSG_LENGTH/4];
 
 	file_scan_task_init();
-	while(1)
-	{
+	while (1) {
 		status = msgQReceive(fs_scan_msg_q_id, &msg_id, (void *)para, C_FS_SCAN_MSG_LENGTH);
 		if(status != 0)
 		{

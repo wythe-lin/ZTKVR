@@ -10,17 +10,28 @@
 * Version : 1.00
 * History :
 */
+#include "ztkconfigs.h"
 #include "turnkey_audio_dac_task.h"
 
-#define AUDIO_DAC_QUEUE_MAX     5
-#define AUDIO_DAC_SENDQ_SIZE    MAX_DAC_BUFFERS
-#define AUDIO_AVI_Q_SIZE        1
-#define AUDIO_RIGHT_Q_SIZE      1
+/* for debug */
+#define DEBUG_TURNKEY_AUDIO_DAC_TASK	1
+#if DEBUG_TURNKEY_AUDIO_DAC_TASK
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
 
-#define SPU_LEFT_CH_BIT         (1 << SPU_LEFT_CH)
-#define SPU_RIGHT_CH_BIT        (1 << SPU_RIGHT_CH)
+/* definitions */
+#define AUDIO_DAC_QUEUE_MAX		5
+#define AUDIO_DAC_SENDQ_SIZE		MAX_DAC_BUFFERS
+#define AUDIO_AVI_Q_SIZE		1
+#define AUDIO_RIGHT_Q_SIZE		1
 
-#define STEP_AUDIO_STOP         4
+#define SPU_LEFT_CH_BIT			(1 << SPU_LEFT_CH)
+#define SPU_RIGHT_CH_BIT		(1 << SPU_RIGHT_CH)
+
+#define STEP_AUDIO_STOP			4
 
 // Variables defined in this file
 /* Task Q declare */
@@ -79,9 +90,9 @@ void audio_dac_task_init(void)
 
 void audio_dac_task_entry(void *p_arg)
 {
-	INT8U			err = 0;
+	INT8U		err = 0;
 	INT8U           pause = 0;
-	INT32S    	    audio_dac_msg;
+	INT32S		audio_dac_msg;
 	INT32U          r_idx = 0;
 	INT32U          w_idx = 0;
 #if AUDIO_BG_DECODE_EN == 1
@@ -89,23 +100,21 @@ void audio_dac_task_entry(void *p_arg)
 	INT32U          w_idx_bg = 0;
 #endif
 #if (defined AUDIO_PROGRESS_SUPPORT) && (AUDIO_PROGRESS_SUPPORT == CUSTOM_ON)
-	INT32U          total_samples = 0;
-    INT32U          pcmlen;
-    double          times;
+	INT32U		total_samples = 0;
+	INT32U		pcmlen;
+	double		times;
 #endif
 #if AUDIO_PRIOR_DYNAMIC_SW == 1
-	INT32U    hiprio_en = 0;
-	INT8U     audio_playing = 0;
-	OS_Q      *pq;
+	INT32U		hiprio_en = 0;
+	INT8U		audio_playing = 0;
+	OS_Q		*pq;
 #endif
-    INT8U reverse = 0;
-	
-		
-    audio_dac_task_init();
+	INT8U		reverse = 0;
 
-    /* Task Star */
-	while (1)
-	{
+	audio_dac_task_init();
+
+	/* Task Star */
+	while (1) {
 	    /* Pend task message */
         audio_dac_msg = (INT32S) OSQPend(hAudioDacTaskQ, 0, &err);
         switch(audio_dac_msg) {

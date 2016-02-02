@@ -686,7 +686,6 @@ void *gp_malloc(INT32U size)
 
 		ptr = (INT32U) gp_fixed_size_malloc(size);
 		if (ptr) {
-			_dmsg((BROWN "gp_malloc(fixed)\r\n" NONE));
 			return (void *) ptr;
 		}
     #if C_MM_DEBUG_MODE > 1
@@ -701,7 +700,6 @@ void *gp_malloc(INT32U size)
 	OSSchedLock();
 #endif
 
-	_dmsg((BROWN "gp_malloc(next)\r\n" NONE));
 	while (pmm->next) {
 		if (((INT32U *) pmm->next - (INT32U *) pmm->end) > size+2) {
 			((MM_SDRAM_STRUCT *) (pmm->end+1))->next = pmm->next;
@@ -926,16 +924,13 @@ void gp_free(void *ptr)
 
 	if ((INT32U) ptr>=free_iram_start && (INT32U) ptr<=free_iram_end) {
 		gp_iram_free(ptr);
-		_dmsg((BROWN "gp_free(iram)\r\n" NONE));
 		return;
 	} else if ((INT32U) ptr < free_sdram_start) {
 #if C_MM_16BYTE_NUM || C_MM_64BYTE_NUM || C_MM_256BYTE_NUM || C_MM_1024BYTE_NUM || C_MM_4096BYTE_NUM
 		gp_fixed_size_free(ptr);
-		_dmsg((BROWN "gp_free(fixed)\r\n" NONE));
 #endif
 		return;
 	} else if ((INT32U) ptr > free_sdram_end) {
-		_dmsg((BROWN "gp_free(end)\r\n" NONE));
 		return;
 	}
 
@@ -943,7 +938,6 @@ void gp_free(void *ptr)
 	OSSchedLock();
 #endif
 
-	_dmsg((BROWN "gp_free(next)\r\n" NONE));
 	while (pmm->next) {
 		if ((INT32U *) pmm->next+2 == ptr) {
 			// Merge previous free memory with this one

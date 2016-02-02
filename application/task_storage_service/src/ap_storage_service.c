@@ -989,40 +989,18 @@ INT32S ap_storage_service_storage_mount(void)
 			if (fm_tx_status_get()) {
 				ap_storage_scan_file(curr_storage_id);
 			}
-			
+
 			if (sd_upgrade_file_flag == 0) {
 				chdir("C:\\");
 
 				// firmware upgrade for GP chip
-				msg(("[m]: ztkvr_upgrade.bin  - "));
+				msg(("[m]: ztkvr_upgrade.bin - "));
 				fd = open((CHAR *) "C:\\ztkvr_upgrade.bin", O_RDONLY);
 				if (fd < 0) {
 					msg((WHITE  "not found\r\n" NONE));
+					sd_upgrade_file_flag = 1;	// no need upgrade
+					chdir("C:\\DCIM");
 
-					// firmware update for ZT3150
-					msg(("[m]: zt3150_upgrade.bin - "));
-					fd = open((CHAR *) "C:\\zt3150_upgrade.bin", O_RDONLY);
-					if (fd < 0) {
-						msg((WHITE  "not found\r\n" NONE));
-
-						// firmware update for ZT3120
-						msg(("[m]: zt3120_upgrade.bin - "));
-						fd = open((CHAR *) "C:\\zt3120_upgrade.bin", O_RDONLY);
-						if (fd < 0) {
-							msg((WHITE  "not found\r\n" NONE));
-							sd_upgrade_file_flag = 1;	// no need upgrade
-							chdir("C:\\DCIM");
-
-						} else {
-							msg((WHITE "found, update ZT3120 firmware\r\n" NONE));
-							sd_upgrade_file_flag = 4;
-							close(fd);
-						}
-					} else {
-						msg((WHITE "found, update ZT3150 firmware\r\n" NONE));
-						sd_upgrade_file_flag = 3;
-						close(fd);
-					}
 				} else {
 					msg((WHITE "found, update ZTKVR firmware\r\n" NONE));
 					sd_upgrade_file_flag = 2;

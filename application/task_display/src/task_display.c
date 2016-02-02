@@ -1,5 +1,16 @@
+#include "ztkconfigs.h"
 #include "task_display.h"
 
+/* for debug */
+#define DEBUG_TASK_DISPLAY		1
+#if DEBUG_TASK_DISPLAY
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* definitions */
 #define DISPLAY_TASK_QUEUE_MAX	64
 
 OS_EVENT *DisplayTaskQ;
@@ -19,16 +30,15 @@ void task_display_entry(void *para)
 {
 	INT32U msg_id;
 	INT8U err;
-	
+
 	task_display_init();
-	
-	while(1) {
+	while (1) {
 		msg_id = (INT32U) OSQPend(DisplayTaskQ, 0, &err);
-		
-		if((!msg_id) || (err != OS_NO_ERR)) {
-        	continue;
-        }
-        switch (msg_id & 0xFF000000) {
+		if ((!msg_id) || (err != OS_NO_ERR)) {
+        		continue;
+        	}
+
+        	switch (msg_id & 0xFF000000) {
         	case MSG_DISPLAY_TASK_QUEUE_INIT:
         		ap_display_queue_init();
         		break;
@@ -45,7 +55,7 @@ void task_display_entry(void *para)
         		ap_display_buff_copy_and_draw(msg_id & 0xFFFFFF, DISPALY_BUFF_SRC_MJPEG);
         		break;
         	case MSG_DISPLAY_TASK_SETTING_DRAW:
-				ap_display_setting_frame_buff_set(msg_id & 0xFFFFFF);
+			ap_display_setting_frame_buff_set(msg_id & 0xFFFFFF);
         		break;
         	case MSG_DISPLAY_TASK_SETTING_INIT:
         		
@@ -114,7 +124,6 @@ void task_display_entry(void *para)
         	default:
         		ap_display_buff_copy_and_draw(msg_id, DISPALY_BUFF_SRC_SENSOR);
         		break;
-        }
-        
-    }
+		}
+	}
 }

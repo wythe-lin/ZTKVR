@@ -1,4 +1,14 @@
+#include "ztkconfigs.h"
 #include "turnkey_audio_decoder_task.h"
+
+/* for debug */
+#define DEBUG_TURNKEY_AUDIO_DECODER_TASK	1
+#if DEBUG_TURNKEY_AUDIO_DECODER_TASK
+    #include "gplib.h"
+    #define _dmsg(x)				print_string x
+#else
+    #define _dmsg(x)
+#endif
 
 // Constant definitions used in this file only go here
 #define AUDIO_QUEUE_MAX  64
@@ -173,9 +183,8 @@ void audio_task_init(void)
 
 void audio_task_entry(void *p_arg)
 {
-    INT32U  msg_id;
-	STAudioTaskPara     *pstAudioTaskPara;
-
+	INT32U		msg_id;
+	STAudioTaskPara	*pstAudioTaskPara;
 
 	audio_task_init();
 	audio_init();

@@ -1,5 +1,16 @@
+#include "ztkconfigs.h"
 #include "ap_display.h"
 
+/* for debug */
+#define DEBUG_AP_DISPLAY	0
+#if DEBUG_AP_DISPLAY
+    #include "gplib.h"
+    #define _dmsg(x)		print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* variables */
 static INT8U *display_frame[TASK_DISPALY_BUFFER_NO];
 static INT32U display_dma_queue[TASK_DISPALY_BUFFER_NO];
 static INT32U display_isr_queue[TASK_DISPALY_BUFFER_NO];
@@ -209,15 +220,29 @@ static INT32S display_device_protect(void);
 static void display_device_unprotect(INT32S mask);
 #endif
 extern INT32S dma_buffer_copy(INT32U s_addr, INT32U t_addr, INT32U byte_count, INT32U s_width, INT32U t_width);
+
+/* global video argument */
+extern VIDEO_ARGUMENT	gvarg;
+
 void ap_display_init(void)
 {
-	INT32U i, buff_size, *buff_ptr;
+	INT32U	i, buff_size, *buff_ptr;
 	
 	video_preview_timerid = 0xFF;
-	buff_size = TFT_WIDTH * TFT_HEIGHT * 2;
+	buff_size = ((INT32U) gvarg.DisplayBufferWidth) * ((INT32U) gvarg.DisplayBufferHeight) * 2UL;
+//	buff_size = TFT_WIDTH * TFT_HEIGHT * 2;
+	_dmsg((RED "[GG]: mm_dump() - buffer_size=%0d\r\n" NONE, buff_size, mm_dump()));
+
+// ### for debug - xyz #########################
+#if 1 //(zt_resolution() < ZT_HD_SCALED)
 	display_frame[0] = gp_malloc_align(buff_size*TASK_DISPALY_BUFFER_NO, 64);
+#else
+	display_frame[0] = gp_malloc_align(buff_size*(TASK_DISPALY_BUFFER_NO+1), 64);
+#endif
+// ### for debug - xyz #########################
+
 	if (display_frame[0]) {
-		for (i=1 ; i<TASK_DISPALY_BUFFER_NO ; i++) {
+		for (i=1; i<TASK_DISPALY_BUFFER_NO; i++) {
 			display_frame[i] = display_frame[i-1] + buff_size;
 		}
 	} else {
@@ -227,23 +252,27 @@ void ap_display_init(void)
 	user_defined_video_codec_entrance();
 	tft_vblank_isr_register(ap_display_vblank_isr);
 	tv_vblank_isr_register(ap_display_vblank_isr);
-	R_PPU_IRQ_EN |= 0x00002000;	//Enable V-blank interrupt.
-	//R_PPU_ENABLE |= (PPU_FRAME_BASE_MODE|PPU_RGB565_MODE|PPU_RGBG_MODE);
-	R_PPU_ENABLE |=( PPU_QVGA_MODE|TFT_SIZE_320X240|PPU_FRAME_BASE_MODE|PPU_RGB565_MODE);
-	R_FREE_SIZE = TFT_HEIGHT; //Vertical
-	R_FREE_SIZE |= (TFT_WIDTH << 16); //Horizontal
-	buff_size >>= 2;
-	buff_ptr = (INT32U *) display_frame[TASK_DISPALY_BUFFER_NO - 1];	
+	R_PPU_IRQ_EN  |= 0x00002000;		// Enable V-blank interrupt.
+//	R_PPU_ENABLE  |= (PPU_FRAME_BASE_MODE|PPU_RGB565_MODE|PPU_RGBG_MODE);
+	R_PPU_ENABLE  |= (PPU_QVGA_MODE|TFT_SIZE_320X240|PPU_FRAME_BASE_MODE|PPU_RGB565_MODE);
+	R_FREE_SIZE    =  (INT32U) gvarg.DisplayBufferHeight;		// Vertical
+	R_FREE_SIZE   |= ((INT32U) gvarg.DisplayBufferWidth) << 16;	// Horizontal
+//	R_FREE_SIZE    = TFT_HEIGHT;		// Vertical
+//	R_FREE_SIZE   |= TFT_WIDTH << 16;	// Horizontal
+	buff_size    >>= 2;
+	buff_ptr       = (INT32U *) display_frame[TASK_DISPALY_BUFFER_NO - 1];	
 	R_TFT_FBI_ADDR = (INT32U) display_frame[TASK_DISPALY_BUFFER_NO - 1];
-	for (i=0 ; i<buff_size ;  i++) {
+	for (i=0; i<buff_size;  i++) {
 		*buff_ptr++ = 0;
 	}	
-	for (i=0 ; i<TASK_DISPALY_BUFFER_NO - 1 ; i++) {
+	for (i=0; i<TASK_DISPALY_BUFFER_NO - 1; i++) {
 		if (ap_display_queue_put(display_isr_queue, (INT32U) display_frame[i]) == STATUS_FAIL) {
 			DBG_PRINT("INIT put Q FAIL.\r\n");
 		}
 	}
 	tft_tft_en_set(TRUE);
+
+	_dmsg((RED "[GG]: mm_dump() - 2\r\n" NONE, mm_dump()));
 }
 
 void ap_display_queue_init(void)

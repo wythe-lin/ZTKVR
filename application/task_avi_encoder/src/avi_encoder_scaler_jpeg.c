@@ -251,7 +251,6 @@ void scaler_task_entry(void *parm)
 		switch(msg_id & 0xFF000000)
 		{
 		case MSG_SCALER_TASK_INIT:
-			_dmsg((GREEN "[zt]: scaler task init\r\n" NONE));
 //			lock_cnt        = 0;
 			skip_cnt        = 0;
 			csi_width       = pAviEncVidPara->sensor_capture_width;

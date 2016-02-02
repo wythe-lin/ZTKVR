@@ -25,6 +25,7 @@
 #include "ztkconfigs.h"
 #include "gplib.h"
 #include "drv_l1_sensor.h"
+#include "task_state_handling.h"
 #include "zt31xx.h"
 
 /* for debug */
@@ -110,6 +111,22 @@ static int zt31xx_mbox_ack(void)
  *
  *****************************************************************************
  */
+void zt31xx_set_strapped(unsigned char val)
+{
+	zt31xx_wr_r16d8(0x0028, val);
+}
+
+char zt31xx_get_strapped(void)
+{
+	unsigned char val;
+
+	if (zt31xx_rd_r16d8(0x0028, &val) < 0) {
+		msg(("[zt31xx]: zt31xx_get_strapped() - i2c nack\r\n"));
+		return (char) (-1);
+	}
+	return val;
+}
+
 void zt31xx_reset(void)
 {
 	// initial gpio
@@ -118,20 +135,28 @@ void zt31xx_reset(void)
 	gpio_drving_init_io(ZT31XX_RESET, (IO_DRV_LEVEL) IO_DRIVING_4mA);
 
 	// zt31xx hardware reset
-	msg(("[zt31xx]: hardware reset\r\n"));
+	msg(("[zt31xx]: hardware reset"));
 	gpio_write_io(ZT31XX_RESET, 0);
-	drv_msec_wait(400);
+	drv_msec_wait(50);
 	gpio_write_io(ZT31XX_RESET, 1);
+	drv_msec_wait(25);
+
+	// zt31xx i2c splitter configuration register
+	zt31xx_wr_r16d8(0x7fff, 0x03);
+
+	// zt31xx read strapped register
+	msg((" (strapped=%02x)\r\n", zt31xx_get_strapped()));
 }
 
 unsigned char zt31xx_ready(void)
 {
 	unsigned char	ack;
 
+	// zt31xx check ready
 	msg(("[zt31xx]: wait ready -"));
 	for (;;) {
 		if (zt31xx_rd_r16d8(0x0080, &ack) < 0) {
-			msg(("\r\n[zt31xx]: zt31xx_ready() - i2c nack\r\n"));
+			msg(("\r\n[zt31xx]: check ready - i2c nack\r\n"));
 			return 1;
 		}
 
@@ -139,7 +164,7 @@ unsigned char zt31xx_ready(void)
 		if (ack == 0x80) {
 			break;
 		}
-		drv_msec_wait(100);
+		drv_msec_wait(50);
 	}
 	msg(("\r\n"));
 	return 0;
@@ -228,7 +253,7 @@ unsigned char zt31xx_wr_sensor_r16d8(unsigned char sen, unsigned short reg, unsi
  *****************************************************************************
  */
 /* for debug */
-#define DEBUG_ZT31XX_SPI	1
+#define DEBUG_ZT31XX_SPI	0
 #if DEBUG_ZT31XX_SPI
     #define _dspi(x)		print_string x
 #else
@@ -259,7 +284,7 @@ unsigned char zt31xx_wr_sensor_r16d8(unsigned char sen, unsigned short reg, unsi
 #define SPI_CMD_PP		0x02	// command : page program, 100h bytes.
 
 
-/* function */
+/* macros */
 #define zt31xx_spi_start() \
 { \
 	zt31xx_wr_r16d8(0x0600, 0x00); \
@@ -289,6 +314,7 @@ static void zt31xx_spicmd_ewsr(void)
 		}
 	}
 	zt31xx_spi_stop();
+	_dspi(("[spi]: zt31xx_spicmd_ewsr() at %ld\r\n", n));
 }
 
 /* command: write status register */
@@ -307,6 +333,7 @@ static void zt31xx_spicmd_wrsr(unsigned char val)
 			break;
 		}
 	}
+	_dspi(("[spi]: zt31xx_spicmd_wrsr() - 1 at %ld\r\n", n));
 
 	zt31xx_wr_r16d8(0x060e, val);
 	for (n=0; n<ZT3150_TIMEOUT_COUNT; n++) {
@@ -316,6 +343,7 @@ static void zt31xx_spicmd_wrsr(unsigned char val)
 		}
 	}
 	zt31xx_spi_stop();
+	_dspi(("[spi]: zt31xx_spicmd_wrsr() - 2 at %ld\r\n", n));
 }
 
 /* command: read status register */
@@ -337,6 +365,7 @@ static unsigned char zt31xx_spicmd_rdsr(void)
 	zt31xx_rd_r16d8(0x0610, &val);	// dummy read
 	zt31xx_rd_r16d8(0x0610, &val);	// real read
 	zt31xx_spi_stop();
+	_dspi(("[spi]: zt31xx_spicmd_rdsr() = %02x, at %ld\r\n", (unsigned short) val, n));
 	return val;
 }
 
@@ -357,10 +386,11 @@ static void zt31xx_spicmd_wren(void)
 		}
 	}
 	zt31xx_spi_stop();
+	_dspi(("[spi]: zt31xx_spicmd_wren() at %ld\r\n", n));
 }
 
 /* command: chip erase */
-static void zt31xx_spicmd_ce(void)
+static int zt31xx_spicmd_ce(void)
 {
 	unsigned long	n;
 	unsigned char	st;
@@ -376,27 +406,32 @@ static void zt31xx_spicmd_ce(void)
 		}
 	}
 	zt31xx_spi_stop();
+	_dspi(("[spi]: zt31xx_spicmd_ce() at %ld\r\n", n));
 
 	for (n=0; n<ZT3150_TIMEOUT_COUNT*10; n++) {
 		if (!(zt31xx_spicmd_rdsr() & SPI_SR_WIP)) {
-			break;
+			return 1;
 		}
 	}
+	_dspi(("[spi]: zt31xx_spicmd_ce() time-out\r\n"));
+	return 0;
 }
 
 /*
  *
  */
-static void zt31xx_spi_wren(void)
+static int zt31xx_spi_wren(void)
 {
 	unsigned long	n;
 
 	for (n=0; n<ZT3150_TIMEOUT_COUNT; n++) {
 		if (zt31xx_spicmd_rdsr() & SPI_SR_WEL) {
-			break;
+			return 1;
 		}
 		zt31xx_spicmd_wren();
 	}
+	_dspi(("[spi]: zt31xx_spi_wren() time-out\r\n"));
+	return 0;
 }
 
 /*
@@ -404,23 +439,38 @@ static void zt31xx_spi_wren(void)
  */
 void zt31xx_spi_enable(void)
 {
-	unsigned char	val;
+	msg(("[zt31xx]: enable spi flash \r\n"));
 
-	msg(("[zt31xx]: enable spi flash\r\n"));
+	// disable hardware strapped spi value
+	zt31xx_set_strapped(zt31xx_get_strapped() & 0xFE);
 
-	zt31xx_rd_r16d8(0x0028, &val);
-	val &= 0xFE;
-	zt31xx_wr_r16d8(0x0028, val);
+	// disable zt31xx, and release 2KB SRAM.
 	zt31xx_wr_r16d8(0x0026, 0x02);
 	zt31xx_wr_r16d8(0x0027, 0x01);
+
+	// zt31xx statemachine idle.
 	zt31xx_wr_r16d8(0x7000, 0x80);
 	zt31xx_wr_r16d8(0x7001, 0xFE);
+
+	// start zt31xx at 2KB SRAM
 	zt31xx_wr_r16d8(0x0080, 0x80);
 	zt31xx_wr_r16d8(0x001A, 0xFF);
 	zt31xx_wr_r16d8(0x0605, 0x03);
 	zt31xx_wr_r16d8(0x0027, 0x00);
 	zt31xx_wr_r16d8(0x0025, 0x01);
 	zt31xx_wr_r16d8(0x0026, 0x00);
+}
+
+void zt31xx_spi_disable(void)
+{
+	msg(("[zt31xx]: disable spi flash\r\n"));
+
+	// disable hardware strapped spi value
+	zt31xx_set_strapped(zt31xx_get_strapped() & 0xFE);
+
+	// disable zt31xx, and release 2KB SRAM.
+	zt31xx_wr_r16d8(0x0026, 0x02);
+	zt31xx_wr_r16d8(0x0027, 0x01);
 }
 
 /*
@@ -454,10 +504,6 @@ void zt31xx_spi_write(unsigned long buf, unsigned long spi, unsigned long len)
 	unsigned char	st;
 	unsigned char	*ptr;
 
-
-	// reset zt31xx
-	zt31xx_reset();
-
 	// enable spi flash
 	zt31xx_spi_enable();
 
@@ -465,7 +511,7 @@ void zt31xx_spi_write(unsigned long buf, unsigned long spi, unsigned long len)
 	zt31xx_spi_erase();
 
 	// write spi flash
-	msg(("[zt31xx]: zt31xx_spi_write() - buf=%08x, spi=%08x, len=%08x\r\n", buf, spi, len));
+	msg(("[zt31xx]: write spi flash - buf=%08x, spi=%08x, len=%08x\r\n", buf, spi, len));
 	real_size = SPI_PAGE_SIZE - (spi & (SPI_PAGE_SIZE - 1));
 
 	while (len > 0) {
@@ -505,10 +551,10 @@ void zt31xx_spi_write(unsigned long buf, unsigned long spi, unsigned long len)
 
 		for (n=0; n<ZT3150_TIMEOUT_COUNT; n++) {
 			if ((zt31xx_spicmd_rdsr() & SPI_SR_WIP) == 0) {
+				msg(("."));
 				break;
 			}
 		}
-		msg(("."));
 	}
 	msg(("\r\n"));
 }
@@ -532,14 +578,12 @@ void zt31xx_spi_read(unsigned long buf, unsigned long spi, unsigned long len)
 	unsigned long	index;
 	unsigned char	*ptr;
 
-	// reset zt31xx
-	zt31xx_reset();
 
 	// enable spi flash
 	zt31xx_spi_enable();
 
 	// read spi flash
-	msg(("[zt31xx]: zt31xx_spi_read() - buf=%08x, spi=%08x, len=%08x\r\n", buf, spi, len));
+	msg(("[zt31xx]: read spi flash - buf=%08x, spi=%08x, len=%08x\r\n", buf, spi, len));
 #if 0
 	// get spi flash data
 	spi -= 1;
@@ -610,4 +654,106 @@ void zt31xx_spi_read(unsigned long buf, unsigned long spi, unsigned long len)
 #endif
 	msg(("\r\n"));
 }
+
+
+/*
+ *****************************************************************************
+ *
+ * zt31xx update firmware function
+ *
+ *****************************************************************************
+ */
+/* for debug */
+#define DEBUG_ZT31XX_FWUPDATE		1
+#if DEBUG_ZT31XX_FWUPDATE
+    #define _dfwup(x)			print_string x
+#else
+    #define _dfwup(x)
+#endif
+
+#define SZ_64KB			(64*1024)
+
+extern VIDEO_ARGUMENT		gvarg;		// global video argument
+
+/*
+ * upgrade ZT31XX firmware
+ * for zt3150_upgrade.bin/zt3120_upgrade.bin
+ *
+ *
+ */
+static char			*zt31xx_fwup_filename[] = {
+	"C:\\zt3150_upgrade.bin",
+	"C:\\zt3120_upgrade.bin",
+	NULL
+};
+
+void zt31xx_fw_update(void)
+{
+	struct stat_t		fsta;
+	INT16S			fd;
+	INT32U			*bincode;
+	INT32U			len;
+	char			path[80];
+	int 			n;
+
+	_dfwup((BROWN "[S]: zt31xx_fw_update()\r\n" NONE));
+
+	// retain the original path
+	getcwd(path, sizeof(path));
+	_dfwup(("[zt31xx]: current path=%s\r\n", path));
+
+	// check media
+	msg(("[zt31xx]: sd card - "));
+	if (chdir("C:\\") != 0) {
+		msg(("not found\r\n", path));
+		goto __exit;
+	}
+	msg(("found\r\n"));
+
+	// search file
+	for (n=0; zt31xx_fwup_filename[n]!=NULL; n++) {
+		msg(("[zt31xx]: %s - ", zt31xx_fwup_filename[n]));
+
+		fd = open(zt31xx_fwup_filename[n], O_RDONLY);
+		if (fd >= 0) {
+			msg(("found\r\n"));
+			goto __read;
+		}
+		msg(("not found\r\n"));
+	}
+	goto __exit;
+
+__read:
+	// read bin file to sdram
+	if (fstat(fd, &fsta)) {
+		msg(("[zt31xx]: zt31xx_fw_update() - get file size fail\r\n"));
+		goto __exit1;
+	}
+	if (fsta.st_size <= SZ_64KB) {
+		len = SZ_64KB;
+	} else {
+		len = ((fsta.st_size + (SZ_64KB - 1)) / SZ_64KB) * SZ_64KB;
+	}
+	bincode = (INT32U *) gp_malloc(len);
+	if (!bincode) {
+		msg(("[zt31xx]: zt31xx_fw_update() - allocte buffer fail\r\n"));
+		goto __exit1;
+	}
+	_dfwup(("[zt31xx]: %s, len=%08x, buf==%08x\r\n", zt31xx_fwup_filename[n], fsta.st_size, len));
+
+	// read bin file
+	if (read(fd, (INT32U) bincode, len) <= 0) {
+		msg(("[zt31xx]: zt31xx_fw_update() - read file fail\r\n"));
+		goto __exit1;
+	}
+
+	zt31xx_spi_write((unsigned long) bincode, 0, len);
+
+__exit1:
+	close(fd);
+__exit:
+	chdir(path);
+	_dfwup((BROWN "[E]: zt31xx_fw_update()\r\n" NONE));
+}
+
 

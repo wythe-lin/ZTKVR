@@ -69,6 +69,8 @@ extern void		zt31xx_spi_erase(void);
 extern void		zt31xx_spi_write(unsigned long buf, unsigned long spi, unsigned long len);
 extern void		zt31xx_spi_read(unsigned long buf, unsigned long spi, unsigned long len);
 
+extern void		zt31xx_fw_update(void);
+
 
 #ifdef __cplusplus
 }

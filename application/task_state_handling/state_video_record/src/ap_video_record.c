@@ -1,7 +1,18 @@
+#include "ztkconfigs.h"
 #include "ap_video_record.h"
 
-	/*static*/ STOR_SERV_FILEINFO curr_file_info;	//wwj modify
-	CHAR g_curr_file_name[24];			//wwj add
+/* for debug */
+#define DEBUG_AP_VIDEO_RECORD		1
+#if DEBUG_AP_VIDEO_RECORD
+    #include "gplib.h"
+    #define _dmsg(x)			print_string x
+#else
+    #define _dmsg(x)
+#endif
+
+/* variables */
+/*static*/ STOR_SERV_FILEINFO curr_file_info;	//wwj modify
+CHAR g_curr_file_name[24];			//wwj add
 
 #if C_CYCLIC_VIDEO_RECORD == CUSTOM_ON
 	/*static*/ STOR_SERV_FILEINFO next_file_info; //wwj modify
@@ -25,7 +36,7 @@ extern INT8U s_usbd_pin;
 
 static void video_rec_card_full_handle(void);
 
-INT16S drvl2_sdc_live_response(void) //marty add 
+INT16S drvl2_sdc_live_response(void) //marty add
 {
 	return gpio_read_io(SD_CD_PIN);
 }
@@ -85,7 +96,7 @@ void ap_video_record_init(void)
 }
 
 void ap_video_record_exit(void)
-{	
+{
 	struct stat_t file_stat;	//wwj add
 
 #if C_MOTION_DETECTION == CUSTOM_ON
@@ -187,14 +198,14 @@ INT8S ap_video_record_md_active(void)
 	if (video_record_sts & VIDEO_RECORD_UNMOUNT) {
 		return TRUE;
 	}
-    
-    if ((ap_state_config_record_time_get()==0) && (vfsFreeSpace(MINI_DVR_STORAGE_TYPE) >> 20)<=CARD_FULL_MB_SIZE) 
+
+    if ((ap_state_config_record_time_get()==0) && (vfsFreeSpace(MINI_DVR_STORAGE_TYPE) >> 20)<=CARD_FULL_MB_SIZE)
     {
         DBG_PRINT ("Card full, MD Auto Disable2!!!\r\n");
-        ap_state_config_md_set(1);    
+        ap_state_config_md_set(1);
         ap_video_record_md_icon_clear_all();
     	ap_video_record_md_disable();
-    	ap_state_config_md_set(0); 
+    	ap_state_config_md_set(0);
         ap_video_record_error_handle();  // super stop MD record
         video_rec_card_full_handle();
         return TRUE;  // return true will stop md detect (Task level)
@@ -210,7 +221,7 @@ INT8S ap_video_record_md_active(void)
 		return TRUE;
 	} else {
 		return FALSE;
-	}	
+	}
 }
 
 void ap_video_record_md_disable(void)
@@ -244,63 +255,59 @@ void ap_video_record_md_icon_clear_all(void)
 
 void ap_video_record_func_key_active(INT32U event)
 {
-	struct stat_t file_stat;	//wwj add
+	struct stat_t	file_stat;	// wwj add
 
-    if (video_record_sts & VIDEO_RECORD_BUSY) 
-    {
-		if(event == MSG_APQ_FUNCTION_KEY_ACTIVE) { //wwj add
-			if((curr_file_info.file_handle == -1)||(next_file_info.file_handle == -1)) {
+	if (video_record_sts & VIDEO_RECORD_BUSY) {
+		if (event == MSG_APQ_FUNCTION_KEY_ACTIVE) { // wwj add
+			if ((curr_file_info.file_handle == -1) || (next_file_info.file_handle == -1)) {
 				return;
 			}
 		}
 
 #if C_MOTION_DETECTION == CUSTOM_ON
-        if (ap_state_config_md_get() && (event == MSG_APQ_FUNCTION_KEY_ACTIVE)) 
-        {
+		if (ap_state_config_md_get() && (event == MSG_APQ_FUNCTION_KEY_ACTIVE)) {
 			ap_video_record_md_icon_clear_all();
 			ap_video_record_md_disable();
 			ap_state_config_md_set(0);
-        }
+        	}
 #endif
 
-        timer_counter_force_display(0); // dominant add,function key event, must disable timer OSD 
-		ap_state_handling_led_on();//wwj add
-		ap_peripheral_auto_off_force_disable_set(0);	//wwj add
+		timer_counter_force_display(0);			// dominant add,function key event, must disable timer OSD
+		ap_state_handling_led_on();			// wwj add
+		ap_peripheral_auto_off_force_disable_set(0);	// wwj add
 		ap_state_handling_icon_clear_cmd(ICON_REC, ICON_LOCKED, NULL);
-        video_calculate_left_recording_time_enable();
-        if (video_encode_stop() != START_OK)
-        {
+		video_calculate_left_recording_time_enable();
+
+		if (video_encode_stop() != START_OK) {
 			close(curr_file_info.file_handle);
 			unlink((CHAR *) curr_file_info.file_path_addr);
 			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_DEL_TABLE_ITEM, &curr_file_info, sizeof(STOR_SERV_FILEINFO), MSG_PRI_NORMAL);
 			DBG_PRINT("Video Record Stop Fail\r\n");
-			//return STATUS_FAIL;
-		} else {  //wwj add
+//			return STATUS_FAIL;
+		} else {  // wwj add
 			curr_file_info.file_handle = open((CHAR *) curr_file_info.file_path_addr, O_RDONLY);
 			fstat(curr_file_info.file_handle, &file_stat);
 			close(curr_file_info.file_handle);
-			if(file_stat.st_size < 512) {
+			if (file_stat.st_size < 512) {
 				unlink((CHAR *) curr_file_info.file_path_addr);
 				msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_DEL_TABLE_ITEM, &curr_file_info, sizeof(STOR_SERV_FILEINFO), MSG_PRI_NORMAL);
 			}
-			if(g_lock_current_file_flag) {
+			if (g_lock_current_file_flag) {
 				_setfattr((CHAR *) curr_file_info.file_path_addr, D_RDONLY);
 				g_lock_current_file_flag = 0;
 			}
 		}
 
 #if C_CYCLIC_VIDEO_RECORD == CUSTOM_ON
-		if (cyclic_record_timerid != 0xFF)
-		{
+		if (cyclic_record_timerid != 0xFF) {
 			sys_kill_timer(cyclic_record_timerid);
 			cyclic_record_timerid = 0xFF;
 		}
-		if (next_file_info.file_handle >= 0)
-		{
-			/*
-			INT8U type = FALSE;		//delete file open handle
+		if (next_file_info.file_handle >= 0) {
+/*
+			INT8U	type = FALSE;		//delete file open handle
 			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VID_CYCLIC_REQ, &type, sizeof(INT8U), MSG_PRI_NORMAL);
-			*/
+*/
 			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_DEL_TABLE_ITEM, &next_file_info, sizeof(STOR_SERV_FILEINFO), MSG_PRI_NORMAL);
 			close(next_file_info.file_handle);
 			unlink((CHAR *) next_file_info.file_path_addr);
@@ -308,25 +315,26 @@ void ap_video_record_func_key_active(INT32U event)
 		}
 #endif
 		ap_video_record_sts_set(~VIDEO_RECORD_BUSY);
-		if ( (audio_playing_state_get() == STATE_IDLE) || (audio_playing_state_get() == STATE_PAUSED) ){
+		if ((audio_playing_state_get() == STATE_IDLE) || (audio_playing_state_get() == STATE_PAUSED)) {
 			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_TIMER_START, NULL, NULL, MSG_PRI_NORMAL);
 		}
 		DBG_PRINT("Video Record Stop\r\n");
-		//chdir("C:\\DCIM");  // dominant mark
-    } else {
-		if (video_record_sts == 0 || video_record_sts == VIDEO_RECORD_MD)   // Video record start
-        {   
-			/*
-			if ((ap_state_config_record_time_get()==0)&&(vfsFreeSpace(MINI_DVR_STORAGE_TYPE) >> 20)<=CARD_FULL_MB_SIZE) 
-			{
-				DBG_PRINT ("Card full, key action avoid!!!\r\n");
+//		chdir("C:\\DCIM");  // dominant mark
+	} else {
+		if (video_record_sts == 0 || video_record_sts == VIDEO_RECORD_MD) {	// Video record start
+/*
+			if ((ap_state_config_record_time_get()==0) && (vfsFreeSpace(MINI_DVR_STORAGE_TYPE)>>20) <= CARD_FULL_MB_SIZE) {
+				DBG_PRINT("Card full, key action avoid!!!\r\n");
 				video_rec_card_full_handle();
 				return;
-			} */
+			}
+*/
 
 			INT64U  disk_free_size;
 
+			_dmsg((RED "[D]: ap_video_record_func_key_active() - b.1\r\n" NONE, mm_dump()));
 			disk_free_size = vfsFreeSpace(MINI_DVR_STORAGE_TYPE) >> 20;
+			_dmsg((RED "[D]: ap_video_record_func_key_active() - b.1.1\r\n" NONE, mm_dump()));
 			if (disk_free_size <= CARD_FULL_MB_SIZE) {
 				if (ap_state_config_record_time_get()==0) {
 					ap_state_handling_str_draw_exit();
@@ -335,36 +343,34 @@ void ap_video_record_func_key_active(INT32U event)
 				} else {
 					msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_FREE_FILESIZE_CHECK, NULL, NULL, MSG_PRI_NORMAL);
 				}
+				_dmsg((RED "[E]: ap_video_record_func_key_active() - 2\r\n" NONE, mm_dump()));
 				return;
 			}
+			_dmsg((RED "[D]: ap_video_record_func_key_active() - b.2\r\n" NONE, mm_dump()));
 
 			ap_video_record_sts_set(VIDEO_RECORD_BUSY);
 			ap_peripheral_auto_off_force_disable_set(0/*1*/);	//wwj add, disable auto off
-			curr_file_info.file_handle = -1;				//wwj add
+			curr_file_info.file_handle = -1;			//wwj add
 			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VID_REQ, NULL, NULL, MSG_PRI_NORMAL);
+
 #if C_MOTION_DETECTION == CUSTOM_ON
-    	    if (ap_state_config_md_get()) 
-            {
+			if (ap_state_config_md_get()) {
 				md_check_tick = 0;
-                if (!(video_record_sts & VIDEO_RECORD_MD)) 
-                {
+				if (!(video_record_sts & VIDEO_RECORD_MD)) {
 					msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_MOTION_DETECT_START, NULL, NULL, MSG_PRI_NORMAL);
 					ap_video_record_sts_set(VIDEO_RECORD_MD);
 				}
-                if (motion_detect_timerid == 0xFF) 
-                {
+				if (motion_detect_timerid == 0xFF) {
 					motion_detect_timerid = VIDEO_PREVIEW_TIMER_ID;
 					sys_set_timer((void*)msgQSend, (void*)ApQ, MSG_APQ_MOTION_DETECT_TICK, motion_detect_timerid, MOTION_DETECT_CHECK_TIME_INTERVAL);
 				}
 			}
-        }
-        else if (video_record_sts & VIDEO_RECORD_UNMOUNT) 
-        {
+        	} else if (video_record_sts & VIDEO_RECORD_UNMOUNT) {
 			if (ap_state_config_md_get()) {
 				if (video_record_sts & VIDEO_RECORD_MD) {
 					ap_video_record_md_icon_clear_all();
 					ap_video_record_md_disable();
-			    	ap_state_config_md_set(0); 		//wwj add
+			    		ap_state_config_md_set(0);		//wwj add
 				} else {
 					ap_state_handling_icon_show_cmd(ICON_MD_STS_0, NULL, NULL);
 					msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_MOTION_DETECT_START, NULL, NULL, MSG_PRI_NORMAL);
@@ -373,8 +379,8 @@ void ap_video_record_func_key_active(INT32U event)
 			}
 			ap_state_handling_str_draw_exit();
 			ap_state_handling_str_draw(STR_NO_SD, 0xF800);
-			ap_peripheral_auto_off_force_disable_set(0);	//wwj add
-#endif		
+			ap_peripheral_auto_off_force_disable_set(0);		//wwj add
+#endif
 		}
 	}
 }
@@ -387,16 +393,13 @@ void ap_video_record_start(void)
 	curr_file_info.file_handle = -1;
 	msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VID_REQ, NULL, NULL, MSG_PRI_NORMAL);
 #if C_MOTION_DETECTION == CUSTOM_ON
-    if (ap_state_config_md_get())
-    {
+	if (ap_state_config_md_get()) {
 		md_check_tick = 0;
-        if (!(video_record_sts & VIDEO_RECORD_MD)) 
-        {
+		if (!(video_record_sts & VIDEO_RECORD_MD)) {
 			msgQSend(PeripheralTaskQ, MSG_PERIPHERAL_TASK_MOTION_DETECT_START, NULL, NULL, MSG_PRI_NORMAL);
 			ap_video_record_sts_set(VIDEO_RECORD_MD);
 		}
-        if (motion_detect_timerid == 0xFF) 
-        {
+        	if (motion_detect_timerid == 0xFF) {
 			motion_detect_timerid = VIDEO_PREVIEW_TIMER_ID;
 			sys_set_timer((void*)msgQSend, (void*)ApQ, MSG_APQ_MOTION_DETECT_TICK, motion_detect_timerid, MOTION_DETECT_CHECK_TIME_INTERVAL);
 		}
@@ -413,7 +416,7 @@ void ap_video_record_cycle_reply_open(STOR_SERV_FILEINFO *file_info_ptr)
 	if (file_info_ptr->file_handle >= 0) {
 		gp_memcpy((INT8S *) &temp_file_info, (INT8S *) &next_file_info, sizeof(STOR_SERV_FILEINFO));
 		gp_memcpy((INT8S *) &next_file_info, (INT8S *) file_info_ptr, sizeof(STOR_SERV_FILEINFO));
-		if (temp_file_info.file_handle >= 0) 
+		if (temp_file_info.file_handle >= 0)
 		{
 			/*
 			INT8U type = FALSE;		//delete file open handle
@@ -431,7 +434,7 @@ void ap_video_record_cycle_reply_open(STOR_SERV_FILEINFO *file_info_ptr)
 		}
 
 	    if ((video_record_sts & VIDEO_RECORD_BUSY) == 0) {
-			if (cyclic_record_timerid != 0xFF) 
+			if (cyclic_record_timerid != 0xFF)
 			{
 				sys_kill_timer(cyclic_record_timerid);
 				cyclic_record_timerid = 0xFF;
@@ -493,7 +496,7 @@ void ap_video_cyclic_record_del_reply(INT32S ret)
 			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VID_CYCLIC_REQ, &type, sizeof(/*INT32U*/INT8U), MSG_PRI_NORMAL);
 		}
 	} else {
-		
+
 	}
 }
 #else
@@ -518,12 +521,12 @@ void ap_video_record_cycle_reply_action(void)
 		src.Format.VideoFormat = MJPEG;
 
 		/*	//wwj mark
-        if (ap_state_config_record_time_get()!=0) 
+        if (ap_state_config_record_time_get()!=0)
         {
             // always keep timer OSD Display and record red-spot
             timer_counter_force_display(1);  // dominant add, cyclic mode, no need stop timer count
         }
-        else 
+        else
         {
 	    	ap_state_handling_icon_clear_cmd(ICON_REC, NULL, NULL);
         } */
@@ -545,7 +548,7 @@ void ap_video_record_cycle_reply_action(void)
 			_setfattr((CHAR *) curr_file_info.file_path_addr, D_RDONLY);
 			g_lock_current_file_flag = 0;
 			ap_state_handling_icon_clear_cmd(ICON_LOCKED, NULL, NULL);
-		}			
+		}
 
 		gp_memcpy((INT8S *) &curr_file_info, (INT8S *) &next_file_info, sizeof(STOR_SERV_FILEINFO));
 		gp_memcpy((INT8S *) g_curr_file_name, (INT8S *) curr_file_info.file_path_addr, sizeof(g_curr_file_name));
@@ -577,7 +580,7 @@ void ap_video_record_cycle_reply_action(void)
 			}
 		}
 	#endif
-		ap_state_handling_icon_show_cmd(ICON_REC, NULL, NULL); 
+		ap_state_handling_icon_show_cmd(ICON_REC, NULL, NULL);
 		next_file_info.file_handle = -1;	//open file handle
 		msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VID_CYCLIC_REQ, &type, sizeof(/*INT32U*/INT8U), MSG_PRI_NORMAL);
 #else
@@ -596,7 +599,7 @@ void ap_video_record_cycle_reply_action(void)
 		if( (total_size <= 1024) && ((ap_state_config_record_time_get() == 3) || (ap_state_config_record_time_get() == 4)) ){	//wwj modify
 			size = 300;
 		}else{
-			size = (FRAME_SIZE*30*60*tag) >> 10;			
+			size = (FRAME_SIZE*30*60*tag) >> 10;
 		}
 		if (video_record_sts & VIDEO_RECORD_BUSY) {
 			if (video_encode_stop() != START_OK) {
@@ -632,7 +635,7 @@ INT32S ap_video_record_del_reply(INT32S ret)
 void ap_video_record_error_handle(void)
 {
 	DBG_PRINT("Video record error handle.\r\n");
-	if (video_record_sts & VIDEO_RECORD_BUSY) {   // dominant mark, in this function has better process 
+	if (video_record_sts & VIDEO_RECORD_BUSY) {   // dominant mark, in this function has better process
 		ap_video_record_func_key_active(NULL);
 	}
 }
@@ -661,18 +664,18 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
 	src.type_ID.FileHandle = curr_file_info.file_handle;
 	src.type = SOURCE_TYPE_FS;
 	src.Format.VideoFormat = MJPEG;
-    
+
     if (time_interval_tag==0)
     {
         time_interval = 255 * VIDEO_RECORD_CYCLE_TIME_INTERVAL + 112;  // dominant add 64 to record more
-    // FAT32:60min(<4GB), FAT16:30min(<2GB), but FAT16 SDC is always less than 2GB      
-        bkground_del_disable(1);  // back ground auto delete disable      
+    // FAT32:60min(<4GB), FAT16:30min(<2GB), but FAT16 SDC is always less than 2GB
+        bkground_del_disable(1);  // back ground auto delete disable
     } else {
         bkground_del_disable(0);  // back ground auto delete enable
         time_interval = time_interval_tag * VIDEO_RECORD_CYCLE_TIME_INTERVAL + 112;  // dominant add 64 to record more
     }
 
-	if (src.type_ID.FileHandle >=0) 
+	if (src.type_ID.FileHandle >=0)
 	{
 		video_calculate_left_recording_time_disable();
 
@@ -682,7 +685,7 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
 		}
 
 		ap_state_handling_icon_show_cmd(ICON_REC, NULL, NULL);
-		if (video_encode_start(src) != START_OK) 
+		if (video_encode_start(src) != START_OK)
 		{
 		    timer_counter_force_display(0); // dominant add
 		    ap_state_handling_icon_clear_cmd(ICON_REC, NULL, NULL);
@@ -694,12 +697,12 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
 		    ap_video_record_sts_set(~VIDEO_RECORD_BUSY);
 		    video_calculate_left_recording_time_enable();
 		    msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_TIMER_START, NULL, NULL, MSG_PRI_NORMAL);
-		} 
-		else 
+		}
+		else
 		{
 			ap_state_handling_led_blink_on();//wwj add
 
-		    //if (time_interval) 
+		    //if (time_interval)
 		    //{
 				//open file handle
 				msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VID_CYCLIC_REQ, &type, sizeof(/*INT32U*/INT8U), MSG_PRI_NORMAL);
@@ -712,9 +715,9 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
 		//enable timer for checking free space
 		    msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_FREESIZE_CHECK_SWITCH, &type, sizeof(/*INT32U*/INT8U), MSG_PRI_NORMAL);
 		}
-	} 
+	}
 
-    if(curr_file_info.storage_free_size < bkground_del_thread_size_get())    
+    if(curr_file_info.storage_free_size < bkground_del_thread_size_get())
     {
         disk_free_size = vfsFreeSpace(MINI_DVR_STORAGE_TYPE) >> 20;
         DBG_PRINT("\r\n[11Bkground Del Detect (DskFree: %d MB)]\r\n", disk_free_size);
@@ -727,33 +730,33 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
             } else {
                 disk_free_thread = 0; // card not exist
             }
-        } 
-        else 
+        }
+        else
         {
             disk_free_thread = bkground_del_thread_size_get();
         }
 
-    	if (disk_free_size < disk_free_thread)  // 當 free size 不夠, 就開始砍 
+    	if (disk_free_size < disk_free_thread)  // 當 free size 不夠, 就開始砍
         {
-            if (time_interval_tag!=0)  // 若現在是循環錄模式才能真的砍下去 
+            if (time_interval_tag!=0)  // 若現在是循環錄模式才能真的砍下去
             {
                 //msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_FREESIZE_CHECK, &free_size_check, sizeof(FREE_SIZE_CHECK), MSG_PRI_NORMAL);
         		time_interval_tag = 0xFFFFFFFF;
     	        msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VIDEO_FILE_DEL, &time_interval_tag, sizeof(INT32U), MSG_PRI_NORMAL);
-            } 
+            }
             else  // size 不夠, 但又沒開循環錄影, 就是卡滿
             {
                 close(src.type_ID.FileHandle);
-                video_rec_card_full_handle();  
+                video_rec_card_full_handle();
             }
         }
-        else if (src.type_ID.FileHandle < 0) // file 打不開, 但 Size 還夠就是壞卡, 因為 size 夠確還開不起來我們認定為壞卡, 開始做 storage check 吧 
+        else if (src.type_ID.FileHandle < 0) // file 打不開, 但 Size 還夠就是壞卡, 因為 size 夠確還開不起來我們認定為壞卡, 開始做 storage check 吧
         {
 			ap_peripheral_auto_off_force_disable_set(0); //wwj add
             ap_video_record_sts_set(~VIDEO_RECORD_BUSY);
             msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_TIMER_START, NULL, NULL, MSG_PRI_NORMAL);
         }
-	} 
+	}
     else if (curr_file_info.storage_free_size<=CARD_FULL_MB_SIZE)
     {
         if (bkground_del_disable_status_get()==1)  // size 不夠, 但又沒開循環錄影, 就是卡滿
@@ -804,11 +807,11 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
 	src.type_ID.FileHandle = curr_file_info.file_handle;
 	src.type = SOURCE_TYPE_FS;
 	src.Format.VideoFormat = MJPEG;
-    
-	if (src.type_ID.FileHandle >=0) 
+
+	if (src.type_ID.FileHandle >=0)
     {
         video_calculate_left_recording_time_disable();
-        
+
         //if (ap_state_config_record_time_get()!=0)	//wwj mark
         {
             timer_counter_force_display(1); // dominant add
@@ -837,10 +840,10 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
 			}
 #endif
 		}
-	} 
+	}
 
 
-    if(curr_file_info.storage_free_size < bkground_del_thread_size_get())    
+    if(curr_file_info.storage_free_size < bkground_del_thread_size_get())
     {
 		if( (src.type_ID.FileHandle < 0) || (!time_interval) ){
 			ap_state_handling_str_draw_exit();
@@ -849,7 +852,7 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
 			//unlink((CHAR *) curr_file_info.file_path_addr);
 			DBG_PRINT("Video Record Stop [NO free space]\r\n");
 			ap_video_record_sts_set(~VIDEO_RECORD_BUSY);
-			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VIDEO_FILE_DEL, &tag, sizeof(INT32U), MSG_PRI_NORMAL);		
+			msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_VIDEO_FILE_DEL, &tag, sizeof(INT32U), MSG_PRI_NORMAL);
 	        msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_TIMER_START, NULL, NULL, MSG_PRI_NORMAL);
         } else {
 			total_size = vfsTotalSpace(MINI_DVR_STORAGE_TYPE) >> 20;
@@ -862,7 +865,7 @@ void ap_video_record_reply_action(STOR_SERV_FILEINFO *file_info_ptr)
         	free_size_check.tag = 0x5A5A5A5A;
         	msgQSend(StorageServiceQ, MSG_STORAGE_SERVICE_FREESIZE_CHECK, &free_size_check, sizeof(FREE_SIZE_CHECK), MSG_PRI_NORMAL);
         }
-		
+
 	}
 }
 #endif
@@ -879,16 +882,16 @@ void video_rec_card_full_handle(void)
 void video_calculate_left_recording_time_enable(void)
 {
 	INT32U freespace, left_recording_time;
-	
+
 	freespace = vfsFreeSpace(MINI_DVR_STORAGE_TYPE) >> 20;
-	
+
 	left_recording_time = (freespace << 1)/3;	//estimate one frame = 50KB, so one second video takes 50KB*30 = 1.5MB
-	
+
 	OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_LEFT_REC_TIME_DRAW | left_recording_time));
 }
 
 void video_calculate_left_recording_time_disable(void)
-{	
+{
 	OSQPost(DisplayTaskQ, (void *) (MSG_DISPLAY_TASK_LEFT_REC_TIME_CLEAR));
 }
 

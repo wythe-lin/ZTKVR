@@ -38,20 +38,17 @@ void task_storage_service_entry(void *para)
 {
 	INT32U msg_id;
 //	STOR_SERV_PLAYINFO play_info;
-	
-	#if C_AUTO_DEL_FILE == CUSTOM_OFF
+#if C_AUTO_DEL_FILE == CUSTOM_OFF
 	FREE_SIZE_CHECK free_size_check;
-	#endif
-	
+#endif
+
 	task_storage_service_init();
-	
 	while (1) {	
 		if (msgQReceive(StorageServiceQ, &msg_id, storage_service_para, STORAGE_SERVICE_QUEUE_MAX_MSG_LEN) == STATUS_FAIL) {
 			continue;
 		}		
 		switch (msg_id) {
         	case MSG_FILESRV_TASK_READY:
-			_dmsg(("[D]: MSG_FILESRV_TASK_READY\r\n"));
 			ap_storage_service_init();        		
         		break;
         	case MSG_STORAGE_SERVICE_STORAGE_CHECK:

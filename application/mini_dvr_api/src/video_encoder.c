@@ -16,19 +16,19 @@ void video_encode_entrance(void)
 
 	avi_encode_init();
 	nRet = avi_encode_state_task_create(AVI_ENC_PRIORITY);
-	if(nRet < 0)
+	if (nRet < 0)
     		DBG_PRINT("avi_encode_state_task_create fail !!!");
     	
 	nRet = scaler_task_create(SCALER_PRIORITY);
-	if(nRet < 0)
+	if (nRet < 0)
     		DBG_PRINT("scaler_task_create fail !!!");
     
 	nRet = video_encode_task_create(JPEG_ENC_PRIORITY);
-	if(nRet < 0)
+	if (nRet < 0)
     		DBG_PRINT("video_encode_task_create fail !!!");
     	
 	nRet = avi_adc_record_task_create(AUD_ENC_PRIORITY);
-	if(nRet < 0)
+	if (nRet < 0)
     		DBG_PRINT("avi_adc_record_task_create fail !!!");
     	
 	DBG_PRINT("avi encode all task create success!!!\r\n");
@@ -38,27 +38,26 @@ void video_encode_exit(void)
 {   
 	INT32S nRet;
 	
-        if(video_encode_status() == VIDEO_CODEC_PROCESSING)
-        {   
-            video_encode_stop();
-        }
+	if (video_encode_status() == VIDEO_CODEC_PROCESSING) {   
+		video_encode_stop();
+	}
    	
-   	video_encode_preview_stop();
+	video_encode_preview_stop();
    	
-    nRet = avi_encode_state_task_del();
-	if(nRet < 0)
+	nRet = avi_encode_state_task_del();
+	if (nRet < 0)
 		DBG_PRINT("avi_encode_state_task_del fail !!!");
 		
 	nRet = scaler_task_del();
-	if(nRet < 0)
+	if (nRet < 0)
 		DBG_PRINT("scaler_task_del fail !!!");
 		
 	nRet = video_encode_task_del();
-	if(nRet < 0)
+	if (nRet < 0)
 		DBG_PRINT("video_encode_task_del fail !!!");
 		
 	nRet = avi_adc_record_task_del();
-	if(nRet < 0)
+	if (nRet < 0)
 		DBG_PRINT("avi_adc_record_task_del fail !!!");
 	
 	DBG_PRINT("avi encode all task delete success!!!\r\n");	
@@ -71,18 +70,11 @@ CODEC_START_STATUS video_encode_preview_start(VIDEO_ARGUMENT arg)
 
 	_dmsg((GREEN "[S]: video_encode_preview_start()\r\n" NONE));
 
-// ### for debug - xyz #########################
-#if 1 //(zt_resolution() < ZT_HD_SCALED)
 	if (ap_state_config_voice_record_switch_get() == 0) {	//wwj add
 	    pAviEncAudPara->audio_format = AVI_ENCODE_AUDIO_FORMAT;
 	} else {
 	    pAviEncAudPara->audio_format = 0;
 	}
-#else
-	pAviEncAudPara->audio_format = 0;
-#endif
-// ### for debug - xyz #########################
-
 	pAviEncAudPara->channel_no	  = 1; //mono
 	pAviEncAudPara->audio_sample_rate = arg.AudSampleRate;
     
@@ -148,9 +140,8 @@ CODEC_START_STATUS video_encode_start(MEDIA_SOURCE src)
 {
 	INT32S			nRet;
 	CODEC_START_STATUS	ret_status;
-	
+
 	ret_status = START_OK;
-    
 	if (src.type == SOURCE_TYPE_FS) {
 		pAviEncPara->source_type = SOURCE_TYPE_FS;
 	} else if (src.type == SOURCE_TYPE_USER_DEFINE) {
@@ -398,60 +389,63 @@ CODEC_START_STATUS video_encode_fast_switch_stop_and_start(MEDIA_SOURCE src)
 	INT8U temp[5] = {0, 1, 3, 5, 10};	//wwj add
 	INT32S nRet;
 	AviEncPacker_t *pNewAviEncPacker, *pOldAviEncPacker;
-	
-	if(pAviEncPara->AviPackerCur == pAviEncPacker0)
-    {
-    	pOldAviEncPacker = pAviEncPacker0;
-    	pNewAviEncPacker = pAviEncPacker1;
-    }
-    else
-    {
-    	pOldAviEncPacker = pAviEncPacker1;
-    	pNewAviEncPacker = pAviEncPacker0;
-    }
+
+	if (pAviEncPara->AviPackerCur == pAviEncPacker0) {
+		pOldAviEncPacker = pAviEncPacker0;
+		pNewAviEncPacker = pAviEncPacker1;
+	} else {
+		pOldAviEncPacker = pAviEncPacker1;
+		pNewAviEncPacker = pAviEncPacker0;
+	}
 
 	// creak new packer
-	if(src.type == SOURCE_TYPE_FS)
-    	pAviEncPara->source_type = SOURCE_TYPE_FS;
-    else if(src.type == SOURCE_TYPE_USER_DEFINE)
-    	pAviEncPara->source_type = SOURCE_TYPE_USER_DEFINE;
-    else 
-        goto AVI_PACKER_FAIL;
+	if (src.type == SOURCE_TYPE_FS)
+		pAviEncPara->source_type = SOURCE_TYPE_FS;
+	else if (src.type == SOURCE_TYPE_USER_DEFINE)
+		pAviEncPara->source_type = SOURCE_TYPE_USER_DEFINE;
+	else 
+		goto AVI_PACKER_FAIL;
   	
-    if(src.type_ID.FileHandle < 0)        
-        goto AVI_PACKER_FAIL;
+	if (src.type_ID.FileHandle < 0)        
+		goto AVI_PACKER_FAIL;
     
-    if(src.Format.VideoFormat == MJPEG)
-    	pAviEncVidPara->video_format = C_MJPG_FORMAT;
+	if (src.Format.VideoFormat == MJPEG)
+		pAviEncVidPara->video_format = C_MJPG_FORMAT;
 	else
 		goto AVI_PACKER_FAIL;
      
-    nRet = avi_encode_set_file_handle_and_caculate_free_size(pNewAviEncPacker, src.type_ID.FileHandle);
-    if(nRet < 0) goto AVI_PACKER_FAIL;
+	nRet = avi_encode_set_file_handle_and_caculate_free_size(pNewAviEncPacker, src.type_ID.FileHandle);
+	if (nRet < 0)
+		goto AVI_PACKER_FAIL;
     
-    //start new avi packer 
-    nRet = avi_enc_packer_start(pNewAviEncPacker);
-    if(nRet < 0) goto AVI_PACKER_FAIL;
-    	
-    //stop current avi encode
-  	nRet = avi_enc_stop();
-	if(nRet < 0) goto AVI_PACKER_FAIL;
+	// start new avi packer 
+	nRet = avi_enc_packer_start(pNewAviEncPacker);
+	if (nRet < 0)
+		goto AVI_PACKER_FAIL;
+
+	// stop current avi encode
+	nRet = avi_enc_stop();
+	if (nRet < 0)
+		goto AVI_PACKER_FAIL;
 	
-    OSTaskChangePrio(pOldAviEncPacker->task_prio, AVI_PACKER_PRIORITY);
+	OSTaskChangePrio(pOldAviEncPacker->task_prio, AVI_PACKER_PRIORITY);
     
-	//start new avi encode
+	// start new avi encode
 	avi_encode_set_curworkmem((void *)pNewAviEncPacker);  
    	nRet = avi_enc_start();
-  	if(nRet < 0) goto AVI_PACKER_FAIL;
+  	if (nRet < 0)
+		goto AVI_PACKER_FAIL;
     
-    //start old avi packer
-    //DBG_PRINT ("\r\nidea frame:%d\r\n",temp[ap_state_config_record_time_get()]*60*AVI_FRAME_RATE);
-//    VdoFramNumsLowBoundReg(ap_state_config_record_time_get()*60*video_encode_frame_rate_get()); 
-    VdoFramNumsLowBoundReg(temp[ap_state_config_record_time_get()]*60*video_encode_frame_rate_get());	//wwj modify
-    nRet = avi_enc_packer_stop(pOldAviEncPacker);
-    
-    if(nRet < 0) goto AVI_PACKER_FAIL;		
-    return START_OK;
+	// start old avi packer
+//	DBG_PRINT("\r\nidea frame:%d\r\n",temp[ap_state_config_record_time_get()]*60*AVI_FRAME_RATE);
+//	VdoFramNumsLowBoundReg(ap_state_config_record_time_get()*60*video_encode_frame_rate_get()); 
+	VdoFramNumsLowBoundReg(temp[ap_state_config_record_time_get()]*60*video_encode_frame_rate_get());	//wwj modify
+
+	nRet = avi_enc_packer_stop(pOldAviEncPacker);
+	if (nRet < 0)
+		goto AVI_PACKER_FAIL;		
+
+	return START_OK;
     
 AVI_PACKER_FAIL:
 	avi_enc_stop();
@@ -463,11 +457,11 @@ AVI_PACKER_FAIL:
 
 void video_encode_frame_rate_set(INT8U fps)
 {
-    pAviEncVidPara->dwRate = fps;
+	pAviEncVidPara->dwRate = fps;
 }
 
 INT8U video_encode_frame_rate_get(void)
 {
-    return pAviEncVidPara->dwRate;
+	return pAviEncVidPara->dwRate;
 }
 

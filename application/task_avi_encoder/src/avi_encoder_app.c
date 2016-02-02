@@ -46,79 +46,6 @@ static void AviPacker_mem_free(AviEncPacker_t *pAviEncPacker);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // avi encode api
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/* for debug - xyz */
-void dump_AviEncVidPara(AviEncVidPara_t *p)
-{
-	int	i;
-
-	_dmsg((GREEN "=== AviEncVidPara ==============================\r\n" NONE));
-	_dmsg((GREEN "- [sensor input]\r\n" NONE));
-	_dmsg(("  sensor_output_format   = %08x\r\n", p->sensor_output_format));	// sensor output format
-	_dmsg(("  sensor_capture_width   = %04d\r\n", p->sensor_capture_width));	// sensor width
-	_dmsg(("  sensor_capture_height  = %04d\r\n", p->sensor_capture_height));	// sensor height
-	for (i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++) {
-		_dmsg(("  csi_frame_addr[%0d]      = %08x\r\n", i, p->csi_frame_addr[i]));// sensor input buffer addr
-	}
-
-	_dmsg((GREEN "- [scaler output]\r\n" NONE));
-	_dmsg(("  scaler_flag            = %04x\r\n", p->scaler_flag));
-	_dmsg(("  dispaly_scaler_flag    = %04x\r\n", p->dispaly_scaler_flag));		// 0: not scaler, 1: scaler again for display
-	_dmsg(("  scaler_zoom_ratio      = %08x\r\n", p->scaler_zoom_ratio));		// for zoom scaler
-	_dmsg(("  scaler_flag            = %08x\r\n", p->scaler_flag));
-	for (i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++) {
-		_dmsg(("  scaler_output_addr[%0d]  = %08x\r\n", i, p->scaler_output_addr[i]));// scaler output buffer addr
-	}
-
-	_dmsg((GREEN "- [display scaler]\r\n" NONE));
-	_dmsg(("  display_output_format  = %08x\r\n", p->display_output_format));	// for display use
-	_dmsg(("  display_width          = %04d\r\n", p->display_width));		// display width
-	_dmsg(("  display_height         = %04d\r\n", p->display_height));		// display height
-	_dmsg(("  display_buffer_width   = %04d\r\n", p->display_buffer_width));	// display width
-	_dmsg(("  display_buffer_height  = %04d\r\n", p->display_buffer_height));	// display height
-	for (i=0; i<AVI_ENCODE_SCALER_BUFFER_NO; i++) {
-		_dmsg(("  display_output_addr[%0d] = %08x\r\n", i, p->display_output_addr[i]));// display scaler buffer addr
-	}
-
-	_dmsg((GREEN "- [video encode]\r\n" NONE));
-	_dmsg(("  video_format           = %08x\r\n", p->video_format));		// display width
-	_dmsg(("  dwScale                = %02x\r\n", p->dwScale));			// display height
-	_dmsg(("  dwRate                 = %02x\r\n", p->dwRate));			// display width
-	_dmsg(("  quality_value          = %04d\r\n", p->quality_value));		// display width
-	_dmsg(("  encode_width           = %04d\r\n", p->encode_width));		// display height
-	_dmsg(("  encode_height          = %04d\r\n", p->encode_height));		// display width
-	for (i=0; i<AVI_ENCODE_VIDEO_BUFFER_NO; i++) {
-		_dmsg(("  video_encode_addr[%0d]   = %08x\r\n", i, p->video_encode_addr[i]));	// display scaler buffer addr
-	}
-
-	_dmsg((GREEN "- [mpeg4 encode use]\r\n" NONE));
-	_dmsg(("  isram_addr             = %08x\r\n", p->isram_addr));
-	_dmsg(("  write_refer_addr       = %08x\r\n", p->write_refer_addr));
-	_dmsg(("  reference_addr         = %08x\r\n", p->reference_addr));
-
-	_dmsg((GREEN "================================================\r\n" NONE));
-}
-
-void dump_AviEncAudPara(AviEncAudPara_t *p)
-{
-	int	i;
-
-	_dmsg((GREEN "=== AviEncAudPara ==============================\r\n" NONE));
-	_dmsg((GREEN "- [audio encode]\r\n" NONE));
-	_dmsg(("  audio_format      = %08x\r\n", p->audio_format));		// audio encode format
-	_dmsg(("  audio_sample_rate = %04x\r\n", p->audio_sample_rate));	// sample rate
-	_dmsg(("  channel_no        = %04x\r\n", p->channel_no));		// channel no, 1:mono, 2:stereo
-	_dmsg(("  work_mem          = %08p\r\n", p->work_mem));			// wave encode work memory
-	_dmsg(("  pack_size         = %08x\r\n", p->pack_size));		// wave encode package size in byte
-	_dmsg(("  pack_buffer_addr  = %08x\r\n", p->pack_buffer_addr));
-	_dmsg(("  pcm_input_size    = %08x\r\n", p->pcm_input_size));		// wave encode pcm input size in short
-	for (i=0; i<AVI_ENCODE_PCM_BUFFER_NO; i++) {
-		_dmsg(("  pcm_input_addr[%0d] = %08x\r\n", i, p->pcm_input_addr[i]));
-	}
-	_dmsg((GREEN "================================================\r\n" NONE));
-}
-
-
-
 /* */
 static void scaler_app_lock(void)
 {
@@ -828,9 +755,9 @@ static INT32S AviPacker_mem_alloc(AviEncPacker_t *pAviEncPacker)
 	if (!pAviEncPacker->avi_workmem) {
 		RETURN(STATUS_FAIL);
 	}
-	gp_memset((INT8S*) pAviEncPacker->avi_workmem, 0x00, AviPackerV3_GetWorkMemSize());
-	DEBUG_MSG(DBG_PRINT("file_write_buffer = 0x%x\r\n", pAviEncPacker->file_write_buffer));
-	DEBUG_MSG(DBG_PRINT("index_write_buffer= 0x%x\r\n", pAviEncPacker->index_write_buffer));
+	gp_memset((INT8S *) pAviEncPacker->avi_workmem, 0x00, AviPackerV3_GetWorkMemSize());
+	DEBUG_MSG(DBG_PRINT("file_write_buffer    = 0x%x\r\n", pAviEncPacker->file_write_buffer));
+	DEBUG_MSG(DBG_PRINT("index_write_buffer   = 0x%x\r\n", pAviEncPacker->index_write_buffer));
 #endif
 	nRet = STATUS_OK;
 Return:
