@@ -233,13 +233,13 @@ void ap_display_init(void)
 //	buff_size = TFT_WIDTH * TFT_HEIGHT * 2;
 	_dmsg((RED "[GG]: mm_dump() - buffer_size=%0d\r\n" NONE, buff_size, mm_dump()));
 
-// ### for debug - xyz #########################
-#if 1 //(zt_resolution() < ZT_HD_SCALED)
+// ### for memory issue - by xyz 2016.01.27 ##################################
+#if (zt_resolution() < ZT_HD_SCALED)
 	display_frame[0] = gp_malloc_align(buff_size*TASK_DISPALY_BUFFER_NO, 64);
 #else
 	display_frame[0] = gp_malloc_align(buff_size*(TASK_DISPALY_BUFFER_NO+1), 64);
 #endif
-// ### for debug - xyz #########################
+// ### for memory issue - by xyz 2016.01.27 ##################################
 
 	if (display_frame[0]) {
 		for (i=1; i<TASK_DISPALY_BUFFER_NO; i++) {

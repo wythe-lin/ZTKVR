@@ -700,7 +700,7 @@ void zt31xx_fw_update(void)
 
 	// retain the original path
 	getcwd(path, sizeof(path));
-	_dfwup(("[zt31xx]: current path=%s\r\n", path));
+	msg(("[zt31xx]: current path=%s\r\n", path));
 
 	// check media
 	msg(("[zt31xx]: sd card - "));

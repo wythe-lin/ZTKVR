@@ -157,10 +157,13 @@ INT32S vid_enc_preview_start(void)
 #endif
 	// start sensor
 	if ((avi_encode_get_status() & C_AVI_ENCODE_SENSOR) == 0) {
-// ### BEGIN - by xyz for zt31xx firmware update
-//		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_SENSOR, avi_encode_ack_m, 5000, msg, err);	
-		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_SENSOR, avi_encode_ack_m, 5000*100, msg, err);	
-// ### END   - by xyz
+// ### for zt31xx firmware update - by xyz 2016.02.03 ########################
+#if 0
+		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_SENSOR, avi_encode_ack_m, 5000, msg, err);
+#else
+		POST_MESSAGE(AVIEncodeApQ, MSG_AVI_START_SENSOR, avi_encode_ack_m, 5000*100, msg, err);
+#endif
+// ### for zt31xx firmware update - by xyz 2016.02.03 ########################
 		avi_encode_set_status(C_AVI_ENCODE_SENSOR);
 		_dmsg((WHITE "c.sensor start\r\n" NONE));
 	}
