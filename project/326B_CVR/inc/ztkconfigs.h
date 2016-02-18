@@ -27,10 +27,11 @@
 
 
 /* custom */
-#define DVR516_CFG			1
+#define DVR516_CFG			0//1
 #define DVR517_CFG			0//1
+#define DVR516K6_CFG			0	// DVR516 + K6000's lcd panel
 #define K6000_CFG			0
-#define K12_CFG				0
+#define K12_CFG				1
 #define EVB_CFG				0
 
 /* ZT3150 resolution selection */
@@ -47,15 +48,16 @@
 
 /* */
 #undef C_DISPLAY_DEVICE
-#if   (DVR516_CFG == 1)
+#if (DVR516_CFG == 1)
     #define FLIP_ILI8961		1
-    #define C_DISPLAY_DEVICE		ILI8961//HX8268C//ILI9341
+    #define C_DISPLAY_DEVICE		ILI8961//HX8268C
     #define zt_opmode()			ZT_H_SIDE_BY_SIDE
     #define zt_resolution()		ZT_HD_SCALED//ZT_VGA
     #define zt_anti_flicker(x)		(!x)
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1
     #define TIME_ADP_OUT_DLY		3		// unit: second
+    #define zt_ext_gpio()		{ gpio_init_io(IO_C11, GPIO_OUTPUT); gpio_set_port_attribute(IO_G5, ATTRIBUTE_HIGH); gpio_write_io(IO_C11, DATA_HIGH); }
 #elif (DVR517_CFG == 1)
     #define FLIP_ILI8961		0
     #define C_DISPLAY_DEVICE		ILI8961
@@ -65,7 +67,19 @@
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1
     #define TIME_ADP_OUT_DLY		5		// unit: second
+    #define zt_ext_gpio()		{ }
+#elif (DVR516K6_CFG == 1)
+    #define FLIP_ILI8961		0
+    #define C_DISPLAY_DEVICE		ILI9341
+    #define zt_opmode()			ZT_H_SIDE_BY_SIDE
+    #define zt_resolution()		ZT_VGA
+    #define zt_anti_flicker(x)		(!x)
+    #define ADKEY_WITH_BAT		0
+    #define DUAL_ADP_IN			1
+    #define TIME_ADP_OUT_DLY		3		// unit: second
+    #define zt_ext_gpio()		{ gpio_init_io(IO_C11, GPIO_OUTPUT); gpio_set_port_attribute(IO_G5, ATTRIBUTE_HIGH); gpio_write_io(IO_C11, DATA_HIGH); }
 #elif (K6000_CFG == 1)
+    #define FLIP_ILI8961		0
     #define C_DISPLAY_DEVICE		ILI9341
     #define zt_opmode()			ZT_H_SIDE_BY_SIDE
     #define zt_resolution()		ZT_VGA
@@ -73,7 +87,9 @@
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1
     #define TIME_ADP_OUT_DLY		10		// unit: second
+    #define zt_ext_gpio()		{ }
 #elif (K12_CFG == 1)
+    #define FLIP_ILI8961		0
     #define C_DISPLAY_DEVICE		ILI9341
     #define zt_opmode()			ZT_H_SIDE_BY_SIDE
     #define zt_resolution()		ZT_VGA
@@ -81,7 +97,9 @@
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1
     #define TIME_ADP_OUT_DLY		1		// unit: second
+    #define zt_ext_gpio()		{ }
 #elif (EVB_CFG == 1)
+    #define FLIP_ILI8961		0
     #define C_DISPLAY_DEVICE		TPO_TD025THD1
     #define zt_opmode()			ZT_H_SIDE_BY_SIDE
     #define zt_resolution()		ZT_VGA
@@ -89,6 +107,7 @@
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1
     #define TIME_ADP_OUT_DLY		1		// unit: second
+    #define zt_ext_gpio()		{ }
 #else
     #error must be chioce one xxx_CFG
 #endif

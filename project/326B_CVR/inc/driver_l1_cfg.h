@@ -5,7 +5,7 @@
 #ifndef CUSTOMER_DEFINE  //For Engineer Development and test                                 //
 //===========================================================================================//
 
-    #define INIT_MCLK                   96000000//108000000
+    #define INIT_MCLK			108000000//96000000
     #define INIT_MHZ                    (INIT_MCLK/1000000)
 
 #if 0

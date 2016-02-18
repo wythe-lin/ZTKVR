@@ -5,3 +5,24 @@
 ( 4) power off latency (5 sec)
 ( 5) gp_cardvr_upgrade.bin change to ztkvr_upgrade.bin
 ( 6) 
+
+
+[mapping list]
+ resource	|
+================+===============================
+ CarScam	| DVR516
+ E_Magic	| DVR516
+ GRAWELCHRI	| DVR516
+ LOUIS		| DVR516
+ LZX		| DVR516
+ MIET		| K12
+ MTD		| DVR516
+ ORDOR		| DVR516
+ ProtectorEyes	| K12
+ SKY_EYE	| DVR516
+ X_Magic	| DVR516K6 (DVR516 + K6000's lcd panel)
+ ZealTek	| DVR516/DVR517
+		|
+
+
+

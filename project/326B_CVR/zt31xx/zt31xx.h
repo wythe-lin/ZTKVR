@@ -57,7 +57,7 @@ extern "C"
  ******************************************************************************
  */
 extern void		zt31xx_reset(void);
-extern unsigned char	zt31xx_ready(void);		// return zero: ready, non-zero: no good
+extern int		zt31xx_ready(int n);		// return zero: ready, non-zero: no good
 
 extern void		zt31xx_set_opmode(unsigned char param1, unsigned char param2, unsigned char param3);
 

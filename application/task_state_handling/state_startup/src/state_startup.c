@@ -1,3 +1,4 @@
+#include "ztkconfigs.h"
 #include "state_startup.h"
 
 //	prototypes
@@ -14,11 +15,7 @@ void state_startup_init(void)
 	ap_startup_init();
 
 /* #BEGIN# add by xyz - 2014.10.27 */
-#if defined(DVR516_CFG) && (DVR516_CFG == 1)
-  	gpio_init_io(IO_C11, GPIO_OUTPUT);
-  	gpio_set_port_attribute(IO_G5, ATTRIBUTE_HIGH);
-  	gpio_write_io(IO_C11, DATA_HIGH);
-#endif
+	zt_ext_gpio();
 /* #END# add by xyz - 2014.10.27 */
 }
 

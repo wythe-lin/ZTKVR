@@ -148,26 +148,28 @@ void zt31xx_reset(void)
 	msg((" (strapped=%02x)\r\n", zt31xx_get_strapped()));
 }
 
-unsigned char zt31xx_ready(void)
+int zt31xx_ready(int n)
 {
+	int		i;
 	unsigned char	ack;
 
 	// zt31xx check ready
 	msg(("[zt31xx]: wait ready -"));
-	for (;;) {
+	for (i=0; i<n; i++) {
 		if (zt31xx_rd_r16d8(0x0080, &ack) < 0) {
-			msg(("\r\n[zt31xx]: check ready - i2c nack\r\n"));
-			return 1;
+			msg((BROWN "\r\n[zt31xx]: check ready - i2c nack\r\n" NONE));
+			return ZT31XX_ST_I2CNACK;
 		}
 
 		msg((" %02x", ack));
-		if (ack == 0x80) {
-			break;
+		switch (ack & 0xc0) {
+		case 0x80: msg((WHITE " (ready)\r\n" NONE));	return ZT31XX_ST_DONE;
+		case 0xc0: msg((WHITE " (error)\r\n" NONE));	return ZT31XX_ST_ERROR;
 		}
 		drv_msec_wait(50);
 	}
-	msg(("\r\n"));
-	return 0;
+	msg((WHITE " (not ready)\r\n" NONE));
+	return ZT31XX_ST_RUNNING;
 }
 
 void zt31xx_set_opmode(unsigned char param1, unsigned char param2, unsigned char param3)
@@ -176,6 +178,7 @@ void zt31xx_set_opmode(unsigned char param1, unsigned char param2, unsigned char
 	zt31xx_wr_r16d8(0x0082, param2);
 	zt31xx_wr_r16d8(0x0083, param3);
 	zt31xx_wr_r16d8(0x0080, 0x01);
+	drv_msec_wait(100);
 }
 
 
@@ -187,7 +190,7 @@ void zt31xx_set_opmode(unsigned char param1, unsigned char param2, unsigned char
  *****************************************************************************
  */
 /* for debug */
-#define DEBUG_ZT31XX_SENSOR	1
+#define DEBUG_ZT31XX_SENSOR	0
 #if DEBUG_ZT31XX_SENSOR
     #define _dsen(x)		print_string x
 #else

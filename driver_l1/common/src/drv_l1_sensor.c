@@ -8891,11 +8891,11 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 
 	// ZT31XX reset
 	zt31xx_reset();
-	zt31xx_fw_update();		// ZT31XX check firmware update procedure
+	zt31xx_fw_update();			// ZT31XX check firmware update procedure
 
 	// ZT31XX reset
 	zt31xx_reset();
-	zt31xx_ready();			// ZT31XX read ?
+	zt31xx_ready(10);			// ZT31XX read ?
 
 	// ZT31XX set operation mode
 	_dmsg(("[zt31xx]: set opmode -"));
@@ -8933,12 +8933,12 @@ void zt3150_init(short nWidthH, short nWidthV,	unsigned short uFlag)
 
 	// set zt31xx operating mode
 	zt31xx_set_opmode(param1, param2, param3);
-	drv_msec_wait(50);
+	zt31xx_ready(100);			// ZT31XX read ?
 
 	// 
-	R_CSI_TG_CTRL1 = uCtrlReg2;			//*P_Sensor_TG_Ctrl2 = uCtrlReg2;
+	R_CSI_TG_CTRL1 = uCtrlReg2;		//*P_Sensor_TG_Ctrl2 = uCtrlReg2;
 #if CSI_IRQ_MODE == CSI_IRQ_PPU_IRQ
-	R_CSI_TG_CTRL0 = uCtrlReg1;			//*P_Sensor_TG_Ctrl1 = uCtrlReg1;
+	R_CSI_TG_CTRL0 = uCtrlReg1;		//*P_Sensor_TG_Ctrl1 = uCtrlReg1;
 #elif CSI_IRQ_MODE == CSI_IRQ_TG_IRQ
 	R_CSI_TG_CTRL0 = uCtrlReg1 | (1 << 16);
 #elif CSI_IRQ_MODE == CSI_IRQ_TG_FIFO8_IRQ
