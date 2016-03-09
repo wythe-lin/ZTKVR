@@ -27,11 +27,11 @@
 
 
 /* custom */
-#define DVR516_CFG			0//1
+#define DVR516_CFG			1
 #define DVR517_CFG			0//1
 #define DVR516K6_CFG			0	// DVR516 + K6000's lcd panel
 #define K6000_CFG			0
-#define K12_CFG				1
+#define K12_CFG				0
 #define EVB_CFG				0
 
 /* ZT3150 resolution selection */
@@ -52,7 +52,7 @@
     #define FLIP_ILI8961		1
     #define C_DISPLAY_DEVICE		ILI8961//HX8268C
     #define zt_opmode()			ZT_H_SIDE_BY_SIDE
-    #define zt_resolution()		ZT_HD_SCALED//ZT_VGA
+    #define zt_resolution()		ZT_VGA//ZT_HD_SCALED//ZT_VGA
     #define zt_anti_flicker(x)		(!x)
     #define ADKEY_WITH_BAT		0
     #define DUAL_ADP_IN			1

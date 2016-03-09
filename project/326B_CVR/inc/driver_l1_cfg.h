@@ -1,3 +1,5 @@
+#include "ztkconfigs.h"
+
 #ifndef __DRIVER_L1_CFG_H__
 #define __DRIVER_L1_CFG_H__
 
@@ -8,7 +10,7 @@
     #define INIT_MCLK			108000000//96000000
     #define INIT_MHZ                    (INIT_MCLK/1000000)
 
-#if 0
+#if (zt_resolution() < ZT_HD_SCALED)
     #define SDRAM_SIZE 			SD_64Mb
     #define SDRAM_START_ADDR            0x00000000 
     #define SDRAM_END_ADDR              0x007FFFFF

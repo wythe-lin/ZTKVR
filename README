@@ -10,14 +10,18 @@
 [mapping list]
  resource	|
 ================+===============================
+ Better		| K12 (spanish)
  CarScam	| DVR516
+ DIYLogo	| DVR516 (sample)
  E_Magic	| DVR516
  GRAWELCHRI	| DVR516
+ KYMCO		| DVR516 (sample)
  LOUIS		| DVR516
  LZX		| DVR516
  MIET		| K12
  MTD		| DVR516
  ORDOR		| DVR516
+ PatrolLine	| K12 (Italian)
  ProtectorEyes	| K12
  SKY_EYE	| DVR516
  X_Magic	| DVR516K6 (DVR516 + K6000's lcd panel)
